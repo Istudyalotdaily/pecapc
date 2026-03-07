@@ -4,81 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PeçaPC Pro — Otimizador de Hardware</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #e67e22; --dark: #1a1a1a; --bg: #f8f9fa; --card: #ffffff; }
+        :root { --primary: #e67e22; --dark: #1a1a1a; --bg: #f8f9fa; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg); color: #333; }
         header { background: var(--dark); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primary); }
-        .logo { font-size: 1.6rem; font-weight: 700; letter-spacing: -1px; }
+        .logo { font-size: 1.6rem; font-weight: 700; }
         .logo span { color: var(--primary); }
-        .nav-btns button { background: transparent; border: 1px solid #444; color: #ddd; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-left: 10px; font-size: 14px; }
+        .nav-btns button { background: transparent; border: 1px solid #444; color: #ddd; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-left: 10px; font-size: 13px; }
         .nav-btns button:hover { border-color: var(--primary); color: white; }
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
-        .tabs { display: flex; gap: 20px; border-bottom: 2px solid #dee2e6; margin-bottom: 20px; }
-        .tab { padding: 12px 0; cursor: pointer; font-weight: 600; color: #6c757d; border-bottom: 3px solid transparent; }
-        .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-        .ad-space { width: 100%; background: #eee; border: 1px dashed #ccc; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 12px; text-transform: uppercase; }
-        .build-row { background: var(--card); padding: 15px 20px; margin-bottom: 12px; border-radius: 8px; display: grid; grid-template-columns: 140px 1fr 150px 100px; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .label { font-size: 12px; font-weight: 700; color: #999; text-transform: uppercase; }
-        .name { font-weight: 600; color: var(--dark); }
-        .price { font-weight: 700; color: var(--primary); text-align: right; }
-        .btn-select { background: #f0f0f0; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; }
-        .used-warning { background: #fff3cd; color: #856404; padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; border-left: 5px solid #ffeeba; }
-        #used-content { display: none; }
+        .container { max-width: 1000px; margin: 20px auto; padding: 20px; }
+        .tabs { display: flex; gap: 20px; border-bottom: 2px solid #ddd; margin-bottom: 20px; }
+        .tab { padding: 10px 0; cursor: pointer; font-weight: 600; color: #666; }
+        .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+        .build-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; display: grid; grid-template-columns: 1fr auto; align-items: center; }
+        .price { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        .btn-main { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 10px; }
+        #auth-box { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd; display: none; margin-bottom: 20px; }
+        input { width: 100%; padding: 10px; margin: 5px 0 15px 0; border: 1px solid #ccc; border-radius: 4px; }
     </style>
 </head>
 <body>
+
 <header>
     <div class="logo">PEÇA<span>PC</span></div>
     <div class="nav-btns">
-        <button onclick="auth()">Entrar / Registrar</button>
-        <button onclick="save()">Salvar Build</button>
+        <button onclick="toggleAuth()">Minha Conta</button>
+        <button onclick="shareBuild()">Compartilhar Build</button>
     </div>
 </header>
+
 <div class="container">
-    <div class="ad-space" style="height: 90px;">Google AdSense - Banner Topo</div>
+    <div id="auth-box">
+        <h3>Acesso Seguro</h3>
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="password" placeholder="Senha">
+        <button class="btn-main" onclick="handleAuth()">Entrar / Registrar</button>
+    </div>
+
     <div class="tabs">
-        <div id="t1" class="tab active" onclick="switchTab(1)">LOJAS OFICIAIS</div>
-        <div id="t2" class="tab" onclick="switchTab(2)">USADOS & MARKETPLACE</div>
+        <div class="tab active" id="t1" onclick="switchTab(1)">OFICIAIS</div>
+        <div class="tab" id="t2" onclick="switchTab(2)">TERCEIROS / USADOS</div>
     </div>
-    <div id="main-content">
-        <div class="build-row">
-            <div class="label">Processador</div>
-            <div class="name">Carregando dados da Amazon/Kabum...</div>
-            <div class="price">R$ 0,00</div>
-            <button class="btn-select">Mudar</button>
+
+    <div id="main-list">
+        <div class="build-card">
+            <div>
+                <strong>Processador</strong><br>
+                <small id="cpu-name">Ryzen 5 5600</small>
+            </div>
+            <div class="price">R$ 849,00</div>
         </div>
     </div>
-    <div id="used-content">
-        <div class="used-warning">
-            <strong>Aviso de Segurança:</strong> Produtos usados não possuem garantia oficial. Verifique a reputação do vendedor.
-        </div>
-        <div class="build-row" style="background: #fafafa; border: 1px solid #eee;">
-            <div class="label">Mercado Livre</div>
-            <div class="name">Placa de Vídeo RTX 3060 (Usada)</div>
-            <div class="price">R$ 1.150,00</div>
-            <button class="btn-select">Ver</button>
-        </div>
-    </div>
-    <div class="ad-space" style="height: 250px; width: 300px; margin: 40px auto;">Google AdSense - Retângulo Final</div>
 </div>
+
 <script>
-    function switchTab(n) {
-        const m = document.getElementById('main-content');
-        const u = document.getElementById('used-content');
-        const t1 = document.getElementById('t1');
-        const t2 = document.getElementById('t2');
-        if(n === 1) {
-            m.style.display = 'block'; u.style.display = 'none';
-            t1.classList.add('active'); t2.classList.remove('active');
+    const SUPABASE_URL = 'https://fzdwbxxiiliykvqflefp.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_dc6xvoMbfW_nLJgTMEUavQ_o1aIEZW1';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function handleAuth() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) {
+            const { error: signUpErr } = await supabaseClient.auth.signUp({ email, password });
+            if (signUpErr) alert(signUpErr.message);
+            else alert("Verifique seu e-mail para confirmar!");
         } else {
-            m.style.display = 'none'; u.style.display = 'block';
-            t1.classList.remove('active'); t2.classList.add('active');
+            location.reload();
         }
     }
-    function auth() { alert("Sistema de login via Supabase em breve."); }
-    function save() { alert("Build salva na conta."); }
+
+    function toggleAuth() {
+        const box = document.getElementById('auth-box');
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    async function shareBuild() {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (!user) return alert("Faça login para gerar um link de compartilhamento!");
+
+        const buildData = { cpu: "Ryzen 5 5600", price: 849 }; // Example data
+
+        const { data, error } = await supabaseClient
+            .from('builds')
+            .insert([{ user_id: user.id, build_data: buildData, is_public: true }])
+            .select();
+
+        if (data) {
+            const url = window.location.href.split('?')[0] + '?id=' + data[0].id;
+            navigator.clipboard.writeText(url);
+            alert("Link copiado! Seu amigo pode ver esta build agora: " + url);
+        }
+    }
+
+    function switchTab(n) {
+        document.getElementById('t1').classList.toggle('active', n === 1);
+        document.getElementById('t2').classList.toggle('active', n === 2);
+    }
 </script>
 </body>
 </html>
