@@ -209,28 +209,51 @@
 </div>
 
 <script>
+    // === CONFIGURATION ===
+    const API_URL = 'http://localhost:5000'; // Change to https://pecapc-api.onrender.com for production
     const SUPABASE_URL = 'https://fzdwbxxiiliykvqflefp.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_dc6xvoMbfW_nLJgTMEUavQ_o1aIEZW1';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     
     let currentUser = null;
+    let apiParts = null;
     
-    const PARTS = [
-        { id: 1, cat: 'CPU', name: 'AMD Ryzen 9 5950X', socket: 'AM4', specs: '16c/32t, 4.9GHz', price: 2800, stores: { 'Amazon': 2799, 'KaBuM!': 2850 } },
-        { id: 2, cat: 'CPU', name: 'Intel Core i9-13900K', socket: 'LGA1700', specs: '24c/32t, 5.8GHz', price: 3200, stores: { 'Amazon': 3199, 'Pichau': 3250 } },
-        { id: 3, cat: 'GPU', name: 'RTX 4090', specs: '24GB GDDR6X, 450W', price: 12000, stores: { 'Amazon': 11999, 'Terabyte': 12500 } },
-        { id: 4, cat: 'GPU', name: 'RTX 4070 Super', specs: '12GB GDDR6X, 220W', price: 5200, stores: { 'KaBuM!': 5199, 'Pichau': 5350 } },
-        { id: 5, cat: 'Motherboard', name: 'ASUS ROG STRIX X870-E', socket: 'AM5', specs: 'DDR5, PCIe 5.0', price: 2400, stores: { 'Terabyte': 2399, 'Amazon': 2499 } },
-        { id: 6, cat: 'RAM', name: 'Kingston Fury Beast 32GB DDR5', specs: '6000MHz, RGB', price: 1200, stores: { 'Amazon': 1199, 'Pichau': 1300 } },
-        { id: 7, cat: 'Storage', name: 'Samsung 990 Pro 2TB', specs: 'NVMe, 7100 MB/s', price: 1800, stores: { 'Amazon': 1799, 'Magazine Luiza': 1899 } },
-        { id: 8, cat: 'PSU', name: 'Corsair RMx 1200W', specs: '80+ Gold, Semi-modular', price: 1900, stores: { 'KaBuM!': 1849, 'Pichau': 1999 } },
+    // Fallback data if API unavailable
+    const FALLBACK_PARTS = [
+        { id: 1, cat: 'CPU', category: 'cpu', name: 'AMD Ryzen 9 5950X', socket: 'AM4', specs: '16c/32t, 4.9GHz', price: 2800, store: 'Amazon' },
+        { id: 2, cat: 'CPU', category: 'cpu', name: 'Intel Core i9-13900K', socket: 'LGA1700', specs: '24c/32t, 5.8GHz', price: 3200, store: 'Pichau' },
+        { id: 3, cat: 'GPU', category: 'gpu', name: 'RTX 4090', specs: '24GB GDDR6X, 450W', price: 12000, store: 'Amazon' },
+        { id: 4, cat: 'GPU', category: 'gpu', name: 'RTX 4070 Super', specs: '12GB GDDR6X, 220W', price: 5200, store: 'KaBuM!' },
+        { id: 5, cat: 'Motherboard', category: 'mobo', name: 'ASUS ROG STRIX X870-E', socket: 'AM5', specs: 'DDR5, PCIe 5.0', price: 2400, store: 'Terabyte' },
+        { id: 6, cat: 'RAM', category: 'ram', name: 'Kingston Fury Beast 32GB DDR5', specs: '6000MHz, RGB', price: 1200, store: 'Amazon' },
+        { id: 7, cat: 'Storage', category: 'storage', name: 'Samsung 990 Pro 2TB', specs: 'NVMe, 7100 MB/s', price: 1800, store: 'Amazon' },
+        { id: 8, cat: 'PSU', category: 'psu', name: 'Corsair RMx 1200W', specs: '80+ Gold, Semi-modular', price: 1900, store: 'KaBuM!' },
     ];
     
-    function initCounts() {
-        document.getElementById('prod-count').textContent = PARTS.length;
+    // === FETCH FROM API ===
+    async function fetchPartsFromAPI() {
+        try {
+            const res = await fetch(`${API_URL}/api/parts?limit=50`);
+            if (!res.ok) throw new Error('API error: ' + res.status);
+            const data = await res.json();
+            apiParts = data.parts.map(p => ({
+                ...p,
+                cat: p.category?.toUpperCase() || 'PEÇA'
+            }));
+            console.log(`[PeçaPC] Carregou ${apiParts.length} peças da API`);
+            return apiParts;
+        } catch (err) {
+            console.warn('[PeçaPC] API indisponível, usando fallback:', err.message);
+            return null;
+        }
+    }
+    
+    async function initCounts() {
+        let parts = apiParts || await fetchPartsFromAPI() || FALLBACK_PARTS;
+        document.getElementById('prod-count').textContent = parts.length;
         document.getElementById('build-count').textContent = '5';
         ['CPU', 'GPU', 'Motherboard', 'RAM', 'Storage', 'PSU'].forEach(cat => {
-            const count = PARTS.filter(p => p.cat === cat).length;
+            const count = parts.filter(p => p.cat === cat || p.category === cat.toLowerCase()).length;
             const id = cat.toLowerCase();
             if (document.getElementById(`count-${id}`)) {
                 document.getElementById(`count-${id}`).textContent = count + ' peça(s)';
@@ -244,10 +267,11 @@
         document.querySelectorAll('.tab').forEach((t, i) => {
             t.classList.toggle('active', ['home', 'builder', 'builds'][i] === view);
         });
-        if (view === 'builder') renderParts(PARTS);
+        if (view === 'builder') renderParts(apiParts || FALLBACK_PARTS);
     }
     
     function renderParts(parts) {
+        if (!parts) parts = FALLBACK_PARTS;
         const html = parts.map(p => `
             <div class="part-card">
                 <div class="part-icon">📦</div>
@@ -255,10 +279,10 @@
                     <h4>${p.name}</h4>
                     <div class="part-specs">${p.specs}</div>
                     <div class="part-stores">
-                        ${Object.entries(p.stores || {}).map(([s, price]) => `<span class="store-badge">${s} R$${price}</span>`).join('')}
+                        <span class="store-badge">${p.store || 'N/A'} R$${p.price?.toLocaleString('pt-BR') || '---'}</span>
                     </div>
                 </div>
-                <div class="part-price">R$${p.price}</div>
+                <div class="part-price">R$${p.price?.toLocaleString('pt-BR') || '---'}</div>
             </div>
         `).join('');
         document.getElementById('parts-list').innerHTML = html || '<p>Nenhuma peça encontrada</p>';
@@ -272,7 +296,8 @@
     
     function applyFilters() {
         const cat = document.getElementById('cat-filter').value;
-        const filtered = cat ? PARTS.filter(p => p.cat === cat) : PARTS;
+        const parts = apiParts || FALLBACK_PARTS;
+        const filtered = cat ? parts.filter(p => p.cat === cat || p.category === cat.toLowerCase()) : parts;
         renderParts(filtered);
     }
     
@@ -316,8 +341,11 @@
         alert('Build salva! 🎉');
     }
     
-    initCounts();
-</script>
+    initCounts();// Initialize on page load
+    (async () => {
+        await fetchPartsFromAPI();
+        await initCounts();
+    })();</script>
 
 </body>
 </html>
