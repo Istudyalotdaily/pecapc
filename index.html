@@ -1,110 +1,417 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PeçaPC Pro — Otimizador de Hardware</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary: #e67e22; --dark: #1a1a1a; --bg: #f8f9fa; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: #333; }
-        header { background: var(--dark); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primary); }
-        .logo { font-size: 1.6rem; font-weight: 700; }
-        .logo span { color: var(--primary); }
-        .nav-btns button { background: transparent; border: 1px solid #444; color: #ddd; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-left: 10px; font-size: 13px; }
-        .nav-btns button:hover { border-color: var(--primary); color: white; }
-        .container { max-width: 1000px; margin: 20px auto; padding: 20px; }
-        .tabs { display: flex; gap: 20px; border-bottom: 2px solid #ddd; margin-bottom: 20px; }
-        .tab { padding: 10px 0; cursor: pointer; font-weight: 600; color: #666; }
-        .tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
-        .build-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; display: grid; grid-template-columns: 1fr auto; align-items: center; }
-        .price { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .btn-main { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 10px; }
-        #auth-box { background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd; display: none; margin-bottom: 20px; }
-        input { width: 100%; padding: 10px; margin: 5px 0 15px 0; border: 1px solid #ccc; border-radius: 4px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeçaPC.com.br — Monte seu PC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 18px; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f5f5f5;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+a { color: #1a73e8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── TOP BAR ── */
+.topbar { background: #2c2c2c; color: #ccc; font-size: 0.75rem; padding: 0 0; height: 28px; display: flex; align-items: center; }
+.topbar-inner { max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; }
+.topbar a { color: #aaa; font-size: 0.75rem; }
+.topbar a:hover { color: #fff; text-decoration: none; }
+.topbar-links { display: flex; gap: 14px; }
+
+/* ── HEADER ── */
+header { background: #1a1a1a; border-bottom: 2px solid #e67e22; }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 16px; height: 66px; display: flex; align-items: center; gap: 24px; }
+.logo { font-size: 1.55rem; font-weight: 700; color: #fff; cursor: pointer; white-space: nowrap; letter-spacing: -0.02em; }
+.logo span { color: #e67e22; }
+.header-nav { display: flex; gap: 4px; margin-left: auto; }
+.header-nav a, .header-nav button { color: #ccc; font-size: 0.8rem; padding: 6px 10px; border-radius: 3px; border: none; background: none; cursor: pointer; white-space: nowrap; text-decoration: none; display: block; }
+.header-nav a:hover, .header-nav button:hover { background: #333; color: #fff; text-decoration: none; }
+.header-nav .active { background: #e67e22 !important; color: #fff !important; }
+
+/* ── NAV BAR ── */
+.navbar { background: #fff; border-bottom: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.navbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 0; height: 38px; }
+.navbar-inner a, .navbar-inner button { font-size: 0.8rem; font-weight: 500; color: #444; padding: 0 12px; height: 38px; display: flex; align-items: center; border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; text-decoration: none; white-space: nowrap; }
+.navbar-inner a:hover, .navbar-inner button:hover { color: #e67e22; text-decoration: none; }
+.navbar-inner .nav-active { color: #e67e22; border-bottom-color: #e67e22; }
+
+/* ── LAYOUT ── */
+.page { display: none; }
+.page.active { display: block; }
+.container { max-width: 1200px; margin: 0 auto; padding: 18px 16px; }
+.two-col { display: grid; grid-template-columns: 1fr 280px; gap: 18px; align-items: start; }
+
+/* ── AD SPACES ── */
+.ad-banner { background: #fff; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 0.75rem; text-align: center; margin-bottom: 16px; }
+.ad-leaderboard { height: 90px; }
+.ad-rectangle  { height: 250px; }
+.ad-sidebar    { height: 600px; margin-bottom: 12px; }
+.ad-label { font-size: 0.65rem; color: #bbb; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+
+/* ── SOURCE TABS ── */
+.source-tabs { display: flex; gap: 0; border-bottom: 2px solid #ddd; margin-bottom: 16px; }
+.source-tab { padding: 10px 22px; cursor: pointer; font-weight: 600; font-size: 0.82rem; color: #666; border-bottom: 3px solid transparent; margin-bottom: -2px; letter-spacing: 0.03em; transition: color 0.15s; }
+.source-tab.active { color: #e67e22; border-bottom-color: #e67e22; }
+.source-tab:hover:not(.active) { color: #333; }
+.used-warning { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 10px 14px; border-radius: 4px; margin-bottom: 14px; font-size: 0.8rem; color: #78350f; }
+
+/* ── BUILDER TABLE ── */
+.builder-table { background: #fff; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; margin-bottom: 16px; }
+.builder-table-head { display: grid; grid-template-columns: 140px 1fr 130px 90px 44px; background: #f0f0f0; border-bottom: 1px solid #ddd; font-size: 0.72rem; font-weight: 600; color: #666; text-transform: uppercase; padding: 7px 12px; gap: 8px; }
+.builder-row { display: grid; grid-template-columns: 140px 1fr 130px 90px 44px; border-bottom: 1px solid #eee; align-items: center; padding: 10px 12px; gap: 8px; transition: background 0.1s; }
+.builder-row:hover { background: #fafafa; }
+.builder-row.empty-row { cursor: pointer; }
+.builder-row.empty-row:hover { background: #fffaf5; }
+
+.row-cat { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 0.8rem; color: #333; }
+.row-part { font-size: 0.82rem; color: #1a1a1a; }
+.row-part .part-name { font-weight: 500; color: #1a73e8; cursor: pointer; }
+.row-part .part-name:hover { text-decoration: underline; }
+.row-part.empty-part { color: #aaa; font-style: italic; }
+.row-stores { font-size: 0.75rem; }
+.row-price { font-size: 0.85rem; font-weight: 600; text-align: right; }
+.btn-icon { width: 26px; height: 26px; border: 1px solid #ddd; background: #fff; border-radius: 3px; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; color: #666; }
+.btn-icon.del:hover { border-color: #c0392b; color: #c0392b; }
+
+.builder-footer { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; }
+.total-label { font-size: 0.8rem; color: #666; }
+.total-price { font-size: 1.1rem; font-weight: 700; color: #1a1a1a; }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 3px; font-size: 0.8rem; font-weight: 500; cursor: pointer; border: 1px solid transparent; }
+.btn-orange { background: #e67e22; color: #fff; border-color: #d35400; }
+.btn-orange:hover { background: #d35400; color: #fff; }
+.btn-white { background: #fff; color: #333; border-color: #ccc; }
+.btn-sm { padding: 4px 10px; font-size: 0.75rem; }
+
+/* ── HOME CARDS ── */
+.home-hero { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 28px 32px; margin-bottom: 18px; display: flex; justify-content: space-between; }
+.home-hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+.home-hero p { font-size: 0.875rem; color: #555; max-width: 480px; margin-bottom: 16px; }
+.home-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 18px; }
+.home-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 18px 10px; cursor: pointer; text-align: center; }
+.home-card:hover { border-color: #e67e22; box-shadow: 0 2px 8px rgba(230,126,34,0.1); }
+.home-card-icon { font-size: 1.6rem; margin-bottom: 6px; }
+.home-card-title { font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0; }
+
+/* ── CATALOG ── */
+.filter-bar { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 12px 14px; margin-bottom: 14px; }
+.filter-bar label { display:block; font-size:0.7rem; font-weight:700; color:#555; margin-bottom:3px; text-transform:uppercase; }
+.filter-bar select { padding: 6px 8px; border: 1px solid #ccc; border-radius: 3px; width: 100%; }
+.parts-table { background: #fff; border: 1px solid #ddd; border-radius: 4px; }
+.parts-table-head { display: grid; grid-template-columns: 60px 1fr 200px 110px 90px; background: #f0f0f0; border-bottom: 1px solid #ddd; padding: 8px 12px; gap: 10px; font-size: 0.72rem; font-weight: 600; color: #666; text-transform: uppercase; }
+.parts-row { display: grid; grid-template-columns: 60px 1fr 200px 110px 90px; border-bottom: 1px solid #eee; padding: 10px 12px; gap: 10px; align-items: center; }
+.parts-row:hover { background: #fafafa; }
+.parts-cat-tag { font-size: 0.68rem; background: #f0f0f0; border: 1px solid #ddd; border-radius: 3px; padding: 2px 5px; color: #555; text-align: center; }
+.parts-name { font-size: 0.82rem; font-weight: 500; color: #1a73e8; cursor: pointer; }
+.parts-name:hover { text-decoration: underline; }
+
+/* ── MODALS ── */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1000; align-items:center; justify-content:center; }
+.modal-content { background:#fff; border-radius:5px; width:600px; max-width:96vw; max-height:90vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,0.2); }
+.modal-header { background:#1a1a1a; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #e67e22; position:sticky; top:0; }
+.modal-header h3 { font-size: 1rem; color:#fff; font-weight: 700; margin:0; }
+.modal-close { background:none; border:none; cursor:pointer; font-size:1.1rem; color:#888; }
+.star-btn { font-size:1.5rem; cursor:pointer; color:#ddd; }
+.star-btn.on { color:#f59e0b; }
+.review-item { padding:10px 0; border-bottom:1px solid #f0f0f0; }
+.review-stars { color:#f59e0b; font-size:0.9rem; margin-bottom:3px; }
+.review-author { font-size:0.72rem; color:#888; margin-bottom:4px; }
+
+/* ── TOAST ── */
+.toast-wrap { position: fixed; bottom: 18px; right: 18px; z-index: 9999; display: flex; flex-direction: column; gap: 6px; }
+.toast { background: #fff; border: 1px solid #ddd; border-left: 4px solid #27ae60; border-radius: 3px; padding: 10px 14px; font-size: 0.82rem; box-shadow: 0 2px 10px rgba(0,0,0,0.12); animation: tIn 0.2s ease; }
+@keyframes tIn { from { opacity:0; transform: translateX(10px); } to { opacity:1; transform: translateX(0); } }
+</style>
 </head>
 <body>
 
 <header>
-    <div class="logo">PEÇA<span>PC</span></div>
-    <div class="nav-btns">
-        <button onclick="toggleAuth()">Minha Conta</button>
-        <button onclick="shareBuild()">Compartilhar Build</button>
-    </div>
+  <div class="header-inner">
+    <div class="logo" onclick="showPage('home')">Peça<span>PC</span><span style="color:#888;font-size:0.7rem;font-weight:400;margin-left:3px;">.com.br</span></div>
+    <nav class="header-nav">
+      <button onclick="showPage('builder')" id="hn-builder">Montar PC</button>
+      <button onclick="showPage('catalog')" id="hn-catalog">Peças</button>
+    </nav>
+  </div>
 </header>
-
-<div class="container">
-    <div id="auth-box">
-        <h3>Acesso Seguro</h3>
-        <input type="email" id="email" placeholder="E-mail">
-        <input type="password" id="password" placeholder="Senha">
-        <button class="btn-main" onclick="handleAuth()">Entrar / Registrar</button>
-    </div>
-
-    <div class="tabs">
-        <div class="tab active" id="t1" onclick="switchTab(1)">OFICIAIS</div>
-        <div class="tab" id="t2" onclick="switchTab(2)">TERCEIROS / USADOS</div>
-    </div>
-
-    <div id="main-list">
-        <div class="build-card">
-            <div>
-                <strong>Processador</strong><br>
-                <small id="cpu-name">Ryzen 5 5600</small>
-            </div>
-            <div class="price">R$ 849,00</div>
-        </div>
-    </div>
+<div class="navbar">
+  <div class="navbar-inner">
+    <button onclick="showPage('builder')" id="nb-builder" class="nav-active">Montar PC</button>
+    <button onclick="showPage('catalog')" id="nb-catalog">Catálogo de Peças</button>
+    <button onclick="showCat('cpu')">Processadores</button>
+    <button onclick="showCat('gpu')">Placas de Vídeo</button>
+    <button onclick="showCat('mobo')">Placas-mãe</button>
+    <button onclick="showCat('ram')">Memória RAM</button>
+  </div>
 </div>
 
+<div class="page active" id="page-home">
+<div class="container">
+  <div class="ad-banner ad-leaderboard">Espaço publicitário 728×90</div>
+  <div class="home-hero">
+    <div>
+      <h1>Monte seu PC — feito para o Brasil</h1>
+      <p>Compare preços em KaBuM!, Pichau, Amazon e TerabyteShop em tempo real. Verificação automática de compatibilidade. Totalmente em português.</p>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-orange" onclick="showPage('builder')">Começar a montar</button>
+        <button class="btn btn-white" onclick="showPage('catalog')">Navegar peças</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-cards">
+    <div class="home-card" onclick="showCat('cpu')"><div class="home-card-icon">⚙️</div><div class="home-card-title">Processadores</div></div>
+    <div class="home-card" onclick="showCat('gpu')"><div class="home-card-icon">🎮</div><div class="home-card-title">Placas de Vídeo</div></div>
+    <div class="home-card" onclick="showCat('mobo')"><div class="home-card-icon">🎛️</div><div class="home-card-title">Placas-mãe</div></div>
+    <div class="home-card" onclick="showCat('ram')"><div class="home-card-icon">🖛</div><div class="home-card-title">Memória RAM</div></div>
+    <div class="home-card" onclick="showCat('storage')"><div class="home-card-icon">💾</div><div class="home-card-title">Armazenamento</div></div>
+    <div class="home-card" onclick="showCat('psu')"><div class="home-card-icon">⚡</div><div class="home-card-title">Fontes</div></div>
+    <div class="home-card" onclick="showCat('cooler')"><div class="home-card-icon">❄️</div><div class="home-card-title">Coolers</div></div>
+    <div class="home-card" onclick="showCat('case')"><div class="home-card-icon">🖥️</div><div class="home-card-title">Gabinetes</div></div>
+    <div class="home-card" onclick="showCat('mouse')"><div class="home-card-icon">🖱️</div><div class="home-card-title">Mouses</div></div>
+    <div class="home-card" onclick="showCat('monitor')"><div class="home-card-icon">📺</div><div class="home-card-title">Monitores</div></div>
+    <div class="home-card" onclick="showCat('keyboard')"><div class="home-card-icon">⌨️</div><div class="home-card-title">Teclados</div></div>
+    <div class="home-card" onclick="showCat('headphone')"><div class="home-card-icon">🎧</div><div class="home-card-title">Headphones</div></div>
+  </div>
+</div>
+</div>
+
+<div class="page" id="page-builder">
+<div class="container">
+  <div class="breadcrumb"><a href="#" onclick="showPage('home')">Início</a> <span>›</span> Montar PC</div>
+  <div class="two-col">
+    <div>
+      <div class="source-tabs">
+        <div class="source-tab active" id="tab-oficiais" onclick="switchSourceTab('oficiais')">OFICIAIS</div>
+        <div class="source-tab" id="tab-usados" onclick="switchSourceTab('usados')">TERCEIROS / USADOS</div>
+      </div>
+
+      <div id="section-oficiais">
+        <div class="builder-table">
+          <div class="builder-table-head"><div>Componente</div><div>Seleção</div><div>Lojas</div><div>Preço</div><div>Ação</div></div>
+          <div id="builder-rows"></div>
+        </div>
+      </div>
+
+      <div id="section-usados" style="display:none;">
+        <div class="used-warning"><strong>Aviso de segurança:</strong> Produtos de terceiros não possuem garantia oficial. Verifique a reputação do vendedor.</div>
+        <div id="used-rows">EM BREVE</div>
+      </div>
+
+      <div class="builder-footer">
+        <div><div class="total-label">Total estimado</div><div class="total-price" id="builder-total">R$ 0,00</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="page" id="page-catalog">
+<div class="container">
+  <div class="breadcrumb"><a href="#" onclick="showPage('home')">Início</a> <span>›</span> Catálogo de Peças</div>
+  <div class="filter-bar">
+    <div style="display:flex; gap:8px;">
+      <div><label>Categoria</label>
+        <select id="cat-select" onchange="filterParts()">
+          <option value="all">Todas</option>
+          <option value="cpu">Processadores</option>
+          <option value="gpu">Placas de Vídeo</option>
+          <option value="mobo">Placas-mãe</option>
+          <option value="ram">Memória RAM</option>
+          <option value="storage">Armazenamento</option>
+          <option value="psu">Fontes</option>
+          <option value="case">Gabinetes</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="parts-table">
+    <div class="parts-table-head"><div>Cat.</div><div>Produto</div><div>Lojas</div><div>Menor preço</div><div>Ação</div></div>
+    <div id="parts-list"></div>
+  </div>
+</div>
+</div>
+
+<div id="part-detail-modal" class="modal-overlay" onclick="if(event.target===this)closePartDetail()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="pd-title">Detalhes da Peça</h3>
+      <button class="modal-close" onclick="closePartDetail()">✕</button>
+    </div>
+    <div style="padding:20px;">
+      <p id="pd-specs" style="color:#555; font-size:0.9rem; margin-bottom:15px;"></p>
+      <div id="pd-stores" style="margin-bottom:20px;"></div>
+      <h4 style="font-size:0.85rem; font-weight:700; text-transform:uppercase; border-bottom:1px solid #eee; padding-bottom:5px; margin-bottom:10px;">Avaliações da Comunidade</h4>
+      <div id="pd-reviews"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+
 <script>
-    const SUPABASE_URL = 'https://fzdwbxxiiliykvqflefp.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_dc6xvoMbfW_nLJgTMEUavQ_o1aIEZW1';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const STORES = {
+  kabum:    { name:'KaBuM!',        url: n => https://www.kabum.com.br/busca/\ },
+  pichau:   { name:'Pichau',        url: n => https://www.pichau.com.br/search?q=\ },
+  terabyte: { name:'TByte',         url: n => https://www.terabyteshop.com.br/busca?str=\ },
+  amazon:   { name:'Amazon',        url: n => https://www.amazon.com.br/s?k=\ }
+};
 
-    async function handleAuth() {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) {
-            const { error: signUpErr } = await supabaseClient.auth.signUp({ email, password });
-            if (signUpErr) alert(signUpErr.message);
-            else alert("Verifique seu e-mail para confirmar!");
-        } else {
-            location.reload();
-        }
+const CATS = [
+  { id:'cpu', label:'Processador' }, { id:'mobo', label:'Placa-mãe' }, { id:'ram', label:'Memória RAM' },
+  { id:'gpu', label:'Placa de Vídeo' }, { id:'storage', label:'Armazenamento' }, { id:'psu', label:'Fonte' }, { id:'case', label:'Gabinete' }
+];
+
+const DB = {
+cpu: [
+  { id:'cpu01', name:'AMD Ryzen 5 7600X', specs:'6C/12T · AM5 · 105W', price:1289, stores:{kabum:1289,amazon:1310} },
+  { id:'cpu02', name:'AMD Ryzen 7 7800X3D', specs:'8C/16T · AM5 · 120W', price:2149, stores:{kabum:2149,pichau:2199} },
+  { id:'cpu03', name:'Intel Core i5-13600K', specs:'14C/20T · LGA1700 · 125W', price:1349, stores:{kabum:1349,terabyte:1379} },
+  { id:'cpu04', name:'Intel Core i9-14900K', specs:'24C/32T · LGA1700 · 253W', price:3299, stores:{pichau:3299,terabyte:3349} }
+],
+gpu: [
+  { id:'gpu01', name:'NVIDIA RTX 4060 8GB', specs:'8GB GDDR6 · 115W', price:1799, stores:{kabum:1799,amazon:1829} },
+  { id:'gpu02', name:'NVIDIA RTX 4070 Super', specs:'12GB GDDR6X · 220W', price:3299, stores:{kabum:3299,pichau:3349} },
+  { id:'gpu03', name:'NVIDIA RTX 4090 24GB', specs:'24GB GDDR6X · 450W', price:12999, stores:{kabum:12999,terabyte:13299} },
+  { id:'gpu04', name:'AMD RX 7900 XTX 24GB', specs:'24GB GDDR6 · 355W', price:5499, stores:{pichau:5499,terabyte:5699} }
+],
+mobo: [
+  { id:'mobo01', name:'ASUS PRIME B650M-A', specs:'mATX · AM5 · DDR5', price:879, stores:{kabum:879} },
+  { id:'mobo02', name:'MSI MAG B760 TOMAHAWK', specs:'ATX · LGA1700 · DDR5', price:1099, stores:{pichau:1099} }
+],
+ram: [
+  { id:'ram01', name:'Corsair Vengeance 32GB', specs:'2x16GB DDR5-5600', price:589, stores:{kabum:589} },
+  { id:'ram02', name:'Kingston Fury Beast 16GB', specs:'2x8GB DDR4-3200', price:289, stores:{amazon:289} }
+],
+storage: [
+  { id:'ssd01', name:'WD Black SN850X 1TB', specs:'PCIe 4.0 NVMe', price:499, stores:{kabum:499} },
+  { id:'ssd02', name:'Kingston NV2 1TB', specs:'PCIe 4.0 NVMe', price:299, stores:{amazon:299} }
+],
+psu: [
+  { id:'psu01', name:'Corsair RM750x', specs:'750W 80+ Gold Modular', price:599, stores:{kabum:599} }
+],
+case: [
+  { id:'case01', name:'NZXT H7 Flow', specs:'Mid Tower ATX Preto', price:699, stores:{pichau:699} }
+]
+};
+
+let build = {};
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(id==='builder') renderBuilder();
+  if(id==='catalog') { document.getElementById('cat-select').value='all'; filterParts(); }
+}
+function showCat(cat) { showPage('catalog'); document.getElementById('cat-select').value = cat; filterParts(); }
+
+function renderBuilder() {
+  document.getElementById('builder-rows').innerHTML = CATS.map(c => {
+    const p = build[c.id];
+    if(p) {
+      return <div class="builder-row">
+        <div class="row-cat">\</div>
+        <div class="row-part"><span class="part-name" onclick="openPartDetail('\', '\')">\</span><br><small style="color:#888">\</small></div>
+        <div class="row-stores">Múltiplas lojas</div>
+        <div class="row-price">R$ \</div>
+        <div class="row-actions"><button class="btn-icon del" onclick="removePart('\')">✕</button></div>
+      </div>;
+    } else {
+      return <div class="builder-row empty-row" onclick="showCat('\')">
+        <div class="row-cat">\</div>
+        <div class="row-part empty-part">Clique para selecionar</div>
+        <div></div><div></div><div></div>
+      </div>;
     }
+  }).join('');
+  calcTotal();
+}
 
-    function toggleAuth() {
-        const box = document.getElementById('auth-box');
-        box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    }
+function removePart(id) { delete build[id]; renderBuilder(); }
+function calcTotal() {
+  let tot = Object.values(build).reduce((acc, p) => acc + p.price, 0);
+  document.getElementById('builder-total').innerText = 'R$ ' + tot.toLocaleString('pt-BR', {minimumFractionDigits:2});
+}
 
-    async function shareBuild() {
-        const { data: { user } } = await supabaseClient.auth.getUser();
-        if (!user) return alert("Faça login para gerar um link de compartilhamento!");
+function filterParts() {
+  const cat = document.getElementById('cat-select').value;
+  let all = [];
+  (cat === 'all' ? CATS : [{id:cat}]).forEach(c => {
+    (DB[c.id]||[]).forEach(p => all.push({...p, catId: c.id}));
+  });
+  
+  document.getElementById('parts-list').innerHTML = all.map(p => 
+    <div class="parts-row">
+      <div><span class="parts-cat-tag">\</span></div>
+      <div><span class="parts-name" onclick="openPartDetail('\', '\')">\</span><br><small style="color:#888">\</small></div>
+      <div>Múltiplas lojas</div>
+      <div class="parts-price">R$ \</div>
+      <div class="parts-actions"><button class="btn btn-orange btn-sm" onclick="addToBuild('\', '\')">+ Build</button></div>
+    </div>
+  ).join('');
+}
 
-        const buildData = { cpu: "Ryzen 5 5600", price: 849 }; // Example data
+function addToBuild(catId, partId) {
+  build[catId] = DB[catId].find(x => x.id === partId);
+  toast('Peça adicionada à build!');
+}
 
-        const { data, error } = await supabaseClient
-            .from('builds')
-            .insert([{ user_id: user.id, build_data: buildData, is_public: true }])
-            .select();
+function getFakeReviews(partName) {
+  const revs = [
+    { u: 'GamerBR', t: 'Excelente custo-benefício. Não me arrependo.', s: 5 },
+    { u: 'TechNinja', t: 'Muito bom, mas verifique o tamanho do seu gabinete antes.', s: 4 },
+    { u: 'PedroPC', t: 'Chegou rápido. Performance exatamente como anunciada.', s: 5 }
+  ];
+  return revs.slice(0, (partName.length % 3) + 1);
+}
 
-        if (data) {
-            const url = window.location.href.split('?')[0] + '?id=' + data[0].id;
-            navigator.clipboard.writeText(url);
-            alert("Link copiado! Seu amigo pode ver esta build agora: " + url);
-        }
-    }
+function openPartDetail(catId, partId) {
+  const part = DB[catId].find(x => x.id === partId);
+  if(!part) return;
 
-    function switchTab(n) {
-        document.getElementById('t1').classList.toggle('active', n === 1);
-        document.getElementById('t2').classList.toggle('active', n === 2);
-    }
+  document.getElementById('pd-title').innerText = part.name;
+  document.getElementById('pd-specs').innerText = part.specs;
+  
+  document.getElementById('pd-stores').innerHTML = Object.entries(part.stores).map(([k,v]) => 
+    <a href="\" target="_blank" style="padding:8px 12px; background:#f0f0f0; display:inline-block; margin-right:5px; border-radius:4px; text-decoration:none; color:#333; border:1px solid #ddd;">
+      \ <strong style="color:#e67e22;">R$ \</strong>
+    </a>
+  ).join('');
+
+  const reviews = getFakeReviews(part.name);
+  document.getElementById('pd-reviews').innerHTML = reviews.map(r => 
+    <div class="review-item">
+      <div class="review-stars">\\</div>
+      <div class="review-author">@\</div>
+      <div class="review-text">\</div>
+    </div>
+  ).join('');
+
+  document.getElementById('part-detail-modal').style.display = 'flex';
+}
+function closePartDetail() { document.getElementById('part-detail-modal').style.display = 'none'; }
+
+function toast(msg) {
+  const el = document.createElement('div'); el.className = 'toast'; el.innerText = msg;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function switchSourceTab(t) {
+  document.getElementById('section-oficiais').style.display = t === 'oficiais' ? 'block' : 'none';
+  document.getElementById('section-usados').style.display = t === 'usados' ? 'block' : 'none';
+  document.getElementById('tab-oficiais').classList.toggle('active', t === 'oficiais');
+  document.getElementById('tab-usados').classList.toggle('active', t === 'usados');
+}
 </script>
 </body>
 </html>
