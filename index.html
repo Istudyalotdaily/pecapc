@@ -3,770 +3,359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PeçaPC.com.br — Monte seu PC</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>PeçaPC — Monte seu PC Perfeito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { font-size: 18px; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;
+  --bg2:#161719;
+  --bg3:#1e2023;
+  --bg4:#26292d;
+  --border:#2e3136;
+  --border2:#3a3e45;
+  --orange:#f97316;
+  --orange2:#ea6c0a;
+  --text:#e8eaed;
+  --text2:#9ea3ac;
+  --text3:#6b7280;
+  --green:#22c55e;
+  --red:#ef4444;
+  --yellow:#eab308;
+  --blue:#3b82f6;
+  --radius:6px;
+  --radius2:10px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:15px;line-height:1.5;min-height:100vh}
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f5f5f5;
-  color: #1a1a1a;
-  line-height: 1.4;
-}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-a { color: #1a73e8; text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* TOPBAR */
+.topbar{background:#0a0b0c;border-bottom:1px solid var(--border);padding:0 20px;height:36px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--text3)}
+.topbar-left{display:flex;gap:16px}
+.topbar-left a{color:var(--text3);text-decoration:none;transition:color .15s}
+.topbar-left a:hover{color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+#topbar-auth a{color:var(--text3);text-decoration:none;transition:color .15s}
+#topbar-auth a:hover{color:var(--orange)}
+#topbar-auth span{color:var(--border2)}
+#topbar-user{display:none;align-items:center;gap:8px}
+#topbar-username{color:var(--orange);font-family:'JetBrains Mono',monospace;font-size:11px}
+#topbar-logout{background:none;border:none;color:var(--text3);cursor:pointer;font-size:11px;font-family:'Barlow',sans-serif;transition:color .15s}
+#topbar-logout:hover{color:var(--red)}
 
-/* ── TOP BAR ── */
-.topbar {
-  background: #2c2c2c;
-  color: #ccc;
-  font-size: 0.75rem;
-  padding: 0 0;
-  height: 28px;
-  display: flex;
-  align-items: center;
-}
-.topbar-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.topbar a { color: #aaa; font-size: 0.75rem; }
-.topbar a:hover { color: #fff; text-decoration: none; }
-.topbar-links { display: flex; gap: 14px; }
+/* HEADER */
+header{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;gap:20px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:1.75rem;font-weight:800;cursor:pointer;letter-spacing:-0.5px;white-space:nowrap;user-select:none}
+.logo span{color:var(--orange)}
+.logo sub{font-size:0.55rem;font-weight:400;color:var(--text3);vertical-align:baseline;margin-left:2px;font-family:'JetBrains Mono',monospace}
+.header-search{flex:1;max-width:480px;position:relative}
+.header-search input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 40px 8px 14px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color .15s}
+.header-search input:focus{border-color:var(--orange)}
+.header-search input::placeholder{color:var(--text3)}
+.header-search button{position:absolute;right:0;top:0;bottom:0;background:var(--orange);border:none;border-radius:0 var(--radius) var(--radius) 0;padding:0 14px;cursor:pointer;color:#fff;font-size:13px;transition:background .15s}
+.header-search button:hover{background:var(--orange2)}
+.header-nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+.header-nav button{background:none;border:none;color:var(--text2);cursor:pointer;font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;padding:6px 12px;border-radius:var(--radius);transition:all .15s}
+.header-nav button:hover,.header-nav button.hn-active{background:var(--bg3);color:var(--text)}
+.header-nav button.hn-active{color:var(--orange)}
+.btn-login{background:var(--bg3)!important;border:1px solid var(--border)!important;color:var(--text)!important}
+.btn-login:hover{border-color:var(--border2)!important}
+.btn-register{background:var(--orange)!important;color:#fff!important}
+.btn-register:hover{background:var(--orange2)!important}
 
-/* ── HEADER ── */
-header {
-  background: #1a1a1a;
-  border-bottom: 2px solid #e67e22;
-}
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-  height: 66px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-.logo {
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: #fff;
-  cursor: pointer;
-  white-space: nowrap;
-  letter-spacing: -0.02em;
-}
-.logo span { color: #e67e22; }
+/* NAVBAR */
+.navbar{background:var(--bg2);border-bottom:1px solid var(--border)}
+.navbar-inner{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.navbar-inner::-webkit-scrollbar{display:none}
+.navbar-inner button{background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);cursor:pointer;font-family:'Barlow',sans-serif;font-size:12.5px;font-weight:500;padding:10px 14px;white-space:nowrap;transition:all .15s}
+.navbar-inner button:hover{color:var(--text);border-bottom-color:var(--border2)}
+.navbar-inner button.nb-active{color:var(--orange);border-bottom-color:var(--orange)}
 
-.header-search {
-  flex: 1;
-  max-width: 420px;
-  display: flex;
-}
-.header-search input {
-  flex: 1;
-  padding: 7px 10px;
-  border: 1px solid #555;
-  border-right: none;
-  background: #333;
-  color: #fff;
-  font-size: 0.875rem;
-  border-radius: 3px 0 0 3px;
-  outline: none;
-}
-.header-search input::placeholder { color: #888; }
-.header-search input:focus { border-color: #e67e22; }
-.header-search button {
-  padding: 7px 14px;
-  background: #e67e22;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.875rem;
-  border-radius: 0 3px 3px 0;
-}
-.header-search button:hover { background: #d35400; }
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
 
-.header-nav {
-  display: flex;
-  gap: 4px;
-  margin-left: auto;
-}
-.header-nav a, .header-nav button {
-  color: #ccc;
-  font-size: 0.8rem;
-  padding: 6px 10px;
-  border-radius: 3px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  white-space: nowrap;
-  text-decoration: none;
-  display: block;
-}
-.header-nav a:hover, .header-nav button:hover { background: #333; color: #fff; text-decoration: none; }
-.header-nav .active { background: #e67e22 !important; color: #fff !important; }
+/* CONTAINER */
+.container{max-width:1280px;margin:0 auto;padding:28px 20px}
 
-/* ── NAV BAR ── */
-.navbar {
-  background: #fff;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-.navbar-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  height: 38px;
-}
-.navbar-inner a, .navbar-inner button {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #444;
-  padding: 0 12px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.navbar-inner a:hover, .navbar-inner button:hover { color: #e67e22; text-decoration: none; }
-.navbar-inner .nav-active { color: #e67e22; border-bottom-color: #e67e22; }
+/* ══════════ HOME ══════════ */
+.hero{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:48px 40px;text-align:center;margin-bottom:28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(249,115,22,.08) 0%,transparent 60%);pointer-events:none}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:800;letter-spacing:-1px;margin-bottom:8px;line-height:1.1}
+.hero h1 span{color:var(--orange)}
+.hero p{color:var(--text2);font-size:1rem;margin-bottom:28px}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero-stats{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden;margin-top:28px;background:var(--bg3)}
+.hero-stat{flex:1;padding:16px 20px;text-align:center;border-right:1px solid var(--border)}
+.hero-stat:last-child{border-right:none}
+.hero-stat-num{font-family:'Barlow Condensed',sans-serif;font-size:1.9rem;font-weight:800;color:var(--orange)}
+.hero-stat-lbl{font-size:11.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
 
-/* ── LAYOUT ── */
-.page { display: none; }
-.page.active { display: block; }
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--text2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 18px 16px;
-}
+.cats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:28px}
+@media(max-width:1100px){.cats-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:700px){.cats-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:450px){.cats-grid{grid-template-columns:repeat(2,1fr)}}
+.cat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:16px 12px;cursor:pointer;transition:all .15s;text-align:center}
+.cat-card:hover{border-color:var(--orange);background:var(--bg3);transform:translateY(-1px)}
+.cat-icon{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;color:var(--orange);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);border-radius:4px;padding:3px 7px;display:inline-block;margin-bottom:8px;letter-spacing:.05em}
+.cat-name{font-size:13px;font-weight:600;margin-bottom:3px;color:var(--text)}
+.cat-count{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace}
 
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 18px;
-  align-items: start;
-}
+.builds-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.build-card-mini{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;cursor:pointer;transition:all .15s}
+.build-card-mini:hover{border-color:var(--border2);background:var(--bg3)}
+.bcm-title{font-weight:600;font-size:14px;margin-bottom:4px}
+.bcm-uso{font-size:12px;color:var(--text3);margin-bottom:10px}
+.bcm-price{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;color:var(--orange)}
+.bcm-votes{font-size:11px;color:var(--text3);float:right;margin-top:2px}
 
-/* ── AD SPACES ── */
-.ad-banner {
-  background: #fff;
-  border: 1px dashed #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 0.75rem;
-  text-align: center;
-  margin-bottom: 16px;
-}
-.ad-leaderboard { height: 90px; } /* 728×90 */
-.ad-rectangle  { height: 250px; } /* 300×250 */
-.ad-sidebar    { height: 600px; margin-bottom: 12px; } /* 160×600 */
-.ad-label { font-size: 0.65rem; color: #bbb; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+/* ══════════ BUTTONS ══════════ */
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:var(--radius);cursor:pointer;font-family:'Barlow',sans-serif;font-size:13.5px;font-weight:600;padding:8px 16px;transition:all .15s;text-decoration:none}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-orange:hover{background:var(--orange2)}
+.btn-ghost{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--border2);background:var(--bg4)}
+.btn-sm{padding:5px 11px;font-size:12.5px}
+.btn-danger{background:transparent;border:1px solid var(--red);color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff}
 
-/* ── BREADCRUMB ── */
-.breadcrumb {
-  font-size: 0.75rem;
-  color: #888;
-  margin-bottom: 12px;
-}
-.breadcrumb a { color: #1a73e8; }
-.breadcrumb span { margin: 0 4px; }
+/* ══════════ BUILDER ══════════ */
+.builder-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+@media(max-width:900px){.builder-layout{grid-template-columns:1fr}}
+.builder-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px}
+.btab{background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);cursor:pointer;font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;padding:10px 18px;transition:all .15s}
+.btab:hover{color:var(--text)}
+.btab.btab-active{color:var(--orange);border-bottom-color:var(--orange)}
+.btab-content{display:none}
+.btab-content.btab-show{display:block}
 
-/* ── PAGE TITLE ── */
-.page-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: #1a1a1a;
-}
+.parts-table{border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden}
+.pt-header{display:grid;grid-template-columns:120px 1fr 180px 100px 90px;gap:0;background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 16px;font-size:11.5px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+.pt-row{display:grid;grid-template-columns:120px 1fr 180px 100px 90px;gap:0;border-bottom:1px solid var(--border);padding:12px 16px;align-items:center;transition:background .1s}
+.pt-row:last-child{border-bottom:none}
+.pt-row:hover{background:var(--bg3)}
+.pt-row.pt-selected{background:rgba(249,115,22,.04)}
+.pt-cat-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--orange);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);border-radius:3px;padding:2px 6px;display:inline-block}
+.pt-choose{display:flex;flex-direction:column;gap:3px}
+.pt-chosen-name{font-size:13.5px;font-weight:600;color:var(--text)}
+.pt-chosen-specs{font-size:11.5px;color:var(--text3)}
+.pt-price{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:var(--orange)}
+.pt-empty-lbl{color:var(--text3);font-size:13px;font-style:italic}
+.pt-actions{display:flex;gap:6px;align-items:center}
+.pt-remove{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:3px;border-radius:3px;transition:color .1s;line-height:1}
+.pt-remove:hover{color:var(--red)}
 
-/* ── BUILDER TABLE ── */
-/* ── SOURCE TABS ── */
-.source-tabs {
-  display: flex;
-  gap: 0;
-  border-bottom: 2px solid #ddd;
-  margin-bottom: 16px;
-}
-.source-tab {
-  padding: 10px 22px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.82rem;
-  color: #666;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  letter-spacing: 0.03em;
-  transition: color 0.15s;
-}
-.source-tab.active {
-  color: #e67e22;
-  border-bottom-color: #e67e22;
-}
-.source-tab:hover:not(.active) { color: #333; }
+.summary-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;position:sticky;top:80px}
+.summary-card h3{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);margin-bottom:14px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.sum-row:last-of-type{border-bottom:none}
+.sum-row-lbl{color:var(--text3)}
+.sum-row-val{color:var(--text);font-weight:500}
+.sum-total{display:flex;justify-content:space-between;padding-top:14px;margin-top:6px;border-top:1px solid var(--border2)}
+.sum-total-lbl{font-weight:700;font-size:15px}
+.sum-total-val{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:var(--orange)}
+.sum-actions{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.sum-actions .btn{justify-content:center}
 
-.used-warning {
-  background: #fff8e1;
-  border-left: 4px solid #f59e0b;
-  padding: 10px 14px;
-  border-radius: 4px;
-  margin-bottom: 14px;
-  font-size: 0.8rem;
-  color: #78350f;
-}
-.used-warning strong { display: block; margin-bottom: 3px; }
+.compat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:16px;margin-top:16px}
+.compat-title{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:10px}
+.compat-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.compat-row:last-child{border-bottom:none}
+.compat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.compat-dot.ok{background:var(--green)}
+.compat-dot.err{background:var(--red)}
+.compat-dot.warn{background:var(--yellow)}
+.compat-dot.na{background:var(--border2)}
 
-.used-part-row {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  display: grid;
-  grid-template-columns: 110px 1fr 130px 90px;
-  align-items: center;
-  gap: 8px;
-}
-.used-part-row:hover { border-color: #e67e22; }
-.used-cat-badge {
-  font-size: 0.68rem;
-  font-weight: 700;
-  background: #f3f4f6;
-  color: #555;
-  padding: 3px 8px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  width: fit-content;
-}
-.used-part-name { font-weight: 600; font-size: 0.88rem; }
-.used-part-source { font-size: 0.75rem; color: #888; margin-top: 2px; }
-.used-part-price { font-weight: 700; color: #e67e22; text-align: right; font-size: 0.95rem; }
-.used-part-btn { text-align: right; }
-.used-part-btn a {
-  display: inline-block;
-  background: #e67e22;
-  color: #fff;
-  padding: 5px 12px;
-  border-radius: 4px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-.used-part-btn a:hover { background: #cf6d17; text-decoration: none; }
+/* PICKER MODAL */
+.picker-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:20px}
+.picker-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);width:100%;max-width:860px;max-height:82vh;display:flex;flex-direction:column;overflow:hidden}
+.picker-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.picker-header h3{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.02em}
+.picker-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;padding:4px;border-radius:3px;transition:color .1s}
+.picker-close:hover{color:var(--text)}
+.picker-search{padding:12px 16px;border-bottom:1px solid var(--border)}
+.picker-search input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13.5px;outline:none;transition:border-color .15s}
+.picker-search input:focus{border-color:var(--orange)}
+.picker-search input::placeholder{color:var(--text3)}
+.picker-list{overflow-y:auto;flex:1}
+.picker-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.picker-row:last-child{border-bottom:none}
+.picker-row:hover{background:var(--bg3)}
+.pr-name{font-size:13.5px;font-weight:600;margin-bottom:2px}
+.pr-specs{font-size:11.5px;color:var(--text3)}
+.pr-price{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;color:var(--orange);white-space:nowrap}
 
-.builder-table {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 16px;
-}
-.builder-table-head {
-  display: grid;
-  grid-template-columns: 140px 1fr 130px 90px 44px;
-  background: #f0f0f0;
-  border-bottom: 1px solid #ddd;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 7px 12px;
-  gap: 8px;
-}
-.builder-row {
-  display: grid;
-  grid-template-columns: 140px 1fr 130px 90px 44px;
-  border-bottom: 1px solid #eee;
-  align-items: center;
-  padding: 10px 12px;
-  gap: 8px;
-  transition: background 0.1s;
-}
-.builder-row:last-child { border-bottom: none; }
-.builder-row:hover { background: #fafafa; }
-.builder-row.has-part { cursor: default; }
-.builder-row.empty-row { cursor: pointer; }
-.builder-row.empty-row:hover { background: #fffaf5; }
+/* USED PARTS */
+.used-banner{background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.2);border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:var(--yellow);margin-bottom:16px}
+.used-row{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.used-src{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:2px 6px;white-space:nowrap}
+.used-name{flex:1;font-size:13.5px;font-weight:600}
+.used-specs{font-size:11.5px;color:var(--text3);margin-top:2px}
+.used-price{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:700;color:var(--orange);margin-right:8px;white-space:nowrap}
 
-.row-cat {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  color: #333;
-}
-.cat-icon { font-size: 0.6rem; font-weight: 700; font-family: 'Inter', monospace; background: #e67e22; color: #fff; padding: 2px 5px; border-radius: 3px; width: auto; min-width: 36px; text-align: center; flex-shrink: 0; letter-spacing: 0.03em; }
+/* ══════════ CATALOG ══════════ */
+.catalog-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.filter-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:1}
+.filter-bar select,.filter-bar input[type=text],.filter-bar input[type=number]{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:7px 10px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;outline:none;transition:border-color .15s}
+.filter-bar select:focus,.filter-bar input:focus{border-color:var(--orange)}
+.filter-bar label{font-size:11.5px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.filter-group{display:flex;flex-direction:column;gap:4px}
+.parts-list-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden}
+.plist-header{display:grid;grid-template-columns:50px 1fr 220px 100px 80px;gap:0;background:var(--bg3);border-bottom:1px solid var(--border);padding:9px 16px;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.plist-row{display:grid;grid-template-columns:50px 1fr 220px 100px 80px;gap:0;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);transition:background .1s}
+.plist-row:last-child{border-bottom:none}
+.plist-row:hover{background:var(--bg3)}
+.plist-badge{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 5px;border-radius:3px;margin-left:6px}
+.badge-orange{background:rgba(249,115,22,.15);color:var(--orange);border:1px solid rgba(249,115,22,.25)}
+.badge-green{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.badge-blue{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
+.store-chips{display:flex;flex-wrap:wrap;gap:5px}
+.store-chip{display:inline-flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:3px 7px;font-size:11px;color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+.store-chip:hover{border-color:var(--orange);color:var(--orange)}
+.s-price{color:var(--orange);font-family:'JetBrains Mono',monospace;font-size:10.5px}
+.empty-msg{padding:40px;text-align:center;color:var(--text3);font-size:14px}
 
-.row-part { font-size: 0.82rem; color: #1a1a1a; }
-.row-part .part-name { font-weight: 500; color: #1a73e8; cursor: pointer; }
-.row-part .part-name:hover { text-decoration: underline; }
-.row-part .part-specs { font-size: 0.72rem; color: #888; margin-top: 2px; }
-.row-part.empty-part { color: #aaa; font-size: 0.8rem; font-style: italic; }
+/* ══════════ BUILDS ══════════ */
+.builds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.build-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;cursor:pointer;transition:all .15s}
+.build-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.bc-title{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:.02em;margin-bottom:4px}
+.bc-author{font-size:11.5px;color:var(--text3);margin-bottom:10px}
+.bc-author span{color:var(--orange);font-family:'JetBrains Mono',monospace}
+.bc-uso{font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:4px 9px;display:inline-block;margin-bottom:12px;color:var(--text2)}
+.bc-parts{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px}
+.bc-part{font-size:11px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:2px 7px;color:var(--text3)}
+.bc-footer{display:flex;align-items:center;justify-content:space-between}
+.bc-price{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;color:var(--orange)}
+.bc-votes{font-size:11.5px;color:var(--text3);display:flex;align-items:center;gap:4px}
+.bc-votes button{background:none;border:1px solid var(--border);border-radius:3px;color:var(--text3);cursor:pointer;font-size:11px;padding:3px 8px;transition:all .15s}
+.bc-votes button:hover{border-color:var(--orange);color:var(--orange)}
 
-.row-stores { font-size: 0.75rem; }
-.store-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 2px 6px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 0.7rem;
-  color: #444;
-  margin: 1px 1px;
-  background: #fafafa;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.store-chip:hover { border-color: #e67e22; color: #e67e22; text-decoration: none; background: #fff8f3; }
-.store-chip .s-price { font-weight: 600; color: #1a73e8; }
-.store-chip:hover .s-price { color: #e67e22; }
+/* BUILD DETAIL MODAL */
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:20px}
+.detail-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);width:100%;max-width:640px;max-height:86vh;overflow-y:auto}
+.detail-header{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;background:var(--bg2);z-index:1}
+.detail-body{padding:22px}
+.detail-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.3rem;padding:2px}
+.detail-close:hover{color:var(--text)}
+.review-list{margin-top:14px}
+.review-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.review-item:last-child{border-bottom:none}
+.rev-author{font-size:12px;color:var(--orange);font-family:'JetBrains Mono',monospace;margin-bottom:3px}
+.rev-text{font-size:13px;color:var(--text2)}
+.stars{display:flex;gap:3px;margin:10px 0}
+.star{font-size:1.2rem;cursor:pointer;transition:color .1s;color:var(--border2)}
+.star.on{color:var(--yellow)}
+.rev-form input,.rev-form textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px 11px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;outline:none;margin-bottom:8px;transition:border-color .15s;resize:vertical}
+.rev-form input:focus,.rev-form textarea:focus{border-color:var(--orange)}
 
-.row-price {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  text-align: right;
-}
-.row-price.no-part { color: #ccc; font-weight: 400; font-size: 0.75rem; }
+/* AUTH MODAL */
+.auth-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center;padding:20px}
+.auth-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);display:flex;width:100%;max-width:720px;overflow:hidden}
+.auth-panel{flex:1;padding:32px 28px}
+.auth-panel.auth-right{background:var(--bg3);border-left:1px solid var(--border);position:relative}
+.auth-panel h2{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:.01em;margin-bottom:4px}
+.auth-panel p{font-size:12.5px;color:var(--text3);margin-bottom:22px}
+.auth-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;padding:4px;transition:color .1s}
+.auth-close:hover{color:var(--text)}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.field input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--orange)}
+.auth-divider{width:1px;background:var(--border);margin:0}
 
-.row-actions { display: flex; gap: 4px; justify-content: center; }
-.btn-icon {
-  width: 26px; height: 26px;
-  border: 1px solid #ddd;
-  background: #fff;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 0.75rem;
-  display: flex; align-items: center; justify-content: center;
-  color: #666;
-  transition: all 0.1s;
-}
-.btn-icon:hover { border-color: #e67e22; color: #e67e22; }
-.btn-icon.del:hover { border-color: #c0392b; color: #c0392b; }
+/* ADD BUILD MODAL */
+.addbuild-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:20px}
+.addbuild-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);width:100%;max-width:480px;padding:28px}
+.addbuild-box h3{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:18px}
+.addbuild-box input,.addbuild-box textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13.5px;outline:none;margin-bottom:10px;transition:border-color .15s;resize:vertical}
+.addbuild-box input:focus,.addbuild-box textarea:focus{border-color:var(--orange)}
 
-.builder-footer {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.total-label { font-size: 0.8rem; color: #666; }
-.total-price { font-size: 1.1rem; font-weight: 700; color: #1a1a1a; }
-.builder-actions { display: flex; gap: 8px; }
+/* TOAST */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+.toast{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);padding:10px 16px;font-size:13px;font-weight:500;animation:toastIn .2s ease;display:flex;align-items:center;gap:8px;min-width:200px;pointer-events:none}
+.toast::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.toast.ok::before{background:var(--green)}
+.toast.err::before{background:var(--red)}
+.toast.warn::before{background:var(--yellow)}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── BUTTONS ── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 14px;
-  border-radius: 3px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid transparent;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all 0.1s;
-}
-.btn-orange { background: #e67e22; color: #fff; border-color: #d35400; }
-.btn-orange:hover { background: #d35400; text-decoration: none; color: #fff; }
-.btn-white { background: #fff; color: #333; border-color: #ccc; }
-.btn-white:hover { background: #f5f5f5; text-decoration: none; }
-.btn-blue { background: #1a73e8; color: #fff; border-color: #1557b0; }
-.btn-blue:hover { background: #1557b0; text-decoration: none; color: #fff; }
-.btn-sm { padding: 4px 10px; font-size: 0.75rem; }
-
-/* ── COMPAT BOX ── */
-.compat-box {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 12px 14px;
-  margin-bottom: 16px;
-  font-size: 0.78rem;
-}
-.compat-title { font-weight: 600; margin-bottom: 8px; color: #333; }
-.compat-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  padding: 4px 0;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 0.77rem;
-}
-.compat-row:last-child { border: none; }
-.compat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
-.dot-ok   { background: #27ae60; }
-.dot-warn { background: #e67e22; }
-.dot-na   { background: #bbb; }
-.dot-err  { background: #c0392b; }
-.compat-text.warn { color: #c0392b; font-weight: 500; }
-
-/* ── SIDEBAR CARDS ── */
-.sidebar-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  overflow: hidden;
-}
-.sidebar-card-head {
-  background: #f5f5f5;
-  border-bottom: 1px solid #ddd;
-  padding: 8px 12px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #333;
-}
-.sidebar-card-body { padding: 10px 12px; }
-
-.price-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  font-size: 0.77rem;
-  border-bottom: 1px solid #f5f5f5;
-}
-.price-row:last-child { border: none; }
-.price-row .name { color: #555; }
-.price-row .val { font-weight: 600; color: #1a1a1a; }
-.price-row.total-row .name { font-weight: 700; color: #1a1a1a; }
-.price-row.total-row .val { color: #e67e22; font-size: 0.9rem; }
-
-/* ── CATALOG ── */
-.filter-bar {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-}
-.filter-bar label { display:block; font-size:0.7rem; font-weight:700; color:#555; white-space:nowrap; margin-bottom:3px; text-transform:uppercase; letter-spacing:0.03em; }
-.filter-bar select, .filter-bar input[type=text], .filter-bar input[type=number] {
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 0.8rem;
-  color: #333;
-  background: #fff;
-  outline: none;
-  width: 100%;
-}
-.filter-bar select:focus, .filter-bar input:focus { border-color: #e67e22; }
-.filter-bar > div > div { min-width: 110px; }
-
-.parts-table {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.parts-table-head {
-  display: grid;
-  grid-template-columns: 60px 1fr 200px 110px 90px;
-  background: #f0f0f0;
-  border-bottom: 1px solid #ddd;
-  padding: 8px 12px;
-  gap: 10px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.parts-row {
-  display: grid;
-  grid-template-columns: 60px 1fr 200px 110px 90px;
-  border-bottom: 1px solid #eee;
-  padding: 10px 12px;
-  gap: 10px;
-  align-items: center;
-  transition: background 0.1s;
-}
-.parts-row:last-child { border-bottom: none; }
-.parts-row:hover { background: #fafafa; }
-
-.parts-cat-tag {
-  font-size: 0.68rem;
-  background: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  padding: 2px 5px;
-  color: #555;
-  text-align: center;
-  white-space: nowrap;
-}
-.parts-name { font-size: 0.82rem; font-weight: 500; color: #1a73e8; cursor: pointer; }
-.parts-name:hover { text-decoration: underline; }
-.parts-specs { font-size: 0.72rem; color: #888; margin-top: 2px; }
-.parts-price { font-size: 0.85rem; font-weight: 600; color: #1a1a1a; text-align: right; }
-.parts-actions { display: flex; gap: 4px; }
-
-/* ── BUILDS ── */
-.builds-table {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.builds-head {
-  display: grid;
-  grid-template-columns: 1fr 220px 110px 80px 90px;
-  background: #f0f0f0;
-  border-bottom: 1px solid #ddd;
-  padding: 8px 12px;
-  gap: 10px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.builds-row {
-  display: grid;
-  grid-template-columns: 1fr 220px 110px 80px 90px;
-  border-bottom: 1px solid #eee;
-  padding: 10px 12px;
-  gap: 10px;
-  align-items: center;
-  transition: background 0.1s;
-}
-.builds-row:last-child { border-bottom: none; }
-.builds-row:hover { background: #fafafa; }
-.build-name-link { font-size: 0.82rem; font-weight: 600; color: #1a73e8; cursor: pointer; }
-.build-name-link:hover { text-decoration: underline; }
-.build-use { font-size: 0.72rem; color: #888; margin-top: 2px; }
-.build-parts-list { font-size: 0.7rem; color: #888; }
-.build-price { font-size: 0.85rem; font-weight: 600; color: #1a1a1a; text-align: right; }
-.build-votes { font-size: 0.78rem; color: #888; text-align: center; }
-
-/* ── BADGES ── */
-.badge {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 1px 5px;
-  border-radius: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-left: 5px;
-}
-.badge-orange { background: #fef3e7; color: #e67e22; border: 1px solid #f5cba7; }
-.badge-green  { background: #eafaf1; color: #27ae60; border: 1px solid #a9dfbf; }
-.badge-blue   { background: #eaf3fb; color: #1a73e8; border: 1px solid #a9cce3; }
-
-/* ── TOAST ── */
-.toast-wrap { position: fixed; bottom: 18px; right: 18px; z-index: 999; display: flex; flex-direction: column; gap: 6px; }
-.toast {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-left: 4px solid #27ae60;
-  border-radius: 3px;
-  padding: 10px 14px;
-  font-size: 0.82rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
-  display: flex; align-items: center; gap: 8px;
-  min-width: 220px;
-  animation: tIn 0.2s ease;
-}
-.toast.warn { border-left-color: #e67e22; }
-.toast.err  { border-left-color: #c0392b; }
-@keyframes tIn { from { opacity:0; transform: translateX(10px); } to { opacity:1; transform: translateX(0); } }
-
-/* ── HOME ── */
-.home-hero {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 28px 32px;
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-.home-hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; }
-.home-hero p { font-size: 0.875rem; color: #555; max-width: 480px; line-height: 1.6; margin-bottom: 16px; }
-.home-hero-stats { display: flex; gap: 24px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee; }
-.hstat-num { font-size: 1.1rem; font-weight: 700; color: #e67e22; }
-.hstat-label { font-size: 0.72rem; color: #888; }
-
-.home-cards {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-  margin-bottom: 18px;
-}
-.home-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 14px 10px;
-  cursor: pointer;
-  transition: all 0.1s;
-  text-align: center;
-}
-.home-card:hover { border-color: #e67e22; box-shadow: 0 2px 8px rgba(230,126,34,0.1); }
-.home-card-icon { font-size: 1.6rem; margin-bottom: 6px; }
-.home-card-title { font-size: 0.78rem; font-weight: 600; color: #333; margin-bottom: 3px; }
-.home-card-count { font-size: 0.68rem; color: #888; }
-
-/* ── REVIEWS ── */
-.star-btn { font-size:1.5rem; cursor:pointer; color:#ddd; transition:color 0.1s; line-height:1; }
-.star-btn.on { color:#f59e0b; }
-.review-item { padding:10px 0; border-bottom:1px solid #f0f0f0; }
-.review-item:last-child { border-bottom:none; }
-.review-stars { color:#f59e0b; font-size:0.9rem; margin-bottom:3px; }
-.review-author { font-size:0.72rem; color:#888; margin-bottom:4px; }
-.review-text { font-size:0.82rem; color:#444; }
-.no-reviews { font-size:0.8rem; color:#aaa; text-align:center; padding:12px 0; }
-
-/* ── MISC ── */
-.btn-auth-login { background:none; border:1px solid #555; color:#ddd; padding:5px 12px; border-radius:3px; cursor:pointer; font-size:0.78rem; margin-left:6px; }
-.btn-auth-login:hover { border-color:#e67e22; color:#fff; }
-.btn-auth-reg { background:#e67e22; border:1px solid #e67e22; color:#fff; padding:5px 12px; border-radius:3px; cursor:pointer; font-size:0.78rem; margin-left:4px; font-weight:600; }
-.btn-auth-reg:hover { background:#cf6d17; }
-
-.section-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  gap: 12px;
-}
-.section-head h2 { font-size: 0.95rem; font-weight: 700; color: #1a1a1a; }
-
-.empty-row {
-  text-align: center;
-  padding: 32px;
-  color: #aaa;
-  font-size: 0.82rem;
-}
-
-/* ── FOOTER ── */
-footer {
-  background: #2c2c2c;
-  color: #aaa;
-  padding: 28px 16px;
-  margin-top: 32px;
-  font-size: 0.78rem;
-}
-.footer-inner { max-width: 1200px; margin: 0 auto; }
-.footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 20px; }
-.footer-col h4 { color: #fff; font-size: 0.8rem; margin-bottom: 10px; font-weight: 600; }
-.footer-col a { display: block; color: #888; margin-bottom: 5px; font-size: 0.75rem; }
-.footer-col a:hover { color: #fff; text-decoration: none; }
-.footer-bottom { border-top: 1px solid #444; padding-top: 14px; font-size: 0.72rem; color: #666; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1200px) {
-  .home-cards { grid-template-columns: repeat(4, 1fr); }
-}
-@media (max-width: 900px) {
-  .two-col { grid-template-columns: 1fr; }
-  .home-cards { grid-template-columns: repeat(3, 1fr); }
-  .footer-cols { grid-template-columns: repeat(2, 1fr); }
-  .builder-table-head, .builder-row { grid-template-columns: 120px 1fr 100px 80px 36px; }
-  .parts-table-head, .parts-row { grid-template-columns: 55px 1fr 130px 90px 80px; }
-}
-@media (max-width: 640px) {
-  .header-inner { gap: 10px; }
-  .header-search { max-width: 200px; }
-  .topbar { display: none; }
-  .builder-table-head { display: none; }
-  .builder-row { grid-template-columns: 1fr; gap: 4px; }
-  .parts-table-head { display: none; }
-  .parts-row { grid-template-columns: 1fr; }
-  .builds-head { display: none; }
-  .builds-row { grid-template-columns: 1fr; }
-  .home-hero { flex-direction: column; }
-  .home-hero-stats { flex-wrap: wrap; gap: 16px; }
-  .home-cards { grid-template-columns: repeat(2, 1fr); }
-  .footer-cols { grid-template-columns: 1fr 1fr; }
-}
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);margin-top:60px}
+.footer-inner{max-width:1280px;margin:0 auto;padding:32px 20px 20px}
+.footer-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:28px}
+@media(max-width:700px){.footer-cols{grid-template-columns:repeat(2,1fr)}}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text);margin-bottom:12px}
+.footer-col a{display:block;color:var(--text3);text-decoration:none;font-size:13px;padding:3px 0;transition:color .15s}
+.footer-col a:hover{color:var(--orange)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:16px;font-size:12px;color:var(--text3);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800}
+.footer-logo span{color:var(--orange)}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="topbar-inner">
-    <div class="topbar-links">
-      <a href="#">Sobre</a>
-      <a href="#">Contato</a>
-      <a href="#">Anuncie aqui</a>
-    </div>
-    <div class="topbar-links" id="topbar-auth">
+  <div class="topbar-left">
+    <a href="#">Sobre</a>
+    <a href="#">Como funciona</a>
+    <a href="#">Anuncie</a>
+    <a href="#">Contato</a>
+  </div>
+  <div class="topbar-right">
+    <span id="topbar-auth">
       <a href="#" onclick="openAuth('login');return false;">Entrar</a>
-      <span style="color:#555;">|</span>
+      <span> · </span>
       <a href="#" onclick="openAuth('register');return false;">Criar conta</a>
-    </div>
-    <div class="topbar-links" id="topbar-user" style="display:none;">
-      <span id="topbar-username" style="color:#aaa;"></span>
-      <a href="#" onclick="doLogout();return false;">Sair</a>
-    </div>
+    </span>
+    <span id="topbar-user">
+      <span id="topbar-username"></span>
+      <button id="topbar-logout" onclick="doLogout()">Sair</button>
+    </span>
   </div>
 </div>
 
 <!-- HEADER -->
 <header>
   <div class="header-inner">
-    <div class="logo" onclick="showPage('home')">Peça<span>PC</span><span style="color:#888;font-size:0.7rem;font-weight:400;margin-left:3px;">.com.br</span></div>
+    <div class="logo" onclick="showPage('home')">Peça<span>PC</span><sub>.com.br</sub></div>
     <div class="header-search">
-      <input type="text" placeholder="Buscar processadores, GPUs, placas-mãe..." id="global-search" oninput="globalSearch()">
+      <input type="text" id="global-search" placeholder="Buscar CPUs, GPUs, placas-mãe..." oninput="globalSearch()">
       <button>Buscar</button>
     </div>
     <nav class="header-nav">
       <button onclick="showPage('builder')" id="hn-builder">Montar PC</button>
       <button onclick="showPage('catalog')" id="hn-catalog">Peças</button>
       <button onclick="showPage('builds')" id="hn-builds">Builds</button>
-      <span id="auth-status-area" style="display:flex;align-items:center;gap:6px;">
-        <button onclick="openAuth('login')" class="btn-auth-login">Entrar</button>
-        <button onclick="openAuth('register')" class="btn-auth-reg">Cadastrar</button>
+      <span id="header-auth-area" style="display:flex;gap:6px;align-items:center;">
+        <button class="btn btn-ghost btn-sm btn-login" onclick="openAuth('login')">Entrar</button>
+        <button class="btn btn-orange btn-sm btn-register" onclick="openAuth('register')">Cadastrar</button>
       </span>
-      <span id="auth-user-area" style="display:none;align-items:center;gap:8px;">
-        <span id="auth-username" style="color:#aaa;font-size:0.78rem;"></span>
-        <button onclick="doLogout()" class="btn-auth-login">Sair</button>
+      <span id="header-user-area" style="display:none;align-items:center;gap:8px;">
+        <span id="header-username" style="color:var(--orange);font-family:'JetBrains Mono',monospace;font-size:12px;"></span>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sair</button>
       </span>
     </nav>
   </div>
 </header>
 
-<!-- NAV BAR -->
+<!-- NAVBAR -->
 <div class="navbar">
   <div class="navbar-inner">
-    <button onclick="showPage('builder')" id="nb-builder" class="nav-active">Montar PC</button>
-    <button onclick="showPage('catalog')" id="nb-catalog">Catálogo de Peças</button>
+    <button onclick="showPage('builder')" id="nb-builder">Montar PC</button>
+    <button onclick="showPage('catalog')" id="nb-catalog">Catálogo</button>
     <button onclick="showPage('builds')" id="nb-builds">Builds</button>
     <button onclick="showCat('cpu')">Processadores</button>
     <button onclick="showCat('gpu')">Placas de Vídeo</button>
@@ -774,155 +363,95 @@ footer {
     <button onclick="showCat('ram')">Memória RAM</button>
     <button onclick="showCat('storage')">Armazenamento</button>
     <button onclick="showCat('psu')">Fontes</button>
+    <button onclick="showCat('case')">Gabinetes</button>
+    <button onclick="showCat('mouse')">Mouse</button>
+    <button onclick="showCat('monitor')">Monitor</button>
   </div>
 </div>
-
-<!-- PAGES -->
 
 <!-- ═══ HOME ═══ -->
 <div class="page active" id="page-home">
 <div class="container">
-  <!-- Ad: Leaderboard -->
-  <div style="text-align:center;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-  <div class="ad-banner ad-leaderboard" id="ad-home-top">
-    <!-- Google AdSense / Ad Network code here -->
-    <div>
-      <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 728×90</div>
-      <div style="font-size:0.7rem;color:#ccc;margin-top:3px;">Anuncie em <a href="#">pecapc.com.br/anuncie</a></div>
+  <div class="hero">
+    <h1>Monte seu PC<br><span>Perfeito</span></h1>
+    <p>Compare preços em 10 lojas e encontre as melhores peças para o Brasil</p>
+    <div class="hero-btns">
+      <button class="btn btn-orange" onclick="showPage('builder')">▶ Começar a montar</button>
+      <button class="btn btn-ghost" onclick="showPage('builds')">Ver builds populares</button>
+      <button class="btn btn-ghost" onclick="showPage('catalog')">Navegar peças</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num" id="stat-parts">—</div><div class="hero-stat-lbl">Produtos</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="stat-builds">—</div><div class="hero-stat-lbl">Builds Salvas</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">10+</div><div class="hero-stat-lbl">Lojas</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-lbl">Gratuito</div></div>
     </div>
   </div>
 
-  <div class="home-hero">
-    <div>
-      <h1>Monte seu PC — feito para o Brasil</h1>
-      <p>Compare preços em KaBuM!, Pichau e TerabyteShop em tempo real. Verificação automática de compatibilidade. Totalmente em português.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn btn-orange" onclick="showPage('builder')">Começar a montar</button>
-        <button class="btn btn-white" onclick="showPage('builds')">Ver builds populares</button>
-        <button class="btn btn-white" onclick="showPage('catalog')">Navegar peças</button>
-      </div>
-      <div class="home-hero-stats">
-        <div><div class="hstat-num" id="stat-parts">—</div><div class="hstat-label">Produtos no catálogo</div></div>
-        <div><div class="hstat-num">10</div><div class="hstat-label">Lojas monitoradas</div></div>
-        <div><div class="hstat-num" id="stat-builds">8</div><div class="hstat-label">Builds da comunidade</div></div>
-        <div><div class="hstat-num">Grátis</div><div class="hstat-label">Para sempre</div></div>
-      </div>
-    </div>
+  <div class="section-title">Categorias</div>
+  <div class="cats-grid">
+    <div class="cat-card" onclick="showCat('cpu')"><div class="cat-icon">CPU</div><div class="cat-name">Processadores</div><div class="cat-count" id="cnt-cpu">—</div></div>
+    <div class="cat-card" onclick="showCat('gpu')"><div class="cat-icon">GPU</div><div class="cat-name">Placas de Vídeo</div><div class="cat-count" id="cnt-gpu">—</div></div>
+    <div class="cat-card" onclick="showCat('mobo')"><div class="cat-icon">MBO</div><div class="cat-name">Placas-mãe</div><div class="cat-count" id="cnt-mobo">—</div></div>
+    <div class="cat-card" onclick="showCat('ram')"><div class="cat-icon">RAM</div><div class="cat-name">Memória RAM</div><div class="cat-count" id="cnt-ram">—</div></div>
+    <div class="cat-card" onclick="showCat('storage')"><div class="cat-icon">SSD</div><div class="cat-name">Armazenamento</div><div class="cat-count" id="cnt-storage">—</div></div>
+    <div class="cat-card" onclick="showCat('psu')"><div class="cat-icon">PSU</div><div class="cat-name">Fontes</div><div class="cat-count" id="cnt-psu">—</div></div>
+    <div class="cat-card" onclick="showCat('cooler')"><div class="cat-icon">CLR</div><div class="cat-name">Coolers</div><div class="cat-count" id="cnt-cooler">—</div></div>
+    <div class="cat-card" onclick="showCat('case')"><div class="cat-icon">CASE</div><div class="cat-name">Gabinetes</div><div class="cat-count" id="cnt-case">—</div></div>
+    <div class="cat-card" onclick="showCat('mouse')"><div class="cat-icon">MSE</div><div class="cat-name">Mouse</div><div class="cat-count" id="cnt-mouse">—</div></div>
+    <div class="cat-card" onclick="showCat('monitor')"><div class="cat-icon">MON</div><div class="cat-name">Monitores</div><div class="cat-count" id="cnt-monitor">—</div></div>
+    <div class="cat-card" onclick="showCat('keyboard')"><div class="cat-icon">TEC</div><div class="cat-name">Teclados</div><div class="cat-count" id="cnt-keyboard">—</div></div>
+    <div class="cat-card" onclick="showCat('headphone')"><div class="cat-icon">AUD</div><div class="cat-name">Headphones</div><div class="cat-count" id="cnt-headphone">—</div></div>
   </div>
 
-  <div class="home-cards" id="home-cards-grid">
-    <div class="home-card" onclick="showCat('cpu')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div><div class="home-card-title">Processadores</div><div class="home-card-count" id="cnt-cpu">— produtos</div></div>
-    <div class="home-card" onclick="showCat('gpu')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="2" y="7" width="20" height="10" rx="2"/><line x1="6" y1="7" x2="6" y2="3"/><line x1="10" y1="7" x2="10" y2="3"/><line x1="14" y1="7" x2="14" y2="3"/><line x1="18" y1="7" x2="18" y2="3"/><circle cx="8" cy="12" r="2"/><circle cx="15" cy="12" r="2"/></svg></div><div class="home-card-title">Placas de Vídeo</div><div class="home-card-count" id="cnt-gpu">— produtos</div></div>
-    <div class="home-card" onclick="showCat('mobo')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><rect x="6" y="6" width="5" height="5"/><rect x="13" y="6" width="5" height="3"/><rect x="6" y="14" width="3" height="4"/><rect x="11" y="13" width="7" height="5"/></svg></div><div class="home-card-title">Placas-mãe</div><div class="home-card-count" id="cnt-mobo">— produtos</div></div>
-    <div class="home-card" onclick="showCat('ram')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="4" y="5" width="4" height="14" rx="1"/><rect x="10" y="5" width="4" height="14" rx="1"/><rect x="16" y="5" width="4" height="14" rx="1"/></svg></div><div class="home-card-title">Memória RAM</div><div class="home-card-count" id="cnt-ram">— produtos</div></div>
-    <div class="home-card" onclick="showCat('storage')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="17" cy="12" r="2"/><line x1="5" y1="10" x2="11" y2="10"/><line x1="5" y1="14" x2="9" y2="14"/></svg></div><div class="home-card-title">Armazenamento</div><div class="home-card-count" id="cnt-storage">— produtos</div></div>
-    <div class="home-card" onclick="showCat('psu')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><line x1="8" y1="5" x2="8" y2="19"/><circle cx="14" cy="10" r="1.5"/><circle cx="14" cy="15" r="1.5"/></svg></div><div class="home-card-title">Fontes</div><div class="home-card-count" id="cnt-psu">— produtos</div></div>
-    <div class="home-card" onclick="showCat('cooler')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><div class="home-card-title">Coolers</div><div class="home-card-count" id="cnt-cooler">— produtos</div></div>
-    <div class="home-card" onclick="showCat('case')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="6" x2="15" y2="6"/><circle cx="12" cy="12" r="3"/><line x1="8" y1="18" x2="10" y2="18"/></svg></div><div class="home-card-title">Gabinetes</div><div class="home-card-count" id="cnt-case">— produtos</div></div>
-    <div class="home-card" onclick="showCat('mouse')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="6" y="2" width="12" height="18" rx="6"/><line x1="12" y1="2" x2="12" y2="10"/><circle cx="12" cy="14" r="1.5"/></svg></div><div class="home-card-title">Mouses</div><div class="home-card-count" id="cnt-mouse">— produtos</div></div>
-    <div class="home-card" onclick="showCat('monitor')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="home-card-title">Monitores</div><div class="home-card-count" id="cnt-monitor">— produtos</div></div>
-    <div class="home-card" onclick="showCat('keyboard')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="10"/><line x1="10" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="14" y2="10"/><line x1="18" y1="10" x2="18" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg></div><div class="home-card-title">Teclados</div><div class="home-card-count" id="cnt-keyboard">— produtos</div></div>
-    <div class="home-card" onclick="showCat('headphone')"><div class="home-card-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div><div class="home-card-title">Headphones</div><div class="home-card-count" id="cnt-headphone">— produtos</div></div>
-  </div>
-
-  <div class="section-head">
-    <h2>Builds populares da comunidade</h2>
-    <button class="btn btn-white btn-sm" onclick="showPage('builds')">Ver todas →</button>
-  </div>
-  <div class="builds-table">
-    <div class="builds-head">
-      <div>Build</div><div>Componentes principais</div><div>Uso</div><div>Votos</div><div>Total</div>
-    </div>
-    <div id="home-builds-list"></div>
-  </div>
+  <div class="section-title">Builds Populares</div>
+  <div class="builds-preview" id="home-builds"></div>
 </div>
 </div>
 
 <!-- ═══ BUILDER ═══ -->
 <div class="page" id="page-builder">
 <div class="container">
-  <div class="breadcrumb"><a href="#" onclick="showPage('home');return false;">Início</a> <span>›</span> Montar PC</div>
-
-  <!-- Ad: Leaderboard -->
-  <div style="text-align:center;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-  <div class="ad-banner ad-leaderboard" id="ad-builder-top">
-    <!-- Google AdSense code here -->
-    <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 728×90</div>
+  <div class="builder-tabs">
+    <button class="btab btab-active" onclick="switchTab('oficial')">PC Novo</button>
+    <button class="btab" onclick="switchTab('usado')">Peças Usadas / Terceiros</button>
   </div>
 
-  <div class="two-col">
-    <div>
-      <div class="section-head">
-        <h2 class="page-title" style="margin:0;">Montar PC</h2>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-white btn-sm" onclick="clearBuild()">Limpar tudo</button>
-          <button class="btn btn-white btn-sm" onclick="saveBuild()">Salvar build</button>
-          <button class="btn btn-orange btn-sm" onclick="shareBuild()">Compartilhar</button>
-        </div>
-      </div>
-
-      <!-- Source tabs -->
-      <div class="source-tabs">
-        <div class="source-tab active" id="tab-oficiais" onclick="switchSourceTab('oficiais')">OFICIAIS</div>
-        <div class="source-tab" id="tab-usados" onclick="switchSourceTab('usados')">TERCEIROS / USADOS</div>
-      </div>
-
-      <!-- Official builder -->
-      <div id="section-oficiais">
-        <div class="builder-table">
-          <div class="builder-table-head">
-            <div>Componente</div><div>Seleção</div><div>Loja / Preço</div><div>Preço</div><div></div>
+  <div class="btab-content btab-show" id="tab-oficial">
+    <div class="builder-layout">
+      <div>
+        <div class="parts-table">
+          <div class="pt-header">
+            <div>Componente</div><div>Selecionado</div><div>Lojas</div><div>Preço</div><div>Ações</div>
           </div>
           <div id="builder-rows"></div>
         </div>
       </div>
-
-      <!-- Used / third-party section -->
-      <div id="section-usados" style="display:none;">
-        <div class="used-warning">
-          <strong>Aviso de segurança</strong>
-          Produtos de terceiros (Mercado Livre, Facebook Marketplace, Shopee) não possuem garantia oficial. Verifique sempre a reputação do vendedor antes de comprar.
+      <div>
+        <div class="summary-card">
+          <h3>Resumo da Build</h3>
+          <div id="sum-rows"></div>
+          <div class="sum-total">
+            <span class="sum-total-lbl">Total estimado</span>
+            <span class="sum-total-val" id="sum-total">R$ 0</span>
+          </div>
+          <div class="sum-actions">
+            <button class="btn btn-orange" onclick="saveBuild()">Salvar build</button>
+            <button class="btn btn-ghost" onclick="shareBuild()">Compartilhar</button>
+            <button class="btn btn-danger btn-sm" onclick="clearBuild()">Limpar</button>
+          </div>
         </div>
-        <div id="used-rows"></div>
-      </div>
-
-      <div class="builder-footer" id="builder-footer">
-        <div>
-          <div class="total-label">Total estimado</div>
-          <div class="total-price" id="builder-total">R$ 0,00</div>
+        <div class="compat-card">
+          <div class="compat-title">Compatibilidade</div>
+          <div id="compat-rows"></div>
         </div>
-        <div class="builder-actions">
-          <button class="btn btn-white" onclick="showPage('catalog')">+ Adicionar mais peças</button>
-        </div>
-      </div>
-
-      <!-- Ad: Rectangle -->
-      <div style="text-align:center;margin-top:16px;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-      <div class="ad-banner ad-rectangle" id="ad-builder-mid">
-        <!-- Google AdSense code here -->
-        <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 300×250</div>
       </div>
     </div>
+  </div>
 
-    <!-- SIDEBAR -->
-    <div>
-      <div class="sidebar-card">
-        <div class="sidebar-card-head">Resumo de preços</div>
-        <div class="sidebar-card-body" id="price-summary"></div>
-      </div>
-
-      <div class="compat-box" id="compat-box">
-        <div class="compat-title">Verificação de compatibilidade</div>
-        <div id="compat-checks"></div>
-      </div>
-
-      <!-- Ad: Sidebar -->
-      <div style="text-align:center;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-      <div class="ad-banner ad-sidebar" id="ad-builder-side">
-        <!-- Google AdSense code here -->
-        <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 160×600</div>
-      </div>
-    </div>
+  <div class="btab-content" id="tab-usado">
+    <div class="used-banner">⚠ Peças de terceiros e usadas. Verifique o vendedor antes de comprar. A PeçaPC não garante essas transações.</div>
+    <div id="used-list"></div>
   </div>
 </div>
 </div>
@@ -930,118 +459,91 @@ footer {
 <!-- ═══ CATALOG ═══ -->
 <div class="page" id="page-catalog">
 <div class="container">
-  <div class="breadcrumb"><a href="#" onclick="showPage('home');return false;">Início</a> <span>›</span> Catálogo de Peças</div>
-
-  <!-- Ad -->
-  <div style="text-align:center;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-  <div class="ad-banner ad-leaderboard" id="ad-catalog-top">
-    <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 728×90</div>
-  </div>
-
   <div class="filter-bar" id="catalog-filters">
-    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;">
-      <div>
-        <label>Categoria</label>
-        <select id="cat-select" onchange="filterParts()">
-          <option value="all">Todas</option>
-          <optgroup label="── Componentes ──">
-            <option value="cpu">Processadores</option>
-            <option value="cooler">Coolers</option>
-            <option value="mobo">Placas-mãe</option>
-            <option value="ram">Memória RAM</option>
-            <option value="gpu">Placas de Vídeo</option>
-            <option value="storage">Armazenamento</option>
-            <option value="psu">Fontes</option>
-            <option value="case">Gabinetes</option>
-          </optgroup>
-          <optgroup label="── Periféricos ──">
-            <option value="mouse">Mouses</option>
-            <option value="monitor">Monitores</option>
-            <option value="keyboard">Teclados</option>
-            <option value="headphone">Headphones</option>
-          </optgroup>
-        </select>
-      </div>
-      <div>
-        <label>Buscar</label>
-        <input type="text" id="cat-search" placeholder="Nome ou spec..." oninput="filterParts()" style="width:180px;">
-      </div>
-      <div>
-        <label>Ordenar</label>
-        <select id="cat-sort" onchange="filterParts()">
-          <option value="name">Nome A-Z</option>
-          <option value="price-asc">Menor preço</option>
-          <option value="price-desc">Maior preço</option>
-        </select>
-      </div>
-      <!-- Dynamic filters -->
-      <div id="flt-price">
-        <label>Preço máx (R$)</label>
-        <input type="number" id="flt-maxprice" placeholder="ex: 2000" oninput="filterParts()" style="width:110px;">
-      </div>
-      <div id="flt-socket-wrap" style="display:none;">
-        <label>Socket</label>
-        <select id="flt-socket" onchange="filterParts()">
-          <option value="">Todos</option>
-          <option>AM4</option><option>AM5</option>
-          <option>LGA1700</option><option>sWRX8</option><option>sWRX9</option>
-        </select>
-      </div>
-      <div id="flt-ramtype-wrap" style="display:none;">
-        <label>Tipo RAM</label>
-        <select id="flt-ramtype" onchange="filterParts()">
-          <option value="">Todos</option>
-          <option>DDR4</option><option>DDR5</option>
-        </select>
-      </div>
-      <div id="flt-formfactor-wrap" style="display:none;">
-        <label>Form Factor</label>
-        <select id="flt-formfactor" onchange="filterParts()">
-          <option value="">Todos</option>
-          <option>ITX</option><option>mATX</option><option>ATX</option><option>E-ATX</option>
-        </select>
-      </div>
-      <div id="flt-color-wrap" style="display:none;">
-        <label>Cor</label>
-        <select id="flt-color" onchange="filterParts()">
-          <option value="">Todas</option>
-          <option>Preto</option><option>Branco</option><option>Bege</option>
-        </select>
-      </div>
-      <div id="flt-wattage-wrap" style="display:none;">
-        <label>Potência mín (W)</label>
-        <select id="flt-wattage" onchange="filterParts()">
-          <option value="">Todas</option>
-          <option>550</option><option>650</option><option>750</option><option>850</option><option>1000</option><option>1200</option>
-        </select>
-      </div>
-      <div id="flt-vram-wrap" style="display:none;">
-        <label>VRAM mín (GB)</label>
-        <select id="flt-vram" onchange="filterParts()">
-          <option value="">Todas</option>
-          <option>8</option><option>12</option><option>16</option><option>20</option><option>24</option>
-        </select>
-      </div>
-      <button class="btn btn-white btn-sm" onclick="clearFilters()" style="margin-top:18px;">Limpar filtros</button>
+    <div class="filter-group">
+      <label>Categoria</label>
+      <select id="cat-select" onchange="filterParts()">
+        <option value="all">Todas</option>
+        <option value="cpu">Processadores</option>
+        <option value="cooler">Coolers</option>
+        <option value="mobo">Placas-mãe</option>
+        <option value="ram">Memória RAM</option>
+        <option value="gpu">Placas de Vídeo</option>
+        <option value="storage">Armazenamento</option>
+        <option value="psu">Fontes</option>
+        <option value="case">Gabinetes</option>
+        <option value="mouse">Mouse</option>
+        <option value="monitor">Monitor</option>
+        <option value="keyboard">Teclado</option>
+        <option value="headphone">Headphone</option>
+      </select>
     </div>
+    <div class="filter-group">
+      <label>Buscar</label>
+      <input type="text" id="cat-search" placeholder="Nome ou specs..." oninput="filterParts()" style="width:200px">
+    </div>
+    <div class="filter-group">
+      <label>Ordenar</label>
+      <select id="cat-sort" onchange="filterParts()">
+        <option value="default">Padrão</option>
+        <option value="price-asc">Menor preço</option>
+        <option value="price-desc">Maior preço</option>
+        <option value="name">Nome A-Z</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Preço máx (R$)</label>
+      <input type="number" id="flt-maxprice" placeholder="Ex: 2000" oninput="filterParts()" style="width:110px">
+    </div>
+    <div class="filter-group" id="flt-grp-socket" style="display:none">
+      <label>Socket</label>
+      <select id="flt-socket" onchange="filterParts()">
+        <option value="">Todos</option>
+        <option>AM4</option><option>AM5</option><option>LGA1700</option><option>sWRX8</option><option>sWRX9</option>
+      </select>
+    </div>
+    <div class="filter-group" id="flt-grp-ramtype" style="display:none">
+      <label>Tipo RAM</label>
+      <select id="flt-ramtype" onchange="filterParts()">
+        <option value="">Todos</option>
+        <option>DDR4</option><option>DDR5</option>
+      </select>
+    </div>
+    <div class="filter-group" id="flt-grp-ff" style="display:none">
+      <label>Form Factor</label>
+      <select id="flt-formfactor" onchange="filterParts()">
+        <option value="">Todos</option>
+        <option>ITX</option><option>mATX</option><option>ATX</option><option>E-ATX</option>
+      </select>
+    </div>
+    <div class="filter-group" id="flt-grp-color" style="display:none">
+      <label>Cor</label>
+      <select id="flt-color" onchange="filterParts()">
+        <option value="">Todas</option>
+        <option>Preto</option><option>Branco</option><option>Bege</option>
+      </select>
+    </div>
+    <div class="filter-group" id="flt-grp-watt" style="display:none">
+      <label>Potência mín (W)</label>
+      <select id="flt-wattage" onchange="filterParts()">
+        <option value="">Qualquer</option>
+        <option>550</option><option>650</option><option>750</option><option>850</option><option>1000</option><option>1200</option>
+      </select>
+    </div>
+    <div class="filter-group" id="flt-grp-vram" style="display:none">
+      <label>VRAM mín (GB)</label>
+      <select id="flt-vram" onchange="filterParts()">
+        <option value="">Qualquer</option>
+        <option>8</option><option>12</option><option>16</option><option>20</option><option>24</option>
+      </select>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="clearFilters()" style="align-self:flex-end">Limpar</button>
   </div>
-
-  <div class="two-col">
-    <div>
-      <div class="parts-table">
-        <div class="parts-table-head">
-          <div>Cat.</div><div>Produto</div><div>Lojas</div><div>Menor preço</div><div>Ação</div>
-        </div>
-        <div id="parts-list"></div>
-      </div>
+  <div class="parts-list-wrap">
+    <div class="plist-header">
+      <div></div><div>Produto</div><div>Lojas</div><div>Preço</div><div>Ação</div>
     </div>
-    <div>
-      <!-- Ad: Sidebar -->
-      <div style="text-align:center;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-      <div class="ad-banner ad-sidebar" id="ad-catalog-side">
-        <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 160×600</div>
-      </div>
-    </div>
+    <div id="parts-list"></div>
   </div>
 </div>
 </div>
@@ -1049,124 +551,105 @@ footer {
 <!-- ═══ BUILDS ═══ -->
 <div class="page" id="page-builds">
 <div class="container">
-  <div class="breadcrumb"><a href="#" onclick="showPage('home');return false;">Início</a> <span>›</span> Builds</div>
-
-  <!-- Ad -->
-  <div style="text-align:center;margin-bottom:4px;"><span class="ad-label">Publicidade</span></div>
-  <div class="ad-banner ad-leaderboard" id="ad-builds-top">
-    <div style="font-size:0.8rem;color:#bbb;">Espaço publicitário 728×90</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div class="section-title" style="margin:0">Builds da Comunidade</div>
+    <button class="btn btn-orange" onclick="openAddBuild()">+ Enviar build</button>
   </div>
+  <div class="builds-grid" id="builds-list"></div>
+</div>
+</div>
 
-  <div class="section-head">
-    <h2 class="page-title" style="margin:0;">Builds da Comunidade</h2>
-    <button class="btn btn-orange btn-sm" id="admin-add-build-btn" style="display:none;" onclick="openAddBuild()">+ Adicionar build</button>
-  </div>
-
-  <div class="builds-table">
-    <div class="builds-head">
-      <div>Build / Autor</div><div>Componentes</div><div>Uso</div><div>Votos</div><div>Total</div>
+<!-- PICKER MODAL -->
+<div class="picker-overlay" id="picker-overlay" onclick="if(event.target===this)closePicker()">
+  <div class="picker-box">
+    <div class="picker-header">
+      <h3 id="picker-title">Selecionar componente</h3>
+      <button class="picker-close" onclick="closePicker()">✕</button>
     </div>
-    <div id="all-builds-list"></div>
-  </div>
-
-  <!-- Build detail / review panel -->
-  <div id="build-detail-panel" style="display:none;margin-top:24px;background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:20px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-      <h3 id="build-detail-title" style="font-size:1rem;font-weight:700;"></h3>
-      <button onclick="closeBuildDetail()" style="background:none;border:none;cursor:pointer;color:#888;font-size:1.1rem;">✕</button>
+    <div class="picker-search">
+      <input type="text" id="picker-search" placeholder="Buscar..." oninput="filterPicker()">
     </div>
-    <div id="build-detail-parts" style="margin-bottom:16px;font-size:0.82rem;color:#555;line-height:1.8;"></div>
-    <div style="border-top:1px solid #eee;padding-top:14px;">
-      <h4 style="font-size:0.82rem;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.03em;">Avaliações</h4>
-      <div id="build-reviews-list" style="margin-bottom:14px;"></div>
-      <div id="review-form" style="background:#f9f9f9;border:1px solid #eee;border-radius:4px;padding:14px;">
-        <div style="font-size:0.75rem;font-weight:700;color:#555;margin-bottom:6px;text-transform:uppercase;">Deixar avaliação</div>
-        <div style="display:flex;gap:4px;margin-bottom:8px;" id="star-select">
-          <span class="star-btn" data-v="1" onclick="setStars(1)">★</span>
-          <span class="star-btn" data-v="2" onclick="setStars(2)">★</span>
-          <span class="star-btn" data-v="3" onclick="setStars(3)">★</span>
-          <span class="star-btn" data-v="4" onclick="setStars(4)">★</span>
-          <span class="star-btn" data-v="5" onclick="setStars(5)">★</span>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<!-- BUILD DETAIL MODAL -->
+<div class="detail-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-box">
+    <div class="detail-header">
+      <div>
+        <div id="detail-title" style="font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:2px"></div>
+        <div id="detail-author" style="font-size:12px;color:var(--text3)"></div>
+      </div>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-body">
+      <div id="detail-uso" style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:5px 10px;font-size:12.5px;color:var(--text2);display:inline-block;margin-bottom:14px"></div>
+      <div id="detail-parts" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:16px">
+        <span style="font-size:13px;color:var(--text3)">Total estimado</span>
+        <span id="detail-price" style="font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:var(--orange)"></span>
+      </div>
+      <div style="font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-bottom:10px">Avaliações</div>
+      <div id="detail-reviews"></div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+        <div style="font-size:12.5px;font-weight:700;color:var(--text2);margin-bottom:8px">Deixe uma avaliação</div>
+        <div class="stars" id="star-row">
+          <span class="star" onclick="setStars(1)">★</span>
+          <span class="star" onclick="setStars(2)">★</span>
+          <span class="star" onclick="setStars(3)">★</span>
+          <span class="star" onclick="setStars(4)">★</span>
+          <span class="star" onclick="setStars(5)">★</span>
         </div>
-        <textarea id="review-text" rows="2" placeholder="Comente sobre esta build..." style="width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:3px;font-size:0.82rem;resize:vertical;outline:none;"></textarea>
-        <button class="btn btn-orange btn-sm" style="margin-top:8px;" onclick="submitReview()">Publicar avaliação</button>
-        <div id="review-login-note" style="font-size:0.75rem;color:#888;margin-top:6px;display:none;">Faça login para avaliar</div>
+        <div class="rev-form">
+          <input type="text" id="rev-author" placeholder="Seu nome">
+          <textarea id="rev-text" rows="3" placeholder="Sua opinião sobre essa build..."></textarea>
+          <button class="btn btn-orange btn-sm" onclick="submitReview()">Enviar avaliação</button>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<!-- ADD BUILD MODAL (admin only) -->
-<div id="add-build-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;" onclick="if(event.target===this)closeAddBuild()">
-  <div style="background:#fff;border-radius:5px;width:480px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
-    <div style="background:#1a1a1a;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e67e22;position:sticky;top:0;">
-      <span style="font-weight:700;font-size:0.9rem;color:#fff;">Adicionar Build</span>
-      <button onclick="closeAddBuild()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:#888;">✕</button>
-    </div>
-    <div style="padding:20px 18px;">
-      <div style="margin-bottom:12px;">
-        <label style="display:block;font-size:0.72rem;font-weight:700;color:#555;margin-bottom:4px;text-transform:uppercase;">Nome da build</label>
-        <input id="nb-title" type="text" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:3px;font-size:0.875rem;" placeholder="Ex: Setup Gamer 1080p">
-      </div>
-      <div style="margin-bottom:12px;">
-        <label style="display:block;font-size:0.72rem;font-weight:700;color:#555;margin-bottom:4px;text-transform:uppercase;">Finalidade</label>
-        <input id="nb-uso" type="text" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:3px;font-size:0.875rem;" placeholder="Ex: Gaming 1080p, Edição de vídeo...">
-      </div>
-      <div style="margin-bottom:12px;">
-        <label style="display:block;font-size:0.72rem;font-weight:700;color:#555;margin-bottom:4px;text-transform:uppercase;">Total estimado (R$)</label>
-        <input id="nb-total" type="number" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:3px;font-size:0.875rem;" placeholder="5499">
-      </div>
-      <div style="margin-bottom:16px;">
-        <label style="display:block;font-size:0.72rem;font-weight:700;color:#555;margin-bottom:4px;text-transform:uppercase;">Componentes (um por linha)</label>
-        <textarea id="nb-parts" rows="6" style="width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:3px;font-size:0.82rem;resize:vertical;" placeholder="Ryzen 5 7600X&#10;RTX 4060 Ti&#10;ASUS B650M-A&#10;32GB DDR5-6000&#10;1TB WD Black&#10;Corsair RM750x&#10;NZXT H7 Flow"></textarea>
-      </div>
-      <button class="btn btn-orange" style="width:100%;justify-content:center;" onclick="submitNewBuild()">Publicar build</button>
     </div>
   </div>
 </div>
 
 <!-- AUTH MODAL -->
-<div id="auth-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center;" onclick="if(event.target===this)closeAuth()">
-  <div style="background:#fff;border-radius:6px;width:700px;max-width:96vw;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.22);display:flex;">
-    <!-- LEFT: Login -->
-    <div style="flex:1;padding:32px 28px;">
-      <div style="font-weight:700;font-size:1rem;color:#1a1a1a;margin-bottom:3px;">Entrar na conta</div>
-      <div style="font-size:0.75rem;color:#888;margin-bottom:20px;">Acesse suas builds salvas</div>
-      <div style="margin-bottom:10px;">
-        <label style="display:block;font-size:0.7rem;font-weight:700;color:#555;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em;">Email</label>
-        <input id="login-email" type="email" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:3px;font-size:0.875rem;outline:none;" placeholder="seu@email.com">
-      </div>
-      <div style="margin-bottom:18px;">
-        <label style="display:block;font-size:0.7rem;font-weight:700;color:#555;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em;">Senha</label>
-        <input id="login-pass" type="password" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:3px;font-size:0.875rem;outline:none;" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <button class="btn btn-orange" style="width:100%;justify-content:center;" onclick="doLogin()">Entrar</button>
+<div class="auth-overlay" id="auth-overlay" onclick="if(event.target===this)closeAuth()">
+  <div class="auth-box">
+    <div class="auth-panel">
+      <h2>Entrar na conta</h2>
+      <p>Acesse suas builds salvas</p>
+      <div class="field"><label>Email</label><input id="login-email" type="email" placeholder="seu@email.com"></div>
+      <div class="field"><label>Senha</label><input id="login-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn btn-orange" style="width:100%;justify-content:center" onclick="doLogin()">Entrar</button>
     </div>
-    <!-- Divider -->
-    <div style="width:1px;background:#eee;margin:24px 0;"></div>
-    <!-- RIGHT: Register -->
-    <div style="flex:1;padding:32px 28px;background:#fafafa;position:relative;">
-      <button onclick="closeAuth()" style="position:absolute;top:12px;right:14px;background:none;border:none;cursor:pointer;font-size:1.2rem;color:#bbb;line-height:1;">✕</button>
-      <div style="font-weight:700;font-size:1rem;color:#1a1a1a;margin-bottom:3px;">Criar conta grátis</div>
-      <div style="font-size:0.75rem;color:#888;margin-bottom:20px;">Salve e compartilhe suas builds</div>
-      <div style="margin-bottom:10px;">
-        <label style="display:block;font-size:0.7rem;font-weight:700;color:#555;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em;">Nome de usuário</label>
-        <input id="reg-name" type="text" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:3px;font-size:0.875rem;outline:none;" placeholder="seu_nome">
-      </div>
-      <div style="margin-bottom:10px;">
-        <label style="display:block;font-size:0.7rem;font-weight:700;color:#555;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em;">Email</label>
-        <input id="reg-email" type="email" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:3px;font-size:0.875rem;outline:none;" placeholder="seu@email.com">
-      </div>
-      <div style="margin-bottom:18px;">
-        <label style="display:block;font-size:0.7rem;font-weight:700;color:#555;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.04em;">Senha</label>
-        <input id="reg-pass" type="password" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:3px;font-size:0.875rem;outline:none;" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()">
-      </div>
-      <button class="btn" style="width:100%;justify-content:center;background:#fff;border:2px solid #e67e22;color:#e67e22;font-weight:700;" onclick="doRegister()">Criar conta</button>
+    <div class="auth-divider"></div>
+    <div class="auth-panel auth-right">
+      <button class="auth-close" onclick="closeAuth()">✕</button>
+      <h2>Criar conta grátis</h2>
+      <p>Salve e compartilhe suas builds</p>
+      <div class="field"><label>Nome de usuário</label><input id="reg-name" type="text" placeholder="seu_nome"></div>
+      <div class="field"><label>Email</label><input id="reg-email" type="email" placeholder="seu@email.com"></div>
+      <div class="field"><label>Senha</label><input id="reg-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()"></div>
+      <button class="btn btn-ghost" style="width:100%;justify-content:center;border-color:var(--orange);color:var(--orange)" onclick="doRegister()">Criar conta</button>
     </div>
   </div>
 </div>
 
+<!-- ADD BUILD MODAL -->
+<div class="addbuild-overlay" id="addbuild-overlay" onclick="if(event.target===this)closeAddBuild()">
+  <div class="addbuild-box">
+    <h3>Enviar nova build</h3>
+    <input type="text" id="nb-name" placeholder="Nome da build (ex: Setup Gamer 1080p)">
+    <input type="text" id="nb-uso" placeholder="Uso principal (ex: Gaming 1440p)">
+    <input type="number" id="nb-total" placeholder="Valor total estimado (R$)">
+    <textarea id="nb-parts" rows="4" placeholder="Liste os componentes, um por linha..."></textarea>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-orange" onclick="submitNewBuild()">Publicar build</button>
+      <button class="btn btn-ghost" onclick="closeAddBuild()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
 <div class="toast-wrap" id="toasts"></div>
 
 <!-- FOOTER -->
@@ -1182,17 +665,17 @@ footer {
       </div>
       <div class="footer-col">
         <h4>Ferramentas</h4>
-        <a href="#" onclick="showPage('builder');return false;">Montar PC</a>
-        <a href="#" onclick="showPage('catalog');return false;">Catálogo de Peças</a>
-        <a href="#" onclick="showPage('builds');return false;">Builds da Comunidade</a>
+        <a href="#" onclick="showPage('builder');return false">Montar PC</a>
+        <a href="#" onclick="showPage('catalog');return false">Catálogo</a>
+        <a href="#" onclick="showPage('builds');return false">Builds</a>
       </div>
       <div class="footer-col">
         <h4>Categorias</h4>
-        <a href="#" onclick="showCat('cpu');return false;">Processadores</a>
-        <a href="#" onclick="showCat('gpu');return false;">Placas de Vídeo</a>
-        <a href="#" onclick="showCat('mobo');return false;">Placas-mãe</a>
-        <a href="#" onclick="showCat('ram');return false;">Memória RAM</a>
-        <a href="#" onclick="showCat('storage');return false;">Armazenamento</a>
+        <a href="#" onclick="showCat('cpu');return false">Processadores</a>
+        <a href="#" onclick="showCat('gpu');return false">Placas de Vídeo</a>
+        <a href="#" onclick="showCat('mobo');return false">Placas-mãe</a>
+        <a href="#" onclick="showCat('ram');return false">Memória RAM</a>
+        <a href="#" onclick="showCat('storage');return false">Armazenamento</a>
       </div>
       <div class="footer-col">
         <h4>Lojas Parceiras</h4>
@@ -1204,32 +687,32 @@ footer {
       </div>
     </div>
     <div class="footer-bottom">
-      © 2025 PeçaPC.com.br — Os preços exibidos são estimativas. Verifique os valores atualizados nas lojas. 
-      Alguns links podem conter referência de afiliado.
+      <span class="footer-logo">Peça<span>PC</span>.com.br</span>
+      <span>© 2025 PeçaPC — Preços são estimativas. Verifique nas lojas. Links podem conter afiliados.</span>
     </div>
   </div>
 </footer>
 
 <script>
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // STORES
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 const STORES = {
-  kabum:    { name:'KaBuM!',        url: n => `https://www.kabum.com.br/busca/${encodeURIComponent(n)}` },
-  pichau:   { name:'Pichau',        url: n => `https://www.pichau.com.br/search?q=${encodeURIComponent(n)}` },
-  terabyte: { name:'TByte',         url: n => `https://www.terabyteshop.com.br/busca?str=${encodeURIComponent(n)}` },
-  amazon:   { name:'Amazon',        url: n => `https://www.amazon.com.br/s?k=${encodeURIComponent(n)}` },
-  ml:       { name:'Mercado Livre', url: n => `https://lista.mercadolivre.com.br/${encodeURIComponent(n)}` },
-  ponto:    { name:'Ponto Frio',    url: n => `https://www.pontofrio.com.br/busca/?q=${encodeURIComponent(n)}` },
-  americanas:{ name:'Americanas',   url: n => `https://www.americanas.com.br/busca/${encodeURIComponent(n)}` },
-  magalu:   { name:'Magazine Luiza',url: n => `https://www.magazineluiza.com.br/busca/${encodeURIComponent(n)}/` },
-  shopee:   { name:'Shopee',        url: n => `https://shopee.com.br/search?keyword=${encodeURIComponent(n)}` },
-  aliexpress:{ name:'AliExpress',   url: n => `https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(n)}` },
+  kabum:     { name:'KaBuM!',         url: n => `https://www.kabum.com.br/busca/${encodeURIComponent(n)}` },
+  pichau:    { name:'Pichau',         url: n => `https://www.pichau.com.br/search?q=${encodeURIComponent(n)}` },
+  terabyte:  { name:'TByte',          url: n => `https://www.terabyteshop.com.br/busca?str=${encodeURIComponent(n)}` },
+  amazon:    { name:'Amazon',         url: n => `https://www.amazon.com.br/s?k=${encodeURIComponent(n)}` },
+  ml:        { name:'M.Livre',        url: n => `https://lista.mercadolivre.com.br/${encodeURIComponent(n)}` },
+  ponto:     { name:'Ponto Frio',     url: n => `https://www.pontofrio.com.br/busca/?q=${encodeURIComponent(n)}` },
+  americanas:{ name:'Americanas',     url: n => `https://www.americanas.com.br/busca/${encodeURIComponent(n)}` },
+  magalu:    { name:'Mag.Luiza',      url: n => `https://www.magazineluiza.com.br/busca/${encodeURIComponent(n)}/` },
+  shopee:    { name:'Shopee',         url: n => `https://shopee.com.br/search?keyword=${encodeURIComponent(n)}` },
+  aliexpress:{ name:'AliExpress',     url: n => `https://www.aliexpress.com/wholesale?SearchText=${encodeURIComponent(n)}` },
 };
 
-// ═══════════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// CATEGORIES
+// ══════════════════════════════════════════════════
 const CATS = [
   { id:'cpu',     label:'Processador',    icon:'CPU' },
   { id:'cooler',  label:'Cooler',         icon:'CLR' },
@@ -1240,92 +723,85 @@ const CATS = [
   { id:'psu',     label:'Fonte',          icon:'PSU' },
   { id:'case',    label:'Gabinete',       icon:'CASE' },
 ];
+const PERIPH_CATS = [
+  { id:'mouse',    label:'Mouse',     icon:'MSE' },
+  { id:'monitor',  label:'Monitor',   icon:'MON' },
+  { id:'keyboard', label:'Teclado',   icon:'TEC' },
+  { id:'headphone',label:'Headphone', icon:'AUD' },
+];
+const ALL_CATS = [...CATS, ...PERIPH_CATS];
 
+// ══════════════════════════════════════════════════
+// DATABASE
+// ══════════════════════════════════════════════════
 const DB = {
 cpu: [
-  // AMD Ryzen AM5
   { id:'cpu01', name:'AMD Ryzen 5 7600X', specs:'6C/12T · AM5 · 5.3GHz · 105W', price:1289, badge:'dest', socket:'AM5', tdp:105, stores:{kabum:1289,pichau:1299,terabyte:1310} },
   { id:'cpu02', name:'AMD Ryzen 5 7600',  specs:'6C/12T · AM5 · 5.1GHz · 65W',  price:1049, socket:'AM5', tdp:65,  stores:{kabum:1049,pichau:1069} },
   { id:'cpu03', name:'AMD Ryzen 7 7700X', specs:'8C/16T · AM5 · 5.4GHz · 105W', price:1599, socket:'AM5', tdp:105, stores:{pichau:1599,terabyte:1620} },
   { id:'cpu04', name:'AMD Ryzen 7 7800X3D', specs:'8C/16T · AM5 · 5.0GHz · 3D V-Cache · 120W', price:2149, badge:'dest', socket:'AM5', tdp:120, stores:{kabum:2149,pichau:2199,terabyte:2180} },
   { id:'cpu05', name:'AMD Ryzen 9 7900X', specs:'12C/24T · AM5 · 5.6GHz · 170W', price:2599, socket:'AM5', tdp:170, stores:{kabum:2599,pichau:2649} },
-  { id:'cpu06', name:'AMD Ryzen 9 7950X', specs:'16C/32T · AM5 · 5.7GHz · 170W', price:3799, socket:'AM5', tdp:170, stores:{pichau:3799,terabyte:3849} },
-  { id:'cpu06b', name:'AMD Ryzen 9 7950X3D', specs:'16C/32T · AM5 · 5.7GHz · 3D V-Cache · 120W', price:4499, badge:'dest', socket:'AM5', tdp:120, stores:{terabyte:4499} },
-  { id:'cpu06c', name:'AMD Ryzen 5 9600X', specs:'6C/12T · AM5 · 5.4GHz · 65W · Zen 5', price:1399, badge:'novo', socket:'AM5', tdp:65, stores:{kabum:1399,pichau:1419} },
-  { id:'cpu06d', name:'AMD Ryzen 7 9700X', specs:'8C/16T · AM5 · 5.5GHz · 65W · Zen 5', price:1899, badge:'novo', socket:'AM5', tdp:65, stores:{kabum:1899,pichau:1929} },
-  { id:'cpu06e', name:'AMD Ryzen 9 9900X', specs:'12C/24T · AM5 · 5.6GHz · 120W · Zen 5', price:2799, badge:'novo', socket:'AM5', tdp:120, stores:{terabyte:2799} },
-  { id:'cpu06f', name:'AMD Ryzen 9 9950X', specs:'16C/32T · AM5 · 5.7GHz · 170W · Zen 5', price:3999, badge:'novo', socket:'AM5', tdp:170, stores:{pichau:3999,terabyte:4049} },
-  // AMD Ryzen AM4
-  { id:'cpu07', name:'AMD Ryzen 5 5600X', specs:'6C/12T · AM4 · 4.6GHz · 65W', price:699, socket:'AM4', tdp:65, stores:{kabum:699,amazon:720,ml:689} },
-  { id:'cpu08', name:'AMD Ryzen 5 5600',  specs:'6C/12T · AM4 · 4.4GHz · 65W', price:599, socket:'AM4', tdp:65, stores:{kabum:599,amazon:610} },
-  { id:'cpu09', name:'AMD Ryzen 7 5700X', specs:'8C/16T · AM4 · 4.6GHz · 65W', price:849, socket:'AM4', tdp:65, stores:{kabum:849,pichau:869} },
-  { id:'cpu09b', name:'AMD Ryzen 7 5800X3D', specs:'8C/16T · AM4 · 4.5GHz · 3D V-Cache · 105W', price:1199, badge:'dest', socket:'AM4', tdp:105, stores:{kabum:1199,pichau:1229} },
-  { id:'cpu10', name:'AMD Ryzen 9 5900X', specs:'12C/24T · AM4 · 4.8GHz · 105W', price:1499, socket:'AM4', tdp:105, stores:{kabum:1499,pichau:1520} },
-  { id:'cpu10b', name:'AMD Ryzen 9 5950X', specs:'16C/32T · AM4 · 4.9GHz · 105W', price:2199, socket:'AM4', tdp:105, stores:{terabyte:2199} },
-  // Intel LGA1700
-  { id:'cpu11', name:'Intel Core i3-14100F', specs:'4C/8T · LGA1700 · 4.7GHz · 58W', price:579, socket:'LGA1700', tdp:58, stores:{kabum:579,amazon:590} },
-  { id:'cpu12', name:'Intel Core i5-12400F', specs:'6C/12T · LGA1700 · 4.4GHz · 65W', price:749, socket:'LGA1700', tdp:65, stores:{kabum:749,pichau:760,ml:730} },
-  { id:'cpu13', name:'Intel Core i5-13600K', specs:'14C/20T · LGA1700 · 5.1GHz · 125W', price:1349, badge:'pop', socket:'LGA1700', tdp:125, stores:{kabum:1349,pichau:1379} },
-  { id:'cpu14', name:'Intel Core i5-14600K', specs:'14C/20T · LGA1700 · 5.3GHz · 125W', price:1489, socket:'LGA1700', tdp:125, stores:{kabum:1489,pichau:1499,terabyte:1510} },
-  { id:'cpu15', name:'Intel Core i7-14700K', specs:'20C/28T · LGA1700 · 5.6GHz · 253W', price:2299, socket:'LGA1700', tdp:253, stores:{kabum:2299,pichau:2349} },
-  { id:'cpu16', name:'Intel Core i9-14900K', specs:'24C/32T · LGA1700 · 6.0GHz · 253W', price:3299, socket:'LGA1700', tdp:253, stores:{pichau:3299,terabyte:3349} },
-  { id:'cpu17', name:'Intel Core i9-13900K', specs:'24C/32T · LGA1700 · 5.8GHz · 253W', price:2899, socket:'LGA1700', tdp:253, stores:{kabum:2899,pichau:2950} },
-  { id:'cpu18', name:'Intel Core i5-13400F', specs:'10C/16T · LGA1700 · 4.6GHz · 65W', price:999, socket:'LGA1700', tdp:65, stores:{kabum:999,amazon:1010} },
-  { id:'cpu18b', name:'Intel Core i7-13700K', specs:'16C/24T · LGA1700 · 5.4GHz · 253W', price:1999, socket:'LGA1700', tdp:253, stores:{kabum:1999,pichau:2049} },
-  { id:'cpu18c', name:'Intel Core i9-14900KS', specs:'24C/32T · LGA1700 · 6.2GHz · 253W', price:3899, socket:'LGA1700', tdp:253, stores:{terabyte:3899} },
-  // Workstation / HEDT
-  { id:'cpu19', name:'AMD Threadripper PRO 5955WX', specs:'16C/32T · sWRX8 · 4.5GHz · 280W', price:6999, socket:'sWRX8', tdp:280, stores:{amazon:6999} },
-  { id:'cpu20', name:'AMD Threadripper PRO 5975WX', specs:'32C/64T · sWRX8 · 4.5GHz · 280W', price:14999, socket:'sWRX8', tdp:280, stores:{amazon:14999} },
-  { id:'cpu21', name:'AMD Threadripper PRO 7985WX', specs:'64C/128T · sWRX9 · 5.1GHz · 350W', price:29999, socket:'sWRX9', tdp:350, stores:{terabyte:29999} },
-  { id:'cpu22', name:'Intel Xeon W9-3595X', specs:'60C/120T · LGA4677 · 4.8GHz · 350W', price:34999, socket:'LGA4677', tdp:350, stores:{amazon:34999} },
-  { id:'cpu23', name:'AMD EPYC 9654', specs:'96C/192T · SP5 · 3.7GHz · 360W · Server', price:49999, socket:'SP5', tdp:360, stores:{amazon:49999} },
-  { id:'cpu24', name:'Intel Xeon Gold 6548Y+', specs:'32C/64T · LGA4677 · 4.1GHz · 250W', price:18999, socket:'LGA4677', tdp:250, stores:{amazon:18999} },
+  { id:'cpu06', name:'AMD Ryzen 9 7950X3D', specs:'16C/32T · AM5 · 5.7GHz · 3D V-Cache · 120W', price:4499, badge:'dest', socket:'AM5', tdp:120, stores:{terabyte:4499} },
+  { id:'cpu07', name:'AMD Ryzen 5 9600X', specs:'6C/12T · AM5 · 5.4GHz · 65W · Zen 5', price:1399, badge:'novo', socket:'AM5', tdp:65, stores:{kabum:1399,pichau:1419} },
+  { id:'cpu08', name:'AMD Ryzen 7 9700X', specs:'8C/16T · AM5 · 5.5GHz · 65W · Zen 5', price:1899, badge:'novo', socket:'AM5', tdp:65, stores:{kabum:1899,pichau:1929} },
+  { id:'cpu09', name:'AMD Ryzen 9 9950X', specs:'16C/32T · AM5 · 5.7GHz · 170W · Zen 5', price:3999, badge:'novo', socket:'AM5', tdp:170, stores:{pichau:3999,terabyte:4049} },
+  { id:'cpu10', name:'AMD Ryzen 5 5600X', specs:'6C/12T · AM4 · 4.6GHz · 65W', price:699, socket:'AM4', tdp:65, stores:{kabum:699,amazon:720,ml:689} },
+  { id:'cpu11', name:'AMD Ryzen 5 5600',  specs:'6C/12T · AM4 · 4.4GHz · 65W', price:599, socket:'AM4', tdp:65, stores:{kabum:599,amazon:610} },
+  { id:'cpu12', name:'AMD Ryzen 7 5700X', specs:'8C/16T · AM4 · 4.6GHz · 65W', price:849, socket:'AM4', tdp:65, stores:{kabum:849,pichau:869} },
+  { id:'cpu13', name:'AMD Ryzen 7 5800X3D', specs:'8C/16T · AM4 · 4.5GHz · 3D V-Cache · 105W', price:1199, badge:'dest', socket:'AM4', tdp:105, stores:{kabum:1199,pichau:1229} },
+  { id:'cpu14', name:'AMD Ryzen 9 5900X', specs:'12C/24T · AM4 · 4.8GHz · 105W', price:1499, socket:'AM4', tdp:105, stores:{kabum:1499,pichau:1520} },
+  { id:'cpu15', name:'Intel Core i3-14100F', specs:'4C/8T · LGA1700 · 4.7GHz · 58W', price:579, socket:'LGA1700', tdp:58, stores:{kabum:579,amazon:590} },
+  { id:'cpu16', name:'Intel Core i5-13600K', specs:'14C/20T · LGA1700 · 5.1GHz · 125W', price:1349, badge:'pop', socket:'LGA1700', tdp:125, stores:{kabum:1349,pichau:1379} },
+  { id:'cpu17', name:'Intel Core i5-14600K', specs:'14C/20T · LGA1700 · 5.3GHz · 125W', price:1489, socket:'LGA1700', tdp:125, stores:{kabum:1489,pichau:1499,terabyte:1510} },
+  { id:'cpu18', name:'Intel Core i7-14700K', specs:'20C/28T · LGA1700 · 5.6GHz · 253W', price:2299, socket:'LGA1700', tdp:253, stores:{kabum:2299,pichau:2349} },
+  { id:'cpu19', name:'Intel Core i9-14900K', specs:'24C/32T · LGA1700 · 6.0GHz · 253W', price:3299, socket:'LGA1700', tdp:253, stores:{pichau:3299,terabyte:3349} },
+  { id:'cpu20', name:'Intel Core i9-14900KS', specs:'24C/32T · LGA1700 · 6.2GHz · 253W', price:3899, socket:'LGA1700', tdp:253, stores:{terabyte:3899} },
+  { id:'cpu21', name:'Intel Core i5-13400F', specs:'10C/16T · LGA1700 · 4.6GHz · 65W', price:999, socket:'LGA1700', tdp:65, stores:{kabum:999,amazon:1010} },
+  { id:'cpu22', name:'AMD Threadripper PRO 5955WX', specs:'16C/32T · sWRX8 · 4.5GHz · 280W', price:6999, socket:'sWRX8', tdp:280, stores:{amazon:6999} },
+  { id:'cpu23', name:'AMD Threadripper PRO 7985WX', specs:'64C/128T · sWRX9 · 5.1GHz · 350W', price:29999, socket:'sWRX9', tdp:350, stores:{terabyte:29999} },
 ],
 cooler: [
-  { id:'cool01', name:'DeepCool AK620', specs:'Dual tower · 2×120mm · 260W TDP', price:289, badge:'dest', stores:{kabum:289,pichau:299} },
+  { id:'cool01', name:'DeepCool AK620', specs:'Dual tower · 2x120mm · 260W TDP', price:289, badge:'dest', stores:{kabum:289,pichau:299} },
   { id:'cool02', name:'DeepCool AK500', specs:'Single tower · 120mm · 240W TDP · ARGB', price:199, stores:{kabum:199,pichau:209} },
   { id:'cool03', name:'Cooler Master Hyper 212 Black', specs:'Single tower · 120mm · 150W TDP', price:139, stores:{kabum:139,amazon:149} },
-  { id:'cool04', name:'Noctua NH-D15', specs:'Dual tower · 2×140mm · 250W TDP', price:599, badge:'dest', stores:{kabum:599,terabyte:609} },
+  { id:'cool04', name:'Noctua NH-D15', specs:'Dual tower · 2x140mm · 250W TDP', price:599, badge:'dest', stores:{kabum:599,terabyte:609} },
   { id:'cool05', name:'Noctua NH-U12S', specs:'Single tower · 120mm · 160W TDP', price:349, stores:{kabum:349} },
-  { id:'cool06', name:'be quiet! Dark Rock Pro 5', specs:'Dual tower · 2×135mm · 250W TDP', price:529, stores:{terabyte:529} },
-  { id:'cool07', name:'NZXT Kraken 240 RGB', specs:'AIO 240mm · 2×120mm · LCD display', price:699, badge:'pop', stores:{kabum:699,pichau:719} },
-  { id:'cool08', name:'NZXT Kraken 360 RGB', specs:'AIO 360mm · 3×120mm · LCD display', price:899, stores:{kabum:899,pichau:919} },
-  { id:'cool09', name:'Corsair H100i Elite', specs:'AIO 240mm · 2×120mm · iCUE RGB', price:649, stores:{kabum:649,terabyte:669} },
-  { id:'cool10', name:'Corsair H150i Elite', specs:'AIO 360mm · 3×120mm · iCUE RGB', price:849, stores:{kabum:849} },
-  { id:'cool11', name:'ID-Cooling SE-226-XT', specs:'Dual tower · 2×120mm · 250W TDP · ARGB', price:239, stores:{kabum:239,ml:229} },
-  { id:'cool12', name:'Arctic Liquid Freezer III 360', specs:'AIO 360mm · 3×120mm · 56cfm', price:599, stores:{amazon:599} },
-  { id:'cool13', name:'Thermalright Peerless Assassin 120 SE', specs:'Dual tower · 2×120mm · 260W TDP', price:189, badge:'dest', stores:{amazon:189,ml:179} },
+  { id:'cool06', name:'be quiet! Dark Rock Pro 5', specs:'Dual tower · 2x135mm · 250W TDP', price:529, stores:{terabyte:529} },
+  { id:'cool07', name:'NZXT Kraken 240 RGB', specs:'AIO 240mm · 2x120mm · LCD display', price:699, badge:'pop', stores:{kabum:699,pichau:719} },
+  { id:'cool08', name:'NZXT Kraken 360 RGB', specs:'AIO 360mm · 3x120mm · LCD display', price:899, stores:{kabum:899,pichau:919} },
+  { id:'cool09', name:'Corsair H100i Elite', specs:'AIO 240mm · 2x120mm · iCUE RGB', price:649, stores:{kabum:649,terabyte:669} },
+  { id:'cool10', name:'Corsair H150i Elite', specs:'AIO 360mm · 3x120mm · iCUE RGB', price:849, stores:{kabum:849} },
+  { id:'cool11', name:'Thermalright Peerless Assassin 120 SE', specs:'Dual tower · 2x120mm · 260W TDP', price:189, badge:'dest', stores:{amazon:189,ml:179} },
+  { id:'cool12', name:'Arctic Liquid Freezer III 360', specs:'AIO 360mm · 3x120mm · 56cfm', price:599, stores:{amazon:599} },
+  { id:'cool13', name:'ID-Cooling SE-226-XT', specs:'Dual tower · 2x120mm · 250W TDP · ARGB', price:239, stores:{kabum:239,ml:229} },
 ],
 mobo: [
-  { id:'mobo01', name:'ASUS PRIME B650M-A', specs:'mATX · AM5 · DDR5 · PCIe 5.0', price:879, socket:'AM5', ramType:'DDR5', stores:{kabum:879,pichau:899} },
-  { id:'mobo02', name:'MSI PRO B650-P WiFi', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:999, socket:'AM5', ramType:'DDR5', stores:{kabum:999,terabyte:1010} },
-  { id:'mobo03', name:'Gigabyte B650 AORUS Elite', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · 4× M.2', price:1249, badge:'dest', socket:'AM5', ramType:'DDR5', stores:{pichau:1249,terabyte:1269} },
-  { id:'mobo04', name:'ASUS ROG STRIX B650E-F', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:1699, socket:'AM5', ramType:'DDR5', stores:{kabum:1699,pichau:1749} },
-  { id:'mobo05', name:'Gigabyte X670E AORUS Master', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:2499, socket:'AM5', ramType:'DDR5', stores:{terabyte:2499} },
-  { id:'mobo05b', name:'ASUS ROG Crosshair X670E Hero', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:2999, socket:'AM5', ramType:'DDR5', stores:{terabyte:2999} },
-  { id:'mobo06', name:'ASRock B550M Pro4', specs:'mATX · AM4 · DDR4 · PCIe 4.0', price:429, socket:'AM4', ramType:'DDR4', stores:{kabum:429,amazon:439} },
-  { id:'mobo07', name:'MSI MAG B550 TOMAHAWK', specs:'ATX · AM4 · DDR4 · PCIe 4.0', price:599, badge:'dest', socket:'AM4', ramType:'DDR4', stores:{kabum:599,pichau:619} },
-  { id:'mobo08', name:'ASUS ROG STRIX B550-F WiFi', specs:'ATX · AM4 · DDR4 · PCIe 4.0 · WiFi 6', price:849, socket:'AM4', ramType:'DDR4', stores:{kabum:849,terabyte:869} },
-  { id:'mobo09', name:'Gigabyte B760M DS3H', specs:'mATX · LGA1700 · DDR4 · PCIe 4.0', price:549, socket:'LGA1700', ramType:'DDR4', stores:{kabum:549,amazon:559} },
-  { id:'mobo10', name:'MSI MAG B760 TOMAHAWK WiFi', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · WiFi 6E', price:1099, badge:'pop', socket:'LGA1700', ramType:'DDR5', stores:{kabum:1099,pichau:1119} },
-  { id:'mobo11', name:'ASUS PRIME Z790-P WiFi', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · WiFi 6E', price:1399, socket:'LGA1700', ramType:'DDR5', stores:{kabum:1399,pichau:1429} },
-  { id:'mobo12', name:'ASUS ROG MAXIMUS Z790 Hero', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · WiFi 7', price:3499, socket:'LGA1700', ramType:'DDR5', stores:{terabyte:3499} },
-  { id:'mobo13', name:'ASRock Z790 PG Riptide', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · 2.5G LAN', price:1299, socket:'LGA1700', ramType:'DDR5', stores:{kabum:1299,terabyte:1329} },
+  { id:'mobo01', name:'ASUS PRIME B650M-A', specs:'mATX · AM5 · DDR5 · PCIe 5.0', price:879, socket:'AM5', ramType:'DDR5', formFactor:'mATX', stores:{kabum:879,pichau:899} },
+  { id:'mobo02', name:'MSI PRO B650-P WiFi', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:999, socket:'AM5', ramType:'DDR5', formFactor:'ATX', stores:{kabum:999,terabyte:1010} },
+  { id:'mobo03', name:'Gigabyte B650 AORUS Elite', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · 4x M.2', price:1249, badge:'dest', socket:'AM5', ramType:'DDR5', formFactor:'ATX', stores:{pichau:1249,terabyte:1269} },
+  { id:'mobo04', name:'ASUS ROG STRIX B650E-F', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:1699, socket:'AM5', ramType:'DDR5', formFactor:'ATX', stores:{kabum:1699,pichau:1749} },
+  { id:'mobo05', name:'Gigabyte X670E AORUS Master', specs:'ATX · AM5 · DDR5 · PCIe 5.0 · WiFi 6E', price:2499, socket:'AM5', ramType:'DDR5', formFactor:'ATX', stores:{terabyte:2499} },
+  { id:'mobo06', name:'ASRock B550M Pro4', specs:'mATX · AM4 · DDR4 · PCIe 4.0', price:429, socket:'AM4', ramType:'DDR4', formFactor:'mATX', stores:{kabum:429,amazon:439} },
+  { id:'mobo07', name:'MSI MAG B550 TOMAHAWK', specs:'ATX · AM4 · DDR4 · PCIe 4.0', price:599, badge:'dest', socket:'AM4', ramType:'DDR4', formFactor:'ATX', stores:{kabum:599,pichau:619} },
+  { id:'mobo08', name:'ASUS ROG STRIX B550-F WiFi', specs:'ATX · AM4 · DDR4 · PCIe 4.0 · WiFi 6', price:849, socket:'AM4', ramType:'DDR4', formFactor:'ATX', stores:{kabum:849,terabyte:869} },
+  { id:'mobo09', name:'Gigabyte B760M DS3H', specs:'mATX · LGA1700 · DDR4 · PCIe 4.0', price:549, socket:'LGA1700', ramType:'DDR4', formFactor:'mATX', stores:{kabum:549,amazon:559} },
+  { id:'mobo10', name:'MSI MAG B760 TOMAHAWK WiFi', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · WiFi 6E', price:1099, badge:'pop', socket:'LGA1700', ramType:'DDR5', formFactor:'ATX', stores:{kabum:1099,pichau:1119} },
+  { id:'mobo11', name:'ASUS PRIME Z790-P WiFi', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · WiFi 6E', price:1399, socket:'LGA1700', ramType:'DDR5', formFactor:'ATX', stores:{kabum:1399,pichau:1429} },
+  { id:'mobo12', name:'ASUS ROG MAXIMUS Z790 Hero', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · WiFi 7', price:3499, socket:'LGA1700', ramType:'DDR5', formFactor:'ATX', stores:{terabyte:3499} },
+  { id:'mobo13', name:'ASRock Z790 PG Riptide', specs:'ATX · LGA1700 · DDR5 · PCIe 5.0 · 2.5G LAN', price:1299, socket:'LGA1700', ramType:'DDR5', formFactor:'ATX', stores:{kabum:1299,terabyte:1329} },
 ],
 ram: [
-  { id:'ram01', name:'G.Skill Trident Z5 RGB 32GB DDR5', specs:'2×16GB · DDR5-6000 · CL30', price:679, badge:'dest', ramType:'DDR5', stores:{kabum:679,terabyte:699} },
-  { id:'ram02', name:'G.Skill Trident Z5 RGB 16GB DDR5', specs:'2×8GB · DDR5-6000 · CL30', price:399, ramType:'DDR5', stores:{kabum:399,pichau:409} },
-  { id:'ram03', name:'Corsair Vengeance DDR5 32GB', specs:'2×16GB · DDR5-5600 · CL36 · RGB', price:589, ramType:'DDR5', stores:{kabum:589,pichau:599} },
-  { id:'ram04', name:'Kingston Fury Beast 32GB DDR5', specs:'2×16GB · DDR5-5200 · CL40', price:499, ramType:'DDR5', stores:{kabum:499,amazon:509} },
-  { id:'ram05', name:'Team T-Force Delta 16GB DDR5', specs:'2×8GB · DDR5-5600 · CL36 · RGB', price:349, badge:'pop', ramType:'DDR5', stores:{kabum:349,ml:339} },
-  { id:'ram05b', name:'Crucial Pro 32GB DDR5', specs:'2×16GB · DDR5-5600 · CL46', price:449, ramType:'DDR5', stores:{amazon:449,terabyte:459} },
-  { id:'ram05c', name:'Micron Crucial Pro 64GB DDR5', specs:'2×32GB · DDR5-5600 · CL46', price:849, ramType:'DDR5', stores:{amazon:849} },
-  { id:'ram06', name:'G.Skill Ripjaws V 32GB DDR4', specs:'2×16GB · DDR4-3200 · CL16', price:319, ramType:'DDR4', stores:{kabum:319,terabyte:329} },
-  { id:'ram07', name:'Corsair Vengeance LPX 16GB DDR4', specs:'2×8GB · DDR4-3200 · CL16', price:219, ramType:'DDR4', stores:{kabum:219,amazon:229} },
-  { id:'ram08', name:'Kingston Fury Beast 32GB DDR4', specs:'2×16GB · DDR4-3200 · CL16 · RGB', price:289, ramType:'DDR4', stores:{kabum:289,pichau:299} },
-  { id:'ram09', name:'XPG Spectrix D50 16GB DDR4', specs:'2×8GB · DDR4-3600 · CL18 · RGB', price:259, ramType:'DDR4', stores:{kabum:259,terabyte:269} },
-  { id:'ram10', name:'Corsair Dominator Platinum 64GB DDR5', specs:'2×32GB · DDR5-6200 · CL32', price:1299, ramType:'DDR5', stores:{amazon:1299,terabyte:1349} },
-  { id:'ram11', name:'Samsung 16GB DDR4-3200 SODIMM', specs:'1×16GB · DDR4-3200 · Notebook', price:199, ramType:'DDR4', stores:{amazon:199,ml:189} },
+  { id:'ram01', name:'G.Skill Trident Z5 RGB 32GB DDR5', specs:'2x16GB · DDR5-6000 · CL30', price:679, badge:'dest', ramType:'DDR5', stores:{kabum:679,terabyte:699} },
+  { id:'ram02', name:'G.Skill Trident Z5 RGB 16GB DDR5', specs:'2x8GB · DDR5-6000 · CL30', price:399, ramType:'DDR5', stores:{kabum:399,pichau:409} },
+  { id:'ram03', name:'Corsair Vengeance DDR5 32GB', specs:'2x16GB · DDR5-5600 · CL36 · RGB', price:589, ramType:'DDR5', stores:{kabum:589,pichau:599} },
+  { id:'ram04', name:'Kingston Fury Beast 32GB DDR5', specs:'2x16GB · DDR5-5200 · CL40', price:499, ramType:'DDR5', stores:{kabum:499,amazon:509} },
+  { id:'ram05', name:'Crucial Pro 32GB DDR5', specs:'2x16GB · DDR5-5600 · CL46', price:449, ramType:'DDR5', stores:{amazon:449,terabyte:459} },
+  { id:'ram06', name:'Crucial Pro 64GB DDR5', specs:'2x32GB · DDR5-5600 · CL46', price:849, ramType:'DDR5', stores:{amazon:849} },
+  { id:'ram07', name:'G.Skill Ripjaws V 32GB DDR4', specs:'2x16GB · DDR4-3200 · CL16', price:319, ramType:'DDR4', stores:{kabum:319,terabyte:329} },
+  { id:'ram08', name:'Corsair Vengeance LPX 16GB DDR4', specs:'2x8GB · DDR4-3200 · CL16', price:219, ramType:'DDR4', stores:{kabum:219,amazon:229} },
+  { id:'ram09', name:'Kingston Fury Beast 32GB DDR4', specs:'2x16GB · DDR4-3200 · CL16 · RGB', price:289, ramType:'DDR4', stores:{kabum:289,pichau:299} },
+  { id:'ram10', name:'XPG Spectrix D50 16GB DDR4', specs:'2x8GB · DDR4-3600 · CL18 · RGB', price:259, ramType:'DDR4', stores:{kabum:259,terabyte:269} },
+  { id:'ram11', name:'Corsair Dominator Platinum 64GB DDR5', specs:'2x32GB · DDR5-6200 · CL32', price:1299, ramType:'DDR5', stores:{amazon:1299,terabyte:1349} },
 ],
 gpu: [
   { id:'gpu01', name:'NVIDIA RTX 4060 8GB', specs:'8GB GDDR6 · 4nm · 115W', price:1799, stores:{kabum:1799,pichau:1829,terabyte:1849} },
@@ -1335,20 +811,18 @@ gpu: [
   { id:'gpu05', name:'NVIDIA RTX 4070 Ti Super 16GB', specs:'16GB GDDR6X · 4nm · 285W', price:4299, stores:{kabum:4299,terabyte:4349} },
   { id:'gpu06', name:'NVIDIA RTX 4080 Super 16GB', specs:'16GB GDDR6X · 4nm · 320W', price:5999, stores:{kabum:5999,pichau:6099} },
   { id:'gpu07', name:'NVIDIA RTX 4090 24GB', specs:'24GB GDDR6X · 4nm · 450W', price:12999, badge:'dest', stores:{kabum:12999,terabyte:13299} },
-  { id:'gpu07b', name:'NVIDIA RTX 5080 16GB', specs:'16GB GDDR7 · 4nm · 360W · Blackwell', price:8999, badge:'novo', stores:{kabum:8999,pichau:9199} },
-  { id:'gpu07c', name:'NVIDIA RTX 5090 32GB', specs:'32GB GDDR7 · 4nm · 575W · Blackwell', price:19999, badge:'novo', stores:{terabyte:19999} },
-  { id:'gpu08', name:'AMD RX 7600 8GB', specs:'8GB GDDR6 · 5nm · 165W', price:1599, stores:{kabum:1599,pichau:1629} },
-  { id:'gpu09', name:'AMD RX 7700 XT 12GB', specs:'12GB GDDR6 · 5nm · 245W', price:2299, stores:{kabum:2299,pichau:2349} },
-  { id:'gpu10', name:'AMD RX 7800 XT 16GB', specs:'16GB GDDR6 · 5nm · 263W', price:2699, badge:'pop', stores:{kabum:2699,terabyte:2749} },
-  { id:'gpu11', name:'AMD RX 7900 GRE 16GB', specs:'16GB GDDR6 · 5nm · 260W', price:3299, stores:{kabum:3299,pichau:3399} },
-  { id:'gpu12', name:'AMD RX 7900 XT 20GB', specs:'20GB GDDR6 · 5nm · 315W', price:4499, stores:{terabyte:4499} },
-  { id:'gpu13', name:'AMD RX 7900 XTX 24GB', specs:'24GB GDDR6 · 5nm · 355W', price:5499, badge:'dest', stores:{kabum:5499,pichau:5699} },
-  { id:'gpu14', name:'Intel Arc A770 16GB', specs:'16GB GDDR6 · 6nm · 225W · Xe HPG', price:1399, stores:{amazon:1399,kabum:1449} },
-  { id:'gpu15', name:'Intel Arc A750 8GB', specs:'8GB GDDR6 · 6nm · 225W', price:1099, stores:{amazon:1099} },
-  { id:'gpu16', name:'NVIDIA RTX 4050 6GB (Notebook)', specs:'6GB GDDR6 · 4nm · 60W · Mobile', price:1299, stores:{amazon:1299} },
+  { id:'gpu08', name:'NVIDIA RTX 5080 16GB', specs:'16GB GDDR7 · 4nm · 360W · Blackwell', price:8999, badge:'novo', stores:{kabum:8999,pichau:9199} },
+  { id:'gpu09', name:'NVIDIA RTX 5090 32GB', specs:'32GB GDDR7 · 4nm · 575W · Blackwell', price:19999, badge:'novo', stores:{terabyte:19999} },
+  { id:'gpu10', name:'AMD RX 7600 8GB', specs:'8GB GDDR6 · 5nm · 165W', price:1599, stores:{kabum:1599,pichau:1629} },
+  { id:'gpu11', name:'AMD RX 7700 XT 12GB', specs:'12GB GDDR6 · 5nm · 245W', price:2299, stores:{kabum:2299,pichau:2349} },
+  { id:'gpu12', name:'AMD RX 7800 XT 16GB', specs:'16GB GDDR6 · 5nm · 263W', price:2699, badge:'pop', stores:{kabum:2699,terabyte:2749} },
+  { id:'gpu13', name:'AMD RX 7900 GRE 16GB', specs:'16GB GDDR6 · 5nm · 260W', price:3299, stores:{kabum:3299,pichau:3399} },
+  { id:'gpu14', name:'AMD RX 7900 XTX 24GB', specs:'24GB GDDR6 · 5nm · 355W', price:5499, badge:'dest', stores:{kabum:5499,pichau:5699} },
+  { id:'gpu15', name:'Intel Arc A770 16GB', specs:'16GB GDDR6 · 6nm · 225W · Xe HPG', price:1399, stores:{amazon:1399,kabum:1449} },
+  { id:'gpu16', name:'Intel Arc A750 8GB', specs:'8GB GDDR6 · 6nm · 225W', price:1099, stores:{amazon:1099} },
 ],
 storage: [
-  { id:'ssd01', name:'WD Black SN850X 1TB NVMe', specs:'PCIe 4.0 · 7300MB/s leitura · 6600MB/s escrita', price:499, badge:'dest', stores:{kabum:499,amazon:509,terabyte:519} },
+  { id:'ssd01', name:'WD Black SN850X 1TB NVMe', specs:'PCIe 4.0 · 7300MB/s leitura', price:499, badge:'dest', stores:{kabum:499,amazon:509,terabyte:519} },
   { id:'ssd02', name:'WD Black SN850X 2TB NVMe', specs:'PCIe 4.0 · 7300MB/s leitura', price:799, stores:{kabum:799,amazon:819} },
   { id:'ssd03', name:'Samsung 990 Pro 1TB NVMe', specs:'PCIe 4.0 · 7450MB/s leitura', price:549, badge:'pop', stores:{amazon:549,terabyte:559} },
   { id:'ssd04', name:'Samsung 990 Pro 2TB NVMe', specs:'PCIe 4.0 · 7450MB/s leitura', price:899, stores:{amazon:899,terabyte:919} },
@@ -1356,80 +830,75 @@ storage: [
   { id:'ssd06', name:'Kingston NV2 2TB NVMe', specs:'PCIe 4.0 · 3500MB/s leitura', price:499, stores:{kabum:499,amazon:509} },
   { id:'ssd07', name:'Seagate Barracuda 2TB HDD', specs:'SATA III · 7200rpm · 256MB cache', price:289, stores:{kabum:289,amazon:299,ml:279} },
   { id:'ssd08', name:'Seagate Barracuda 4TB HDD', specs:'SATA III · 7200rpm · 256MB cache', price:479, stores:{kabum:479,amazon:489} },
-  { id:'ssd09', name:'WD Blue 2TB HDD', specs:'SATA III · 7200rpm · 256MB cache', price:279, stores:{kabum:279,amazon:289} },
+  { id:'ssd09', name:'WD Blue 2TB HDD', specs:'SATA III · 7200rpm', price:279, stores:{kabum:279,amazon:289} },
   { id:'ssd10', name:'Crucial P3 Plus 1TB NVMe', specs:'PCIe 4.0 · 5000MB/s leitura', price:269, stores:{kabum:269,amazon:279} },
   { id:'ssd11', name:'XPG S70 Blade 1TB NVMe', specs:'PCIe 4.0 · 7400MB/s leitura', price:399, stores:{kabum:399,terabyte:409} },
   { id:'ssd12', name:'Samsung 870 EVO 1TB SATA', specs:'SATA III · 560MB/s leitura', price:349, stores:{amazon:349,terabyte:359} },
-  { id:'ssd13', name:'Seagate IronWolf 4TB NAS', specs:'SATA III · 5400rpm · NAS/Server', price:599, stores:{amazon:599,terabyte:619} },
-  { id:'ssd14', name:'WD Red Plus 6TB NAS', specs:'SATA III · 5640rpm · CMR · NAS', price:899, stores:{amazon:899} },
-  { id:'ssd15', name:'Samsung 980 Pro 2TB NVMe', specs:'PCIe 4.0 · 7000MB/s leitura', price:699, stores:{amazon:699,kabum:719} },
-  { id:'ssd16', name:'Micron 2450 1TB NVMe', specs:'PCIe 4.0 · 6600MB/s leitura', price:319, stores:{amazon:319} },
-  { id:'ssd17', name:'WD Black SN770 1TB NVMe', specs:'PCIe 4.0 · 5150MB/s leitura', price:349, stores:{kabum:349,amazon:359} },
+  { id:'ssd13', name:'WD Black SN770 1TB NVMe', specs:'PCIe 4.0 · 5150MB/s leitura', price:349, stores:{kabum:349,amazon:359} },
 ],
 psu: [
-  { id:'psu01', name:'Corsair RM850x 850W', specs:'80+ Gold · Totalmente modular · 10 anos garantia', price:699, badge:'dest', wattage:850, stores:{kabum:699,pichau:719} },
+  { id:'psu01', name:'Corsair RM850x 850W', specs:'80+ Gold · Totalmente modular', price:699, badge:'dest', wattage:850, stores:{kabum:699,pichau:719} },
   { id:'psu02', name:'Corsair RM750x 750W', specs:'80+ Gold · Totalmente modular', price:599, wattage:750, stores:{kabum:599,pichau:619} },
   { id:'psu03', name:'Corsair RM1000x 1000W', specs:'80+ Gold · Totalmente modular', price:899, wattage:1000, stores:{kabum:899,terabyte:919} },
-  { id:'psu04', name:'Seasonic Focus GX-750 750W', specs:'80+ Gold · Totalmente modular · 10 anos garantia', price:589, badge:'dest', wattage:750, stores:{terabyte:589} },
+  { id:'psu04', name:'Seasonic Focus GX-750 750W', specs:'80+ Gold · Totalmente modular · 10 anos', price:589, badge:'dest', wattage:750, stores:{terabyte:589} },
   { id:'psu05', name:'Seasonic Focus GX-850 850W', specs:'80+ Gold · Totalmente modular', price:699, wattage:850, stores:{terabyte:699} },
   { id:'psu06', name:'be quiet! Straight Power 12 1000W', specs:'80+ Platinum · Modular · silencioso', price:949, wattage:1000, stores:{terabyte:949} },
   { id:'psu07', name:'EVGA SuperNOVA 650 G6 650W', specs:'80+ Gold · Totalmente modular', price:479, wattage:650, stores:{amazon:479,ml:469} },
   { id:'psu08', name:'DeepCool PQ850M 850W', specs:'80+ Gold · Totalmente modular', price:549, wattage:850, stores:{kabum:549,pichau:559} },
   { id:'psu09', name:'Cooler Master MWE Gold 750W', specs:'80+ Gold · Totalmente modular', price:499, wattage:750, stores:{kabum:499,pichau:509} },
-  { id:'psu10', name:'XPG Core Reactor II 1000W', specs:'80+ Gold · Totalmente modular · ATX 3.0', price:799, badge:'pop', wattage:1000, stores:{kabum:799,terabyte:819} },
+  { id:'psu10', name:'XPG Core Reactor II 1000W', specs:'80+ Gold · Modular · ATX 3.0', price:799, badge:'pop', wattage:1000, stores:{kabum:799,terabyte:819} },
   { id:'psu11', name:'Corsair HX1200 1200W', specs:'80+ Platinum · Totalmente modular', price:1199, wattage:1200, stores:{kabum:1199,terabyte:1249} },
   { id:'psu12', name:'Seasonic PRIME TX-1300 1300W', specs:'80+ Titanium · Modular', price:1499, wattage:1300, stores:{terabyte:1499} },
 ],
 case: [
   { id:'case01', name:'Lian Li O11 Dynamic EVO', specs:'Mid Tower · ATX/mATX/ITX · Vidro temperado', price:879, badge:'dest', formFactor:'ATX', color:'Preto', stores:{pichau:879,terabyte:899} },
   { id:'case02', name:'Lian Li O11 Air Mini', specs:'mATX/ITX · Malha frontal · alto airflow', price:699, formFactor:'mATX', color:'Preto', stores:{pichau:699} },
-  { id:'case03', name:'NZXT H7 Flow', specs:'Mid Tower · ATX · Malha frontal · 2×140mm', price:699, badge:'pop', formFactor:'ATX', color:'Preto', stores:{kabum:699,pichau:719} },
+  { id:'case03', name:'NZXT H7 Flow', specs:'Mid Tower · ATX · Malha frontal · 2x140mm', price:699, badge:'pop', formFactor:'ATX', color:'Preto', stores:{kabum:699,pichau:719} },
   { id:'case04', name:'NZXT H5 Flow', specs:'Mid Tower · ATX · Malha frontal · compacto', price:499, formFactor:'ATX', color:'Preto', stores:{kabum:499,pichau:509} },
-  { id:'case04b', name:'NZXT H5 Flow Branco', specs:'Mid Tower · ATX · Malha frontal · compacto', price:519, formFactor:'ATX', color:'Branco', stores:{kabum:519,pichau:529} },
-  { id:'case05', name:'Fractal Design Meshify 2', specs:'Mid Tower · ATX · Malha frontal · 3×140mm', price:799, formFactor:'ATX', color:'Preto', stores:{terabyte:799} },
-  { id:'case05b', name:'Fractal Design North', specs:'Mid Tower · ATX · Frente de madeira · 2×140mm', price:899, badge:'dest', formFactor:'ATX', color:'Bege', stores:{terabyte:899,pichau:919} },
-  { id:'case06', name:'Fractal Design Pop Air', specs:'Mid Tower · ATX · Malha frontal · 3×120mm', price:499, formFactor:'ATX', color:'Preto', stores:{terabyte:499,kabum:519} },
-  { id:'case06b', name:'Fractal Design Pop Air Branco', specs:'Mid Tower · ATX · Malha frontal · 3×120mm', price:499, formFactor:'ATX', color:'Branco', stores:{terabyte:499} },
-  { id:'case07', name:'Cooler Master NR200P', specs:'Mini-ITX · SFX · Vidro temperado', price:479, formFactor:'ITX', color:'Preto', stores:{kabum:479,amazon:499} },
-  { id:'case07b', name:'Cooler Master NR200P Branco', specs:'Mini-ITX · SFX · Vidro temperado', price:499, formFactor:'ITX', color:'Branco', stores:{amazon:499} },
-  { id:'case08', name:'Phanteks Eclipse G360A', specs:'Mid Tower · ATX · Malha frontal · DRGB', price:599, formFactor:'ATX', color:'Preto', stores:{pichau:599,terabyte:609} },
-  { id:'case09', name:'DeepCool CH510', specs:'Mid Tower · ATX · Vidro temperado', price:329, formFactor:'ATX', color:'Preto', stores:{kabum:329,amazon:339} },
-  { id:'case09b', name:'DeepCool CH510 Branco', specs:'Mid Tower · ATX · Vidro temperado', price:349, formFactor:'ATX', color:'Branco', stores:{amazon:349} },
-  { id:'case10', name:'Corsair 4000D Airflow', specs:'Mid Tower · ATX · Malha frontal · 2×120mm', price:549, badge:'pop', formFactor:'ATX', color:'Preto', stores:{kabum:549,terabyte:559} },
-  { id:'case10b', name:'Corsair 4000D Airflow Branco', specs:'Mid Tower · ATX · Malha frontal · 2×120mm', price:549, formFactor:'ATX', color:'Branco', stores:{terabyte:549} },
-  { id:'case11', name:'Lian Li LANCOOL III', specs:'Full Tower · E-ATX/ATX · 7×120mm slots', price:899, formFactor:'E-ATX', color:'Preto', stores:{pichau:899,terabyte:919} },
-  { id:'case12', name:'be quiet! Silent Base 802', specs:'Mid Tower · ATX · Isolamento sonoro', price:749, formFactor:'ATX', color:'Preto', stores:{terabyte:749} },
+  { id:'case05', name:'NZXT H5 Flow Branco', specs:'Mid Tower · ATX · Malha frontal · compacto', price:519, formFactor:'ATX', color:'Branco', stores:{kabum:519,pichau:529} },
+  { id:'case06', name:'Fractal Design Meshify 2', specs:'Mid Tower · ATX · Malha frontal · 3x140mm', price:799, formFactor:'ATX', color:'Preto', stores:{terabyte:799} },
+  { id:'case07', name:'Fractal Design North', specs:'Mid Tower · ATX · Frente de madeira · 2x140mm', price:899, badge:'dest', formFactor:'ATX', color:'Bege', stores:{terabyte:899,pichau:919} },
+  { id:'case08', name:'Fractal Design Pop Air', specs:'Mid Tower · ATX · Malha frontal · 3x120mm', price:499, formFactor:'ATX', color:'Preto', stores:{terabyte:499,kabum:519} },
+  { id:'case09', name:'Fractal Design Pop Air Branco', specs:'Mid Tower · ATX · 3x120mm', price:499, formFactor:'ATX', color:'Branco', stores:{terabyte:499} },
+  { id:'case10', name:'Cooler Master NR200P', specs:'Mini-ITX · SFX · Vidro temperado', price:479, formFactor:'ITX', color:'Preto', stores:{kabum:479,amazon:499} },
+  { id:'case11', name:'Cooler Master NR200P Branco', specs:'Mini-ITX · SFX · Vidro temperado', price:499, formFactor:'ITX', color:'Branco', stores:{amazon:499} },
+  { id:'case12', name:'DeepCool CH510', specs:'Mid Tower · ATX · Vidro temperado', price:329, formFactor:'ATX', color:'Preto', stores:{kabum:329,amazon:339} },
+  { id:'case13', name:'DeepCool CH510 Branco', specs:'Mid Tower · ATX · Vidro temperado', price:349, formFactor:'ATX', color:'Branco', stores:{amazon:349} },
+  { id:'case14', name:'Corsair 4000D Airflow', specs:'Mid Tower · ATX · Malha frontal · 2x120mm', price:549, badge:'pop', formFactor:'ATX', color:'Preto', stores:{kabum:549,terabyte:559} },
+  { id:'case15', name:'Corsair 4000D Airflow Branco', specs:'Mid Tower · ATX · 2x120mm', price:549, formFactor:'ATX', color:'Branco', stores:{terabyte:549} },
+  { id:'case16', name:'Lian Li LANCOOL III', specs:'Full Tower · E-ATX/ATX · 7x120mm slots', price:899, formFactor:'E-ATX', color:'Preto', stores:{pichau:899,terabyte:919} },
+  { id:'case17', name:'be quiet! Silent Base 802', specs:'Mid Tower · ATX · Isolamento sonoro', price:749, formFactor:'ATX', color:'Preto', stores:{terabyte:749} },
+  { id:'case18', name:'Phanteks Eclipse G360A', specs:'Mid Tower · ATX · Malha frontal · DRGB', price:599, formFactor:'ATX', color:'Preto', stores:{pichau:599,terabyte:609} },
 ],
-// ── PERIFÉRICOS ──
 mouse: [
   { id:'ms01', name:'Logitech G Pro X Superlight 2', specs:'60g · Sensor HERO 25K · sem fio · USB-C', price:699, badge:'dest', stores:{kabum:699,amazon:729} },
   { id:'ms02', name:'Razer DeathAdder V3', specs:'59g · Sensor Focus Pro 30K · 90h bateria', price:499, stores:{kabum:499,amazon:519} },
-  { id:'ms03', name:'SteelSeries Rival 5', specs:'85.8g · Sensor TrueMove Air · 8 botões', price:299, stores:{kabum:299,pichau:309} },
+  { id:'ms03', name:'SteelSeries Rival 5', specs:'85.8g · Sensor TrueMove Air · 8 botoes', price:299, stores:{kabum:299,pichau:309} },
   { id:'ms04', name:'Logitech G502 X Plus', specs:'106g · Sensor HERO 25K · sem fio · RGB', price:599, stores:{kabum:599,amazon:619} },
   { id:'ms05', name:'Glorious Model O 2', specs:'59g · Sensor Bambo 26K · com fio', price:299, badge:'pop', stores:{amazon:299} },
   { id:'ms06', name:'HyperX Pulsefire Haste 2 Wireless', specs:'61g · Sensor HyperX 26K · sem fio', price:449, stores:{kabum:449,amazon:469} },
-  { id:'ms07', name:'ASUS ROG Gladius III Wireless AimPoint', specs:'79g · Sensor AimPoint Pro 36K · sem fio', price:549, stores:{kabum:549,amazon:569} },
+  { id:'ms07', name:'ASUS ROG Gladius III Wireless', specs:'79g · Sensor AimPoint Pro 36K · sem fio', price:549, stores:{kabum:549,amazon:569} },
   { id:'ms08', name:'Corsair M75 Air', specs:'60g · Sensor AI-23000 · sem fio · 100h', price:499, stores:{kabum:499,terabyte:519} },
 ],
 monitor: [
-  { id:'mon01', name:'LG 27GP850-B 27"', specs:'1440p · 165Hz · IPS · 1ms GTG · G-Sync Comp.', price:1799, badge:'dest', stores:{kabum:1799,amazon:1849} },
-  { id:'mon02', name:'Samsung Odyssey G7 32" Curvo', specs:'1440p · 240Hz · VA · 1ms · G-Sync Comp.', price:2499, stores:{kabum:2499,amazon:2549} },
+  { id:'mon01', name:'LG 27GP850-B 27"', specs:'1440p · 165Hz · IPS · 1ms GTG · G-Sync', price:1799, badge:'dest', stores:{kabum:1799,amazon:1849} },
+  { id:'mon02', name:'Samsung Odyssey G7 32" Curvo', specs:'1440p · 240Hz · VA · 1ms · G-Sync', price:2499, stores:{kabum:2499,amazon:2549} },
   { id:'mon03', name:'ASUS ROG Swift PG27AQDM 27"', specs:'1440p · 240Hz · OLED · 0.03ms · G-Sync', price:3999, badge:'dest', stores:{kabum:3999,terabyte:4099} },
   { id:'mon04', name:'Dell S2722DGM 27"', specs:'1440p · 165Hz · VA · 1ms · FreeSync', price:1499, stores:{amazon:1499,kabum:1549} },
   { id:'mon05', name:'LG 27UK650-W 27"', specs:'4K · 60Hz · IPS · HDR400 · sRGB 99%', price:1899, stores:{amazon:1899,kabum:1949} },
   { id:'mon06', name:'AOC 24G2 24"', specs:'1080p · 144Hz · IPS · 1ms · FreeSync', price:999, badge:'pop', stores:{kabum:999,pichau:1019} },
-  { id:'mon07', name:'Alienware AW3423DWF 34"', specs:'3440×1440 · 165Hz · QD-OLED · FreeSync', price:4999, stores:{amazon:4999} },
+  { id:'mon07', name:'Alienware AW3423DWF 34"', specs:'3440x1440 · 165Hz · QD-OLED · FreeSync', price:4999, stores:{amazon:4999} },
 ],
 keyboard: [
   { id:'kb01', name:'Logitech G Pro X TKL Wireless', specs:'TKL · Hot-swap · sem fio · GX switches', price:799, badge:'dest', stores:{kabum:799,amazon:829} },
   { id:'kb02', name:'Razer BlackWidow V4 Pro', specs:'Full · Razer Green/Yellow switches · sem fio', price:1299, stores:{kabum:1299,amazon:1349} },
-  { id:'kb03', name:'HyperX Alloy Origins 65', specs:'65% · HyperX switches · RGB · alumínio', price:499, stores:{kabum:499,amazon:519} },
+  { id:'kb03', name:'HyperX Alloy Origins 65', specs:'65% · HyperX switches · RGB · aluminio', price:499, stores:{kabum:499,amazon:519} },
   { id:'kb04', name:'Keychron Q3 Pro', specs:'TKL · Gasket mount · Gateron switches · sem fio', price:899, badge:'pop', stores:{amazon:899} },
   { id:'kb05', name:'Corsair K100 RGB', specs:'Full · OPX Optical switches · Aluminum · iCUE', price:999, stores:{kabum:999,terabyte:1029} },
-  { id:'kb06', name:'SteelSeries Apex Pro TKL Wireless', specs:'TKL · OmniPoint 2.0 · ajustável · sem fio', price:1099, stores:{kabum:1099,amazon:1149} },
+  { id:'kb06', name:'SteelSeries Apex Pro TKL Wireless', specs:'TKL · OmniPoint 2.0 · ajustavel · sem fio', price:1099, stores:{kabum:1099,amazon:1149} },
 ],
 headphone: [
-  { id:'hp01', name:'HyperX Cloud Alpha Wireless', specs:'Planar magnético · 300h bateria · DTS 7.1', price:699, badge:'dest', stores:{kabum:699,amazon:729} },
+  { id:'hp01', name:'HyperX Cloud Alpha Wireless', specs:'Planar magnetico · 300h bateria · DTS 7.1', price:699, badge:'dest', stores:{kabum:699,amazon:729} },
   { id:'hp02', name:'Logitech G Pro X Wireless', specs:'DTS 7.1 · 20h bateria · Blue Voice mic', price:799, stores:{kabum:799,amazon:819} },
   { id:'hp03', name:'Razer Kraken V3 Pro', specs:'THX 7.1 · sem fio · TriForce 50mm', price:899, stores:{kabum:899,pichau:919} },
   { id:'hp04', name:'SteelSeries Arctis Nova Pro Wireless', specs:'Hi-Res audio · ANC · 22h bateria', price:1499, badge:'pop', stores:{kabum:1499,amazon:1549} },
@@ -1437,53 +906,13 @@ headphone: [
 ],
 };
 
-// Adicionar periféricos ao catálogo
-const PERIPH_CATS = [
-  { id:'mouse',    label:'Mouse',      icon:'MSE' },
-  { id:'monitor',  label:'Monitor',    icon:'MON' },
-  { id:'keyboard', label:'Teclado',    icon:'TEC' },
-  { id:'headphone',label:'Headphone',  icon:'AUD' },
-];
-  { id:'gpu06', name:'NVIDIA RTX 4080 Super 16GB',    specs:'16GB GDDR6X · 4nm · 320W', price:6499, stores:{pichau:6499,terabyte:6549} },
-  { id:'gpu07', name:'NVIDIA RTX 4090 24GB',          specs:'24GB GDDR6X · 4nm · 450W', price:8999, stores:{pichau:8999,terabyte:9199} },
-  { id:'gpu08', name:'AMD RX 7600 8GB',               specs:'8GB GDDR6 · 6nm · 165W · RDNA 3', price:1399, stores:{kabum:1399,amazon:1419,ml:1389} },
-  { id:'gpu09', name:'AMD RX 7700 XT 12GB',           specs:'12GB GDDR6 · 6nm · 245W · RDNA 3', price:2199, stores:{kabum:2199,pichau:2229} },
-  { id:'gpu10', name:'AMD RX 7800 XT 16GB',           specs:'16GB GDDR6 · 6nm · 263W · RDNA 3', price:2699, badge:'pop', stores:{kabum:2699,pichau:2749} },
-  { id:'gpu11', name:'AMD RX 7900 GRE 16GB',          specs:'16GB GDDR6 · 6nm · 260W · RDNA 3', price:3199, stores:{pichau:3199,terabyte:3249} },
-  { id:'gpu12', name:'AMD RX 7900 XT 20GB',           specs:'20GB GDDR6 · 6nm · 315W · RDNA 3', price:3799, stores:{kabum:3799,terabyte:3849} },
-  { id:'gpu13', name:'AMD RX 7900 XTX 24GB',          specs:'24GB GDDR6 · 6nm · 355W · RDNA 3', price:4299, badge:'dest', stores:{pichau:4299,terabyte:4349} },
-  { id:'gpu14', name:'Intel Arc A770 16GB',            specs:'16GB GDDR6 · 6nm · 225W', price:1199, badge:'novo', stores:{kabum:1199,amazon:1219} },
-  { id:'gpu15', name:'NVIDIA RTX 3060 12GB',           specs:'12GB GDDR6 · 8nm · 170W · Ampere', price:1499, stores:{ml:1499,amazon:1549} },
-  { id:'gpu16', name:'NVIDIA RTX 3070 8GB',            specs:'8GB GDDR6 · 8nm · 220W · Ampere', price:1899, stores:{ml:1899,amazon:1949} },
-],
-storage: [
-  { id:'ssd01', name:'WD Black SN850X 1TB NVMe',      specs:'PCIe 4.0 · 7300MB/s leitura · 6600MB/s escrita', price:449, badge:'dest', stores:{kabum:449,amazon:459} },
-  { id:'ssd02', name:'WD Black SN850X 2TB NVMe',      specs:'PCIe 4.0 · 7300MB/s leitura · 6600MB/s escrita', price:799, stores:{kabum:799,amazon:819} },
-  { id:'ssd03', name:'Samsung 990 Pro 1TB NVMe',      specs:'PCIe 4.0 · 7450MB/s leitura · 6900MB/s escrita', price:499, badge:'pop', stores:{amazon:499,terabyte:509} },
-  { id:'ssd04', name:'Samsung 990 Pro 2TB NVMe',      specs:'PCIe 4.0 · 7450MB/s leitura · 6900MB/s escrita', price:899, stores:{amazon:899,terabyte:919} },
-  { id:'ssd05', name:'Kingston NV2 1TB NVMe',         specs:'PCIe 4.0 · 3500MB/s leitura', price:299, stores:{kabum:299,amazon:309} },
-  { id:'ssd06', name:'Kingston NV2 2TB NVMe',         specs:'PCIe 4.0 · 3500MB/s leitura', price:499, stores:{kabum:499,amazon:509} },
-  { id:'ssd07', name:'Seagate Barracuda 2TB HDD',     specs:'SATA III · 7200rpm · 256MB cache', price:289, stores:{kabum:289,amazon:299,ml:279} },
-  { id:'ssd08', name:'Seagate Barracuda 4TB HDD',     specs:'SATA III · 7200rpm · 256MB cache', price:479, stores:{kabum:479,amazon:489} },
-  { id:'ssd09', name:'WD Blue 2TB HDD',               specs:'SATA III · 7200rpm · 256MB cache', price:279, stores:{kabum:279,amazon:289} },
-  { id:'ssd10', name:'Crucial P3 Plus 1TB NVMe',      specs:'PCIe 4.0 · 5000MB/s leitura', price:269, stores:{kabum:269,amazon:279} },
-  { id:'ssd11', name:'XPG S70 Blade 1TB NVMe',        specs:'PCIe 4.0 · 7400MB/s leitura', price:399, stores:{kabum:399,terabyte:409} },
-  { id:'ssd12', name:'Samsung 870 EVO 1TB SATA',      specs:'SATA III · 560MB/s leitura · 530MB/s escrita', price:349, stores:{amazon:349,terabyte:359} },
-],
-psu: [
-  { id:'psu01', name:'Corsair RM850x 850W',          specs:'80+ Gold · Totalmente modular · 10 anos garantia', price:699, badge:'dest', wattage:850, stores:{kabum:699,pichau:719} },
-  { id:'psu02', name:'Corsair RM750x 750W',          specs:'80+ Gold · Totalmente modular', price:599, wattage:750, stores:{kabum:599,pichau:619} },
-  { id:'psu03', name:'Corsair RM1000x 1000W',        specs:'80+ Gold · Totalmente modular', price:899, wattage:1000, stores:{kabum:899,terabyte:919} },
-  { id:'psu04', name:'Seasonic Focus GX-750 750W',   specs:'80+ Gold · Totalmente modular · 10 anos garantia', price:589, badge:'dest', wattage:750, stores:{terabyte:589} },
-  { id:'psu05', name:'Seasonic Focus GX-850 850W',   specs:'80+ Gold · Totalmente modular', price:699, wattage:850, stores:{terabyte:699} },
-  { id:'psu06', name:'be quiet! Straight Power 12 1000W', specs:'80+ Platinum · Modular · silencioso', price:949, wattage:1000, stores:{terabyte:949} },
-],
-};
-
+// ══════════════════════════════════════════════════
+// BUILDS DATA
+// ══════════════════════════════════════════════════
 let BUILDS_DATA = [
-  { id:'b1', name:'Setup Gamer 1080p', author:'Admin', total:5499, parts:['Ryzen 5 7600X','RTX 4060 Ti','ASUS B650M-A','32GB DDR5','1TB NVMe WD Black','Corsair RM750x','NZXT H7 Flow'], votes:312, uso:'Gaming 1080p/1440p', reviews:[] },
-  { id:'b2', name:'Workstation 4K', author:'Admin', total:9200, parts:['Intel i9-14900K','RTX 4080 Super','ASUS Z790-P','64GB DDR5','2TB Samsung 990 Pro','Corsair RM1000x','Lian Li O11 EVO'], votes:221, uso:'Edição de vídeo 4K', reviews:[] },
-  { id:'b3', name:'Custo-Benefício', author:'Admin', total:2899, parts:['Ryzen 5 5600X','AMD RX 7600','MSI B550 Tomahawk','16GB DDR4','1TB Kingston NV2','Seasonic GX-750','Cooler Master NR200P'], votes:498, uso:'Gaming 1080p', reviews:[] },
+  { id:'b1', name:'Setup Gamer 1080p', author:'Admin', total:5499, parts:['Ryzen 5 7600X','RTX 4060 Ti','ASUS B650M-A','32GB DDR5','1TB WD Black','Corsair RM750x','NZXT H7 Flow'], votes:312, uso:'Gaming 1080p/1440p', reviews:[] },
+  { id:'b2', name:'Workstation 4K', author:'Admin', total:9200, parts:['Intel i9-14900K','RTX 4080 Super','ASUS Z790-P','64GB DDR5','2TB Samsung 990 Pro','Corsair RM1000x','Lian Li O11 EVO'], votes:221, uso:'Edicao de video 4K', reviews:[] },
+  { id:'b3', name:'Custo-Beneficio', author:'Admin', total:2899, parts:['Ryzen 5 5600X','AMD RX 7600','MSI B550 Tomahawk','16GB DDR4','1TB Kingston NV2','Seasonic GX-750','Cooler Master NR200P'], votes:498, uso:'Gaming 1080p', reviews:[] },
   { id:'b4', name:'Overkill 4K', author:'Admin', total:16800, parts:['Ryzen 9 7950X3D','RX 7900 XTX','Gigabyte X670E AORUS','64GB DDR5-6000','2TB WD Black SN850X','1000W 80+ Platinum','Lian Li O11 EVO'], votes:104, uso:'4K + Streaming', reviews:[] },
   { id:'b5', name:'Mini ITX Potente', author:'Admin', total:6900, parts:['Intel i5-14600K','RTX 4070 Super','MSI B760 Tomahawk','32GB DDR5','1TB WD Black SN850X','Seasonic 750W Gold','Cooler Master NR200P'], votes:187, uso:'Gaming compacto', reviews:[] },
   { id:'b6', name:'Budget Master', author:'Admin', total:1999, parts:['Intel i3-14100F','Intel Arc A770 16GB','Gigabyte B760M DS3H','16GB DDR4-3200','512GB SSD','EVGA 650W Gold','DeepCool CH510'], votes:634, uso:'Jogos casuais / Office', reviews:[] },
@@ -1491,27 +920,48 @@ let BUILDS_DATA = [
   { id:'b8', name:'Streamer Pro', author:'Admin', total:8500, parts:['Intel i7-14700K','RTX 4070 Ti Super','ASUS Z790-P WiFi','64GB DDR5','2TB Samsung 990 Pro','Corsair RM1000x','NZXT H7 Flow'], votes:178, uso:'Gaming + Streaming', reviews:[] },
 ];
 
-// ═══════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════
-let build = {};
+// ══════════════════════════════════════════════════
+// USED PARTS
+// ══════════════════════════════════════════════════
+const USED_PARTS = [
+  { name:'AMD Ryzen 7 5800X', specs:'AM4 · 8C/16T · usado', price:649, src:'Mercado Livre', link:'https://lista.mercadolivre.com.br/AMD-Ryzen-7-5800X' },
+  { name:'NVIDIA RTX 3070 8GB', specs:'8GB GDDR6 · usado', price:1499, src:'Mercado Livre', link:'https://lista.mercadolivre.com.br/RTX-3070' },
+  { name:'NVIDIA RTX 3060 12GB', specs:'12GB GDDR6 · usado', price:1199, src:'Shopee', link:'https://shopee.com.br/search?keyword=RTX+3060+usado' },
+  { name:'AMD Ryzen 5 5600X', specs:'AM4 · 6C/12T · usado', price:499, src:'Facebook', link:'https://www.facebook.com/marketplace' },
+  { name:'Corsair RM750x 750W', specs:'80+ Gold · usado · testado', price:449, src:'Mercado Livre', link:'https://lista.mercadolivre.com.br/Corsair-RM750x' },
+  { name:'Kingston Fury Beast 32GB DDR4', specs:'DDR4-3200 · usado', price:199, src:'Shopee', link:'https://shopee.com.br/search?keyword=32GB+DDR4+usado' },
+  { name:'Samsung 970 EVO 500GB', specs:'NVMe · PCIe 3.0 · usado', price:149, src:'Mercado Livre', link:'https://lista.mercadolivre.com.br/Samsung-970-EVO' },
+  { name:'NZXT H510 Flow', specs:'Mid Tower · ATX · usado', price:299, src:'Facebook', link:'https://www.facebook.com/marketplace' },
+];
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+let build = {};
+let pickerCat = null;
+let currentBuildId = null;
+let selectedStars = 0;
+let currentUser = null;
+const USERS = [];
+const ADMIN_EMAIL = 'admin@pecapc.com.br';
+const ADMIN_PASS  = 'pecapc@admin2025';
+
+// ══════════════════════════════════════════════════
 // NAVIGATION
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('page-' + id).classList.add('active');
   ['builder','catalog','builds'].forEach(x => {
-    const hn = document.getElementById('hn-'+x);
-    const nb = document.getElementById('nb-'+x);
-    if(hn) hn.classList.toggle('active', x===id);
-    if(nb) nb.classList.toggle('nav-active', x===id);
+    const hn = document.getElementById('hn-' + x);
+    const nb = document.getElementById('nb-' + x);
+    if (hn) hn.classList.toggle('hn-active', x === id);
+    if (nb) nb.classList.toggle('nb-active', x === id);
   });
-  if(id==='builder') renderBuilder();
-  if(id==='catalog') { document.getElementById('cat-select').value='all'; filterParts(); }
-  if(id==='builds'||id==='home') renderBuilds();
-  window.scrollTo(0,0);
+  if (id === 'builder') renderBuilder();
+  if (id === 'catalog') { document.getElementById('cat-select').value = 'all'; filterParts(); }
+  if (id === 'builds' || id === 'home') renderBuilds();
+  window.scrollTo(0, 0);
 }
 
 function showCat(cat) {
@@ -1520,571 +970,442 @@ function showCat(cat) {
   filterParts();
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // BUILDER
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 function renderBuilder() {
-  document.getElementById('builder-rows').innerHTML = CATS.map(c => {
-    const p = build[c.id];
-    if (p) {
-      const storeHtml = Object.entries(p.stores||{}).map(([k,v]) =>
-        `<a class="store-chip" href="${STORES[k].url(p.name)}" target="_blank" rel="noopener">${STORES[k].name} <span class="s-price">${fmt(v)}</span></a>`
-      ).join('');
-      return `<div class="builder-row has-part">
-        <div class="row-cat"><span class="cat-icon">${c.icon}</span>${c.label}</div>
-        <div class="row-part">
-          <div class="part-name" onclick="openPicker('${c.id}')">${p.name}</div>
-          <div class="part-specs">${p.specs}</div>
-        </div>
-        <div class="row-stores">${storeHtml}</div>
-        <div class="row-price">${fmt(p.price)}</div>
-        <div class="row-actions">
-          <button class="btn-icon" onclick="openPicker('${c.id}')" title="Trocar">↔</button>
-          <button class="btn-icon del" onclick="removePart('${c.id}')" title="Remover">✕</button>
-        </div>
-      </div>`;
-    } else {
-      return `<div class="builder-row empty-row" onclick="openPicker('${c.id}')">
-        <div class="row-cat"><span class="cat-icon">${c.icon}</span>${c.label}</div>
-        <div class="row-part empty-part">Clique para selecionar um componente</div>
-        <div class="row-stores"></div>
-        <div class="row-price no-part">—</div>
-        <div class="row-actions">
-          <button class="btn-icon" onclick="openPicker('${c.id}')">+</button>
-        </div>
-      </div>`;
-    }
+  const rows = document.getElementById('builder-rows');
+  if (!rows) return;
+  rows.innerHTML = CATS.map(c => {
+    const sel = build[c.id];
+    const minPrice = sel ? Math.min(...Object.values(sel.stores || {_: sel.price})) : 0;
+    const storeLinks = sel ? Object.entries(sel.stores || {}).slice(0, 3).map(([k, v]) =>
+      `<a class="store-chip" href="${STORES[k] ? STORES[k].url(sel.name) : '#'}" target="_blank" rel="noopener">${STORES[k] ? STORES[k].name : k} <span class="s-price">${fmt(v)}</span></a>`
+    ).join('') : '';
+    return `<div class="pt-row${sel ? ' pt-selected' : ''}">
+      <div><span class="pt-cat-tag">${c.icon}</span><div style="font-size:11px;color:var(--text3);margin-top:3px">${c.label}</div></div>
+      <div class="pt-choose">
+        ${sel
+          ? `<div class="pt-chosen-name">${sel.name}</div><div class="pt-chosen-specs">${sel.specs || ''}</div>`
+          : `<span class="pt-empty-lbl">Clique para escolher ${c.label.toLowerCase()}...</span>`
+        }
+      </div>
+      <div class="store-chips">${storeLinks}</div>
+      <div>${sel ? `<span class="pt-price">${fmt(minPrice)}</span>` : ''}</div>
+      <div class="pt-actions">
+        <button class="btn btn-orange btn-sm" onclick="openPicker('${c.id}')">${sel ? 'Trocar' : 'Escolher'}</button>
+        ${sel ? `<button class="pt-remove" onclick="removePart('${c.id}')" title="Remover">✕</button>` : ''}
+      </div>
+    </div>`;
   }).join('');
   renderSummary();
+  renderCompat();
 }
 
 function removePart(id) { delete build[id]; renderBuilder(); }
-function clearBuild()   { if(!confirm('Limpar toda a build?')) return; build={}; renderBuilder(); toast('Build limpa.','ok'); }
+function clearBuild() { if (!confirm('Limpar toda a build?')) return; build = {}; renderBuilder(); toast('Build limpa.', 'ok'); }
 
 function renderSummary() {
-  const filled = CATS.filter(c => build[c.id]);
+  const sumRows = document.getElementById('sum-rows');
+  const sumTotal = document.getElementById('sum-total');
+  if (!sumRows) return;
   let total = 0;
-  const rows = filled.map(c => {
-    total += build[c.id].price;
-    return `<div class="price-row"><span class="name">${c.label}</span><span class="val">${fmt(build[c.id].price)}</span></div>`;
+  sumRows.innerHTML = CATS.map(c => {
+    const p = build[c.id];
+    if (!p) return '';
+    const price = Math.min(...Object.values(p.stores || {_: p.price}));
+    total += price;
+    return `<div class="sum-row"><span class="sum-row-lbl">${c.label}</span><span class="sum-row-val">${fmt(price)}</span></div>`;
   }).join('');
-  document.getElementById('price-summary').innerHTML = rows
-    + `<div class="price-row total-row" style="margin-top:6px;padding-top:6px;border-top:2px solid #eee;"><span class="name">Total estimado</span><span class="val">${fmt(total)}</span></div>`;
-  document.getElementById('builder-total').textContent = fmt(total);
-
-  // compat
-  const checks = [];
-  const {cpu, mobo, ram, gpu, psu, case: cs, cooler} = build;
-
-  // Socket
-  if(cpu && mobo) {
-    const ok = cpu.socket === mobo.socket;
-    checks.push({ s: ok?'ok':'err', t: ok ? `Socket ${cpu.socket} — CPU e placa-mãe compatíveis` : `INCOMPATÍVEL: CPU usa ${cpu.socket}, placa-mãe suporta ${mobo.socket}` });
-  } else checks.push({s:'na', t:'Socket (selecione CPU e placa-mãe)'});
-
-  // RAM type
-  if(mobo && ram) {
-    const ok = mobo.ramType === ram.ramType;
-    checks.push({ s: ok?'ok':'err', t: ok ? `${ram.ramType} — memória compatível com a placa-mãe` : `INCOMPATÍVEL: RAM ${ram.ramType} / placa suporta apenas ${mobo.ramType}` });
-  } else checks.push({s:'na', t:'Tipo de memória (selecione placa-mãe e RAM)'});
-
-  // PSU wattage
-  const gpuW = gpu?.tdp||100, cpuW = cpu?.tdp||65, psuW = psu?.wattage||0;
-  if(psuW) {
-    const need = Math.round((gpuW+cpuW)*1.3);
-    const ok = psuW >= need;
-    checks.push({ s:ok?'ok':'warn', t: ok ? `Fonte ${psuW}W — adequada (estimativa ${need}W)` : `ATENÇÃO: Fonte ${psuW}W pode ser insuficiente (estimativa: ${need}W necessários)` });
-  } else checks.push({s:'na', t:'Adequação da fonte (selecione CPU, GPU e fonte)'});
-
-  // GPU TDP warning
-  if(gpu && gpu.tdp >= 300 && (!psu || psu.wattage < 750)) {
-    checks.push({s:'warn', t:`GPU potente (${gpu.tdp}W TDP) — recomendado pelo menos 750W com fonte de qualidade`});
-  }
-
-  // Case / Mobo form factor
-  if(cs && mobo) {
-    const cFF = cs.formFactor;
-    const mFF = mobo.formFactor || (mobo.socket ? 'ATX' : 'ATX');
-    // Derive mobo form factor from specs string
-    const moboFF = mobo.specs.includes('mATX') ? 'mATX' : mobo.specs.includes('ATX') ? 'ATX' : 'ATX';
-    const caseFF = cs.formFactor || 'ATX';
-    const ffOrder = {'ITX':0,'mATX':1,'ATX':2,'E-ATX':3};
-    const caseRank = ffOrder[caseFF]??2;
-    const moboRank = ffOrder[moboFF]??2;
-    if(moboRank > caseRank) {
-      checks.push({s:'err', t:`INCOMPATÍVEL: Placa-mãe ${moboFF} não cabe no gabinete ${caseFF}`});
-    } else if(moboRank < caseRank) {
-      const cosmetic = moboFF==='mATX' && caseFF==='ATX';
-      checks.push({s: cosmetic?'warn':'ok', t: cosmetic
-        ? `AVISO ESTÉTICO: Placa mATX em gabinete ATX — funciona, mas fica com espaço vazio e pode parecer desleixado`
-        : `Form factor compatível: placa ${moboFF} no gabinete ${caseFF}`
-      });
-    } else {
-      checks.push({s:'ok', t:`Form factor ${moboFF} — encaixa perfeitamente no gabinete ${caseFF}`});
-    }
-  } else checks.push({s:'na', t:'Form factor (selecione placa-mãe e gabinete)'});
-
-  // Cooler TDP check
-  if(cooler && cpu) {
-    const coolerTDP = parseInt((cooler.specs||'').match(/(\d+)W TDP/)?.[1])||150;
-    const ok = coolerTDP >= cpu.tdp;
-    checks.push({ s:ok?'ok':'warn', t: ok
-      ? `Cooler suporta ${coolerTDP}W — adequado para o CPU (${cpu.tdp}W TDP)`
-      : `ATENÇÃO: Cooler (${coolerTDP}W) pode ser insuficiente para o CPU (${cpu.tdp}W TDP)`
-    });
-  }
-
-  // NVMe + no storage warning
-  if(Object.keys(build).includes('cpu') && !build.storage) {
-    checks.push({s:'warn', t:'Nenhum armazenamento selecionado — não esqueça de adicionar um SSD ou HDD'});
-  }
-
-  document.getElementById('compat-checks').innerHTML = checks.map(c =>
-    `<div class="compat-row">
-      <div class="compat-dot dot-${c.s}"></div>
-      <span class="compat-text ${c.s==='err'||c.s==='warn'?'warn':''}">${c.t}</span>
-    </div>`).join('');
+  sumTotal.textContent = fmt(total);
 }
 
-// ═══════════════════════════════════════════════════════
-// PICKER (inline, not modal — replaces row)
-// ═══════════════════════════════════════════════════════
-let pickerCat = null;
+function renderCompat() {
+  const el = document.getElementById('compat-rows');
+  if (!el) return;
+  const checks = [];
+  const cpu = build['cpu'];
+  const mobo = build['mobo'];
+  const ram = build['ram'];
+  const gpu = build['gpu'];
+  const psu = build['psu'];
+  const cs = build['case'];
+  const cooler = build['cooler'];
 
+  if (cpu && mobo) {
+    const ok = cpu.socket === mobo.socket;
+    checks.push({ s: ok ? 'ok' : 'err', t: ok ? `Socket ${cpu.socket} OK` : `INCOMPATIVEL: CPU ${cpu.socket} vs Mobo ${mobo.socket}` });
+  } else checks.push({ s:'na', t:'Socket (escolha CPU e placa-mae)' });
+
+  if (mobo && ram) {
+    const ok = mobo.ramType === ram.ramType;
+    checks.push({ s: ok ? 'ok' : 'err', t: ok ? `${ram.ramType} compativel com placa-mae` : `INCOMPATIVEL: Mobo ${mobo.ramType} vs RAM ${ram.ramType}` });
+  } else checks.push({ s:'na', t:'Tipo RAM (escolha mobo e RAM)' });
+
+  if (cpu && psu) {
+    const gpuTdp = gpu ? (parseInt((gpu.specs || '').match(/(\d+)W/) || [0, 0])[1]) : 0;
+    const est = Math.round((cpu.tdp + gpuTdp) * 1.3);
+    const ok = psu.wattage >= est;
+    checks.push({ s: ok ? 'ok' : 'warn', t: ok ? `Fonte ${psu.wattage}W OK (estimativa ${est}W)` : `Fonte pode ser insuficiente: estimativa ${est}W, fonte ${psu.wattage}W` });
+  } else checks.push({ s:'na', t:'Consumo (escolha CPU e fonte)' });
+
+  if (cs && mobo) {
+    const FF = { ITX:0, mATX:1, ATX:2, 'E-ATX':3 };
+    const caseFF = FF[cs.formFactor] ?? 2;
+    const moboFF = FF[mobo.formFactor] ?? 2;
+    if (moboFF > caseFF) checks.push({ s:'err', t:`INCOMPATIVEL: ${mobo.formFactor} nao cabe em ${cs.formFactor}` });
+    else if (moboFF < caseFF - 1) checks.push({ s:'warn', t:`${mobo.formFactor} em gabinete ${cs.formFactor}: ficara com espaco vazio` });
+    else checks.push({ s:'ok', t:`Formato ${mobo.formFactor} compativel com gabinete ${cs.formFactor}` });
+  } else checks.push({ s:'na', t:'Form factor (escolha mobo e gabinete)' });
+
+  if (cpu && !build['storage']) {
+    checks.push({ s:'warn', t:'Sem armazenamento selecionado' });
+  }
+
+  el.innerHTML = checks.map(c => `<div class="compat-row"><div class="compat-dot ${c.s}"></div><span style="color:var(--text2)">${c.t}</span></div>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// PICKER MODAL
+// ══════════════════════════════════════════════════
 function openPicker(catId) {
   pickerCat = catId;
-  const cat = CATS.find(c => c.id===catId);
-  const parts = DB[catId]||[];
-
-  // Inject picker inline below header
-  const existing = document.getElementById('inline-picker');
-  if(existing) existing.remove();
-
-  const picker = document.createElement('div');
-  picker.id = 'inline-picker';
-  picker.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:900;display:flex;align-items:flex-start;justify-content:center;padding-top:80px;';
-  picker.innerHTML = `
-    <div style="background:#fff;border:1px solid #ccc;border-radius:4px;width:800px;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-      <div style="background:#f0f0f0;border-bottom:1px solid #ddd;padding:12px 16px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:0.65rem;font-weight:700;background:#e67e22;color:#fff;padding:3px 7px;border-radius:3px;letter-spacing:0.03em;">${cat.icon}</span>
-        <strong style="font-size:0.9rem;">Selecionar ${cat.label}</strong>
-        <input type="text" id="picker-search" placeholder="Buscar..." oninput="filterPicker()" style="margin-left:auto;padding:5px 8px;border:1px solid #ccc;border-radius:3px;font-size:0.8rem;width:200px;outline:none;">
-        <button onclick="closePicker()" style="background:none;border:1px solid #ccc;border-radius:3px;padding:4px 8px;cursor:pointer;font-size:0.8rem;">✕ Fechar</button>
-      </div>
-      <div style="display:grid;grid-template-columns:60px 1fr 220px 100px 80px;background:#f8f8f8;border-bottom:1px solid #ddd;padding:7px 12px;gap:10px;font-size:0.7rem;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:0.04em;">
-        <div>Cat.</div><div>Produto / Specs</div><div>Lojas</div><div>Menor preço</div><div>Ação</div>
-      </div>
-      <div id="picker-rows" style="overflow-y:auto;flex:1;"></div>
-    </div>`;
-  picker.addEventListener('click', e => { if(e.target===picker) closePicker(); });
-  document.body.appendChild(picker);
-  renderPickerRows(parts);
+  const cat = ALL_CATS.find(c => c.id === catId);
+  document.getElementById('picker-title').textContent = 'Escolher ' + (cat ? cat.label : catId);
+  document.getElementById('picker-search').value = '';
+  document.getElementById('picker-overlay').style.display = 'flex';
+  filterPicker();
 }
 
-function renderPickerRows(parts) {
-  const cat = CATS.find(c => c.id===pickerCat);
-  document.getElementById('picker-rows').innerHTML = parts.length === 0
-    ? `<div class="empty-row">Nenhuma peça encontrada.</div>`
+function filterPicker() {
+  const q = (document.getElementById('picker-search').value || '').toLowerCase();
+  const parts = (DB[pickerCat] || []).filter(p =>
+    !q || p.name.toLowerCase().includes(q) || (p.specs || '').toLowerCase().includes(q)
+  );
+  document.getElementById('picker-list').innerHTML = parts.length === 0
+    ? '<div class="empty-msg">Nenhum resultado encontrado.</div>'
     : parts.map(p => {
-        const minPrice = Math.min(...Object.values(p.stores||{p:p.price}));
-        const storeHtml = Object.entries(p.stores||{}).map(([k,v]) =>
-          `<a class="store-chip" href="${STORES[k].url(p.name)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${STORES[k].name} <span class="s-price">${fmt(v)}</span></a>`
-        ).join('');
-        const badgeHtml = p.badge ? `<span class="badge ${p.badge==='dest'?'badge-orange':p.badge==='pop'?'badge-green':'badge-blue'}">${p.badge==='dest'?'Destaque':p.badge==='pop'?'Popular':'Novo'}</span>` : '';
-        return `<div style="display:grid;grid-template-columns:60px 1fr 220px 100px 80px;border-bottom:1px solid #eee;padding:9px 12px;gap:10px;align-items:center;transition:background 0.1s;" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background=''">
-          <div style="font-size:0.62rem;font-weight:700;background:#e67e22;color:#fff;padding:3px 5px;border-radius:3px;text-align:center;letter-spacing:0.03em;">${cat.icon}</div>
-          <div>
-            <div style="font-size:0.82rem;font-weight:500;color:#1a1a1a;">${p.name}${badgeHtml}</div>
-            <div style="font-size:0.7rem;color:#888;margin-top:2px;">${p.specs}</div>
-          </div>
-          <div>${storeHtml}</div>
-          <div style="font-size:0.85rem;font-weight:600;text-align:right;">${fmt(minPrice)}</div>
-          <div><button class="btn btn-orange btn-sm" onclick="selectPart('${p.id}')">Selecionar</button></div>
+        const minPrice = Math.min(...Object.values(p.stores || {_: p.price}));
+        const badgeHtml = p.badge ? `<span class="plist-badge ${p.badge==='dest'?'badge-orange':p.badge==='pop'?'badge-green':'badge-blue'}">${p.badge==='dest'?'Destaque':p.badge==='pop'?'Popular':'Novo'}</span>` : '';
+        return `<div class="picker-row" onclick="selectPart('${p.id}')">
+          <div><div class="pr-name">${p.name}${badgeHtml}</div><div class="pr-specs">${p.specs || ''}</div></div>
+          <span class="pr-price">${fmt(minPrice)}</span>
+          <button class="btn btn-orange btn-sm">Selecionar</button>
         </div>`;
       }).join('');
 }
 
-function filterPicker() {
-  const q = document.getElementById('picker-search').value.toLowerCase();
-  const parts = (DB[pickerCat]||[]).filter(p => p.name.toLowerCase().includes(q) || p.specs.toLowerCase().includes(q));
-  renderPickerRows(parts);
-}
-
 function selectPart(partId) {
-  for(const parts of Object.values(DB)) {
-    const found = parts.find(p => p.id===partId);
-    if(found) { build[pickerCat]=found; break; }
-  }
+  const part = (DB[pickerCat] || []).find(p => p.id === partId);
+  if (part) { build[pickerCat] = part; toast(part.name + ' adicionado.', 'ok'); }
   closePicker();
   renderBuilder();
-  toast(`${CATS.find(c=>c.id===pickerCat).label} adicionado à build.`, 'ok');
 }
 
 function closePicker() {
-  const p = document.getElementById('inline-picker');
-  if(p) p.remove();
+  document.getElementById('picker-overlay').style.display = 'none';
+  pickerCat = null;
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// BUILDER TABS
+// ══════════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.btab').forEach((b, i) => b.classList.toggle('btab-active', (tab === 'oficial') === (i === 0)));
+  document.getElementById('tab-oficial').classList.toggle('btab-show', tab === 'oficial');
+  document.getElementById('tab-usado').classList.toggle('btab-show', tab === 'usado');
+  if (tab === 'usado') renderUsed();
+}
+
+function renderUsed() {
+  document.getElementById('used-list').innerHTML = USED_PARTS.map(p => `
+    <div class="used-row">
+      <span class="used-src">${p.src}</span>
+      <div><div class="used-name">${p.name}</div><div class="used-specs">${p.specs}</div></div>
+      <span class="used-price">${fmt(p.price)}</span>
+      <a class="btn btn-ghost btn-sm" href="${p.link}" target="_blank" rel="noopener">Ver anuncio</a>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════
 // CATALOG
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 function updateFilterVisibility() {
   const cat = document.getElementById('cat-select').value;
-  const show = (id, conds) => { const el = document.getElementById(id); if(el) el.style.display = conds ? '' : 'none'; };
-  const isCPU   = cat==='cpu' || cat==='mobo' || cat==='all';
-  const isRAM   = cat==='ram' || cat==='mobo' || cat==='all';
-  const isGPU   = cat==='gpu' || cat==='all';
-  const isCase  = cat==='case' || cat==='all';
-  const isMobo  = cat==='mobo' || cat==='all';
-  const isPSU   = cat==='psu' || cat==='all';
-  show('flt-socket-wrap',    isCPU||isMobo);
-  show('flt-ramtype-wrap',   isRAM||isMobo);
-  show('flt-formfactor-wrap',isCase||isMobo||cat==='all');
-  show('flt-color-wrap',     isCase);
-  show('flt-wattage-wrap',   isPSU);
-  show('flt-vram-wrap',      isGPU);
+  const show = (id, cond) => { const el = document.getElementById(id); if (el) el.style.display = cond ? '' : 'none'; };
+  show('flt-grp-socket',  ['cpu','mobo','all'].includes(cat));
+  show('flt-grp-ramtype', ['ram','mobo','all'].includes(cat));
+  show('flt-grp-ff',      ['case','mobo','all'].includes(cat));
+  show('flt-grp-color',   ['case','all'].includes(cat));
+  show('flt-grp-watt',    ['psu','all'].includes(cat));
+  show('flt-grp-vram',    ['gpu','all'].includes(cat));
 }
 
 function clearFilters() {
-  document.getElementById('cat-search').value = '';
-  document.getElementById('flt-maxprice').value = '';
-  const ids = ['flt-socket','flt-ramtype','flt-formfactor','flt-color','flt-wattage','flt-vram'];
-  ids.forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  ['cat-search','flt-maxprice'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  ['flt-socket','flt-ramtype','flt-formfactor','flt-color','flt-wattage','flt-vram','cat-sort'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  document.getElementById('cat-select').value = 'all';
   filterParts();
 }
 
 function filterParts() {
   updateFilterVisibility();
-  const cat = document.getElementById('cat-select').value;
-  const q   = (document.getElementById('cat-search')?.value||'').toLowerCase();
-  const sort = document.getElementById('cat-sort').value;
-  const maxPrice  = parseFloat(document.getElementById('flt-maxprice')?.value)||Infinity;
-  const socket    = document.getElementById('flt-socket')?.value||'';
-  const ramType   = document.getElementById('flt-ramtype')?.value||'';
-  const formFactor= document.getElementById('flt-formfactor')?.value||'';
-  const color     = document.getElementById('flt-color')?.value||'';
-  const wattage   = parseFloat(document.getElementById('flt-wattage')?.value)||0;
-  const vram      = parseFloat(document.getElementById('flt-vram')?.value)||0;
+  const cat       = document.getElementById('cat-select').value;
+  const q         = (document.getElementById('cat-search')?.value || '').toLowerCase();
+  const sort      = document.getElementById('cat-sort').value;
+  const maxPrice  = parseFloat(document.getElementById('flt-maxprice')?.value) || Infinity;
+  const socket    = document.getElementById('flt-socket')?.value || '';
+  const ramType   = document.getElementById('flt-ramtype')?.value || '';
+  const formFactor= document.getElementById('flt-formfactor')?.value || '';
+  const color     = document.getElementById('flt-color')?.value || '';
+  const wattage   = parseFloat(document.getElementById('flt-wattage')?.value) || 0;
+  const vram      = parseFloat(document.getElementById('flt-vram')?.value) || 0;
 
-  const allCats = [...CATS, ...PERIPH_CATS];
-  const cats = cat==='all' ? allCats : allCats.filter(c=>c.id===cat);
+  const cats = cat === 'all' ? ALL_CATS : ALL_CATS.filter(c => c.id === cat);
   let all = [];
-  cats.forEach(c => (DB[c.id]||[]).forEach(p => all.push({...p, catId:c.id, catLabel:c.label, icon:c.icon})));
+  cats.forEach(c => (DB[c.id] || []).forEach(p => all.push({ ...p, catId: c.id, catLabel: c.label, icon: c.icon })));
 
-  // apply filters
-  if(q)          all = all.filter(p => p.name.toLowerCase().includes(q)||(p.specs||'').toLowerCase().includes(q));
-  if(maxPrice<Infinity) all = all.filter(p => p.price <= maxPrice);
-  if(socket)     all = all.filter(p => !p.socket   || p.socket === socket);
-  if(ramType)    all = all.filter(p => !p.ramType  || p.ramType === ramType);
-  if(formFactor) all = all.filter(p => !p.formFactor || p.formFactor === formFactor);
-  if(color)      all = all.filter(p => !p.color    || p.color === color);
-  if(wattage)    all = all.filter(p => !p.wattage  || p.wattage >= wattage);
-  if(vram)       all = all.filter(p => {
-    const m = (p.specs||'').match(/(\d+)GB/);
-    return m ? parseInt(m[1]) >= vram : true;
-  });
+  if (q)           all = all.filter(p => p.name.toLowerCase().includes(q) || (p.specs || '').toLowerCase().includes(q));
+  if (maxPrice < Infinity) all = all.filter(p => p.price <= maxPrice);
+  if (socket)      all = all.filter(p => !p.socket     || p.socket === socket);
+  if (ramType)     all = all.filter(p => !p.ramType    || p.ramType === ramType);
+  if (formFactor)  all = all.filter(p => !p.formFactor || p.formFactor === formFactor);
+  if (color)       all = all.filter(p => !p.color      || p.color === color);
+  if (wattage)     all = all.filter(p => !p.wattage    || p.wattage >= wattage);
+  if (vram)        all = all.filter(p => { const m = (p.specs || '').match(/(\d+)GB/); return m ? parseInt(m[1]) >= vram : true; });
 
-  if(sort==='price-asc')  all.sort((a,b)=>a.price-b.price);
-  if(sort==='price-desc') all.sort((a,b)=>b.price-a.price);
-  if(sort==='name')       all.sort((a,b)=>a.name.localeCompare(b.name));
+  if (sort === 'price-asc')  all.sort((a, b) => a.price - b.price);
+  if (sort === 'price-desc') all.sort((a, b) => b.price - a.price);
+  if (sort === 'name')       all.sort((a, b) => a.name.localeCompare(b.name));
 
-  document.getElementById('parts-list').innerHTML = all.length===0
-    ? `<div class="empty-row">Nenhum produto encontrado com esses filtros.</div>`
+  const isPC = id => CATS.some(c => c.id === id);
+  document.getElementById('parts-list').innerHTML = all.length === 0
+    ? '<div class="empty-msg">Nenhum produto encontrado com esses filtros.</div>'
     : all.map(p => {
-        const minPrice = Math.min(...Object.values(p.stores||{_:p.price}));
-        const storeLinks = Object.entries(p.stores||{}).slice(0,4).map(([k,v]) =>
-          `<a class="store-chip" href="${STORES[k]?.url(p.name)||'#'}" target="_blank" rel="noopener">${STORES[k]?.name||k} <span class="s-price">${fmt(v)}</span></a>`
+        const minPrice = Math.min(...Object.values(p.stores || {_: p.price}));
+        const storeLinks = Object.entries(p.stores || {}).slice(0, 4).map(([k, v]) =>
+          `<a class="store-chip" href="${STORES[k] ? STORES[k].url(p.name) : '#'}" target="_blank" rel="noopener">${STORES[k] ? STORES[k].name : k} <span class="s-price">${fmt(v)}</span></a>`
         ).join('');
-        const badgeHtml = p.badge ? `<span class="badge ${p.badge==='dest'?'badge-orange':p.badge==='pop'?'badge-green':'badge-blue'}">${p.badge==='dest'?'Destaque':p.badge==='pop'?'Popular':'Novo'}</span>` : '';
-        const isPC = CATS.some(c=>c.id===p.catId);
-        return `<div class="parts-row">
-          <div><span class="parts-cat-tag">${p.icon}</span></div>
+        const badgeHtml = p.badge ? `<span class="plist-badge ${p.badge==='dest'?'badge-orange':p.badge==='pop'?'badge-green':'badge-blue'}">${p.badge==='dest'?'Destaque':p.badge==='pop'?'Popular':'Novo'}</span>` : '';
+        return `<div class="plist-row">
+          <div><span class="pt-cat-tag">${p.icon}</span></div>
           <div>
-            <div class="parts-name">${p.name}${badgeHtml}</div>
-            <div class="parts-specs">${p.specs||''}</div>
+            <div style="font-size:13.5px;font-weight:600;margin-bottom:2px">${p.name}${badgeHtml}</div>
+            <div style="font-size:11.5px;color:var(--text3)">${p.specs || ''}</div>
           </div>
-          <div>${storeLinks}</div>
-          <div class="parts-price">${fmt(minPrice)}</div>
-          <div class="parts-actions">
-            ${isPC ? `<button class="btn btn-orange btn-sm" onclick="addToBuild('${p.catId}','${p.id}')">+ Build</button>` : ''}
+          <div class="store-chips">${storeLinks}</div>
+          <div class="pt-price">${fmt(minPrice)}</div>
+          <div>
+            ${isPC(p.catId) ? `<button class="btn btn-orange btn-sm" onclick="addToBuild('${p.catId}','${p.id}')">+ Build</button>` : ''}
           </div>
         </div>`;
       }).join('');
 }
 
 function addToBuild(catId, partId) {
-  const part = (DB[catId]||[]).find(p=>p.id===partId);
-  const catInfo = CATS.find(c=>c.id===catId);
-  if(part && catInfo) { build[catId]=part; toast(`${catInfo.label} adicionado à build.`, 'ok'); }
+  const part = (DB[catId] || []).find(p => p.id === partId);
+  const cat = CATS.find(c => c.id === catId);
+  if (part && cat) { build[catId] = part; toast(cat.label + ' adicionado a build.', 'ok'); }
 }
 
-// ═══════════════════════════════════════════════════════
-// BUILDS
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
+// BUILDS PAGE
+// ══════════════════════════════════════════════════
 function renderBuilds() {
+  const el = document.getElementById('builds-list');
+  const homeEl = document.getElementById('home-builds');
   const html = BUILDS_DATA.map(b => `
-    <div class="builds-row" onclick="openBuildDetail('${b.id}')" style="cursor:pointer;">
-      <div>
-        <div class="build-name-link">${b.name}</div>
-        <div class="build-use">por @${b.author}</div>
+    <div class="build-card" onclick="openDetail('${b.id}')">
+      <div class="bc-title">${b.name}</div>
+      <div class="bc-author">por <span>@${b.author}</span></div>
+      <div class="bc-uso">${b.uso}</div>
+      <div class="bc-parts">${b.parts.slice(0, 4).map(p => `<span class="bc-part">${p}</span>`).join('')}${b.parts.length > 4 ? `<span class="bc-part">+${b.parts.length - 4}</span>` : ''}</div>
+      <div class="bc-footer">
+        <span class="bc-price">${fmt(b.total)}</span>
+        <span class="bc-votes">▲ ${b.votes} votos</span>
       </div>
-      <div class="build-parts-list">${b.parts.slice(0,4).join(', ')}${b.parts.length>4?'...':''}</div>
-      <div style="font-size:0.78rem;color:#555;">${b.uso}</div>
-      <div class="build-votes">${b.votes}</div>
-      <div class="build-price">${fmt(b.total)}</div>
     </div>`).join('');
-  ['home-builds-list','all-builds-list'].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=html; });
+  if (el) el.innerHTML = html;
+  if (homeEl) homeEl.innerHTML = BUILDS_DATA.slice(0, 4).map(b => `
+    <div class="build-card-mini" onclick="openDetail('${b.id}')">
+      <div class="bcm-title">${b.name}</div>
+      <div class="bcm-uso">${b.uso}</div>
+      <span class="bcm-price">${fmt(b.total)}</span>
+      <span class="bcm-votes">▲ ${b.votes}</span>
+    </div>`).join('');
 }
 
-// ── BUILD DETAIL + REVIEWS ──
-let currentBuildId = null;
-let selectedStars = 0;
-
-function openBuildDetail(id) {
+function openDetail(id) {
   const b = BUILDS_DATA.find(x => x.id === id);
   if (!b) return;
   currentBuildId = id;
-  document.getElementById('build-detail-title').textContent = b.name + ' — ' + fmt(b.total);
-  document.getElementById('build-detail-parts').innerHTML = b.parts.map(p => `• ${p}`).join('<br>');
-  renderReviews(b);
-  document.getElementById('build-detail-panel').style.display = 'block';
-  document.getElementById('build-detail-panel').scrollIntoView({behavior:'smooth', block:'start'});
-  setStars(0);
+  document.getElementById('detail-title').textContent = b.name;
+  document.getElementById('detail-author').textContent = 'por @' + b.author;
+  document.getElementById('detail-uso').textContent = b.uso;
+  document.getElementById('detail-price').textContent = fmt(b.total);
+  document.getElementById('detail-parts').innerHTML = b.parts.map(p => `<span class="bc-part">${p}</span>`).join('');
+  renderDetailReviews(b);
+  document.getElementById('detail-overlay').style.display = 'flex';
 }
 
-function closeBuildDetail() {
-  document.getElementById('build-detail-panel').style.display = 'none';
-  currentBuildId = null;
+function renderDetailReviews(b) {
+  const el = document.getElementById('detail-reviews');
+  el.innerHTML = b.reviews.length === 0
+    ? '<div style="color:var(--text3);font-size:13px">Sem avaliacoes ainda. Seja o primeiro!</div>'
+    : b.reviews.map(r => `<div class="review-item"><div class="rev-author">@${r.author}</div><div class="rev-text">${r.text}</div></div>`).join('');
 }
 
-function renderReviews(b) {
-  const list = document.getElementById('build-reviews-list');
-  if (!b.reviews || !b.reviews.length) {
-    list.innerHTML = '<div class="no-reviews">Nenhuma avaliação ainda. Seja o primeiro!</div>';
-    return;
-  }
-  list.innerHTML = b.reviews.map(r => `
-    <div class="review-item">
-      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-      <div class="review-author">@${r.author} · ${r.date}</div>
-      <div class="review-text">${r.text}</div>
-    </div>`).join('');
-}
+function closeDetail() { document.getElementById('detail-overlay').style.display = 'none'; currentBuildId = null; }
 
 function setStars(n) {
   selectedStars = n;
-  document.querySelectorAll('.star-btn').forEach(el => {
-    el.classList.toggle('on', parseInt(el.dataset.v) <= n);
-  });
+  document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('on', i < n));
 }
 
 function submitReview() {
-  if (!currentUser) { toast('Faça login para avaliar.','warn'); return; }
-  if (!selectedStars) { toast('Selecione uma nota de 1 a 5 estrelas.','warn'); return; }
-  const text = document.getElementById('review-text').value.trim();
-  if (!text) { toast('Escreva um comentário.','warn'); return; }
+  const author = document.getElementById('rev-author').value.trim();
+  const text   = document.getElementById('rev-text').value.trim();
+  if (!author || !text) { toast('Preencha nome e avaliacao.', 'warn'); return; }
   const b = BUILDS_DATA.find(x => x.id === currentBuildId);
   if (!b) return;
-  b.reviews.push({ author: currentUser.name, stars: selectedStars, text, date: new Date().toLocaleDateString('pt-BR') });
-  document.getElementById('review-text').value = '';
+  b.reviews.push({ author, text, stars: selectedStars });
+  renderDetailReviews(b);
+  document.getElementById('rev-author').value = '';
+  document.getElementById('rev-text').value = '';
   setStars(0);
-  renderReviews(b);
-  toast('Avaliação publicada!','ok');
+  toast('Avaliacao enviada!', 'ok');
 }
 
-// ── ADMIN BUILD ADD ──
 function openAddBuild() {
-  document.getElementById('add-build-overlay').style.display = 'flex';
+  if (!currentUser) { openAuth('login'); toast('Faca login para enviar uma build.', 'warn'); return; }
+  document.getElementById('addbuild-overlay').style.display = 'flex';
 }
-function closeAddBuild() {
-  document.getElementById('add-build-overlay').style.display = 'none';
-}
+function closeAddBuild() { document.getElementById('addbuild-overlay').style.display = 'none'; }
+
 function submitNewBuild() {
-  const title  = document.getElementById('nb-title').value.trim();
-  const uso    = document.getElementById('nb-uso').value.trim();
-  const total  = parseInt(document.getElementById('nb-total').value) || 0;
-  const parts  = document.getElementById('nb-parts').value.trim().split('\n').map(s=>s.trim()).filter(Boolean);
-  if (!title || !parts.length) { toast('Preencha nome e componentes.','warn'); return; }
-  const newB = { id:'b'+Date.now(), name:title, author:'Admin', total, parts, votes:0, uso, reviews:[] };
-  BUILDS_DATA.unshift(newB);
+  const name  = document.getElementById('nb-name').value.trim();
+  const uso   = document.getElementById('nb-uso').value.trim();
+  const total = parseFloat(document.getElementById('nb-total').value) || 0;
+  const parts = document.getElementById('nb-parts').value.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!name || !parts.length) { toast('Preencha nome e componentes.', 'warn'); return; }
+  BUILDS_DATA.unshift({ id:'u'+Date.now(), name, author: currentUser.name, total, parts, uso, votes:0, reviews:[] });
   renderBuilds();
   closeAddBuild();
-  document.getElementById('nb-title').value='';
-  document.getElementById('nb-uso').value='';
-  document.getElementById('nb-total').value='';
-  document.getElementById('nb-parts').value='';
-  toast('Build adicionada!','ok');
+  toast('Build publicada!', 'ok');
 }
 
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // GLOBAL SEARCH
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 function globalSearch() {
-  const q = document.getElementById('global-search').value;
-  if(q.length < 2) return;
-  document.getElementById('cat-search').value = q;
+  const q = document.getElementById('global-search').value.trim();
+  if (!q) return;
   showPage('catalog');
+  document.getElementById('cat-search').value = q;
+  document.getElementById('cat-select').value = 'all';
   filterParts();
 }
 
-// ═══════════════════════════════════════════════════════
-// AUTH (simulated — replace with Supabase/backend)
-// ═══════════════════════════════════════════════════════
-const ADMIN_EMAIL = 'admin@pecapc.com.br';
-const ADMIN_PASS  = 'pecapc@admin2025';
-let currentUser = null;
-// Simple in-memory user store
-const USERS = [];
-
+// ══════════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════════
 function openAuth(m) {
   document.getElementById('auth-overlay').style.display = 'flex';
-  // Auto-focus login or register side
   setTimeout(() => {
-    const el = m==='register' ? document.getElementById('reg-name') : document.getElementById('login-email');
-    if(el) el.focus();
+    const el = m === 'register' ? document.getElementById('reg-name') : document.getElementById('login-email');
+    if (el) el.focus();
   }, 50);
 }
-
-function closeAuth() {
-  document.getElementById('auth-overlay').style.display = 'none';
-}
+function closeAuth() { document.getElementById('auth-overlay').style.display = 'none'; }
 
 function doLogin() {
   const email = document.getElementById('login-email').value.trim();
   const pass  = document.getElementById('login-pass').value;
-  if(!email||!pass) { toast('Preencha email e senha.','warn'); return; }
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASS) {
+  if (!email || !pass) { toast('Preencha email e senha.', 'warn'); return; }
+  if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
     currentUser = { email, name:'Admin', isAdmin:true };
-    closeAuth(); updateAuthUI(); toast('Bem-vindo, Admin!','ok'); return;
+    closeAuth(); updateAuthUI(); toast('Bem-vindo, Admin!', 'ok'); return;
   }
-  const user = USERS.find(u=>u.email===email&&u.pass===pass);
-  if(!user) { toast('Email ou senha incorretos.','err'); return; }
-  currentUser = { email, name:user.name, isAdmin:false };
-  closeAuth(); updateAuthUI(); toast('Bem-vindo de volta, '+user.name+'!','ok');
+  const user = USERS.find(u => u.email === email && u.pass === pass);
+  if (!user) { toast('Email ou senha incorretos.', 'err'); return; }
+  currentUser = { email, name: user.name, isAdmin: false };
+  closeAuth(); updateAuthUI(); toast('Bem-vindo, ' + user.name + '!', 'ok');
 }
 
 function doRegister() {
   const name  = document.getElementById('reg-name').value.trim();
   const email = document.getElementById('reg-email').value.trim();
   const pass  = document.getElementById('reg-pass').value;
-  if(!name||!email||!pass) { toast('Preencha todos os campos.','warn'); return; }
-  if(USERS.find(u=>u.email===email)) { toast('Email já cadastrado.','warn'); return; }
-  USERS.push({email,pass,name});
-  currentUser = {email,name,isAdmin:email===ADMIN_EMAIL};
-  closeAuth(); updateAuthUI(); toast('Conta criada! Bem-vindo, '+name+'!','ok');
+  if (!name || !email || !pass) { toast('Preencha todos os campos.', 'warn'); return; }
+  if (USERS.find(u => u.email === email)) { toast('Email ja cadastrado.', 'warn'); return; }
+  USERS.push({ email, pass, name });
+  currentUser = { email, name, isAdmin: email === ADMIN_EMAIL };
+  closeAuth(); updateAuthUI(); toast('Conta criada! Bem-vindo, ' + name + '!', 'ok');
 }
 
 function doLogout() {
   currentUser = null;
   updateAuthUI();
-  toast('Sessão encerrada.','ok');
+  toast('Sessao encerrada.', 'ok');
 }
 
 function updateAuthUI() {
   const on = !!currentUser;
-  document.getElementById('auth-status-area').style.display = on ? 'none' : 'flex';
-  document.getElementById('auth-user-area').style.display   = on ? 'flex' : 'none';
-  if(on) document.getElementById('auth-username').textContent = '@'+currentUser.name;
-  // topbar
   const tba = document.getElementById('topbar-auth');
   const tbu = document.getElementById('topbar-user');
-  if(tba) tba.style.display = on ? 'none' : '';
-  if(tbu) tbu.style.display = on ? '' : 'none';
-  if(on && document.getElementById('topbar-username')) document.getElementById('topbar-username').textContent = '@'+currentUser.name+' ·';
-  // admin button
-  const adminBtn = document.getElementById('admin-add-build-btn');
-  if(adminBtn) adminBtn.style.display = (on && currentUser.isAdmin) ? '' : 'none';
+  const haa = document.getElementById('header-auth-area');
+  const hua = document.getElementById('header-user-area');
+  if (tba) tba.style.display = on ? 'none' : '';
+  if (tbu) tbu.style.display = on ? 'flex' : 'none';
+  if (haa) haa.style.display = on ? 'none' : 'flex';
+  if (hua) hua.style.display = on ? 'flex' : 'none';
+  if (on) {
+    const tu = document.getElementById('topbar-username');
+    const hu = document.getElementById('header-username');
+    if (tu) tu.textContent = '@' + currentUser.name;
+    if (hu) hu.textContent = '@' + currentUser.name;
+  }
 }
 
-document.addEventListener('keydown', e => { if(e.key==='Escape') { closePicker(); closeAuth(); closeAddBuild(); } });
-
-// ═══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════
 // UTILS
-// ═══════════════════════════════════════════════════════
-function fmt(n) { return 'R$ ' + n.toLocaleString('pt-BR', {minimumFractionDigits:2}); }
+// ══════════════════════════════════════════════════
+function fmt(n) { return 'R$ ' + Number(n).toLocaleString('pt-BR', { minimumFractionDigits: 2 }); }
 
-function toast(msg, type='ok') {
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.textContent = msg;
-  document.getElementById('toasts').appendChild(el);
-  setTimeout(() => el.remove(), 3500);
+function toast(msg, type) {
+  const wrap = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type || 'ok');
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
 }
 
-function saveBuild()  { if(!Object.keys(build).length) { toast('Adicione peças antes de salvar.','warn'); return; } toast('Build salva com sucesso.','ok'); }
-function shareBuild() { if(!Object.keys(build).length) { toast('Adicione peças antes de compartilhar.','warn'); return; } toast('Link da build copiado para a área de transferência.','ok'); }
+function saveBuild()  { if (!Object.keys(build).length) { toast('Adicione pecas primeiro.', 'warn'); return; } toast('Build salva com sucesso!', 'ok'); }
+function shareBuild() { if (!Object.keys(build).length) { toast('Adicione pecas primeiro.', 'warn'); return; } toast('Link copiado para a area de transferencia.', 'ok'); }
 
-// ── SOURCE TABS ──
-function switchSourceTab(tab) {
-  document.getElementById('section-oficiais').style.display = tab === 'oficiais' ? '' : 'none';
-  document.getElementById('section-usados').style.display  = tab === 'usados'   ? '' : 'none';
-  document.getElementById('tab-oficiais').classList.toggle('active', tab === 'oficiais');
-  document.getElementById('tab-usados').classList.toggle('active', tab === 'usados');
-  if (tab === 'usados') renderUsedParts();
-}
-
-const USED_PARTS = [
-  { cat:'CPU',  name:'AMD Ryzen 5 5600 (usado)',         price:'R$ 490,00', source:'Mercado Livre', q:'Ryzen 5 5600' },
-  { cat:'CPU',  name:'Intel Core i5-12400F (usado)',      price:'R$ 520,00', source:'Mercado Livre', q:'i5-12400F' },
-  { cat:'CPU',  name:'AMD Ryzen 7 5700X (usado)',         price:'R$ 750,00', source:'Shopee',        q:'Ryzen 7 5700X' },
-  { cat:'GPU',  name:'NVIDIA RTX 3060 12GB (usado)',      price:'R$ 1.150,00', source:'Mercado Livre', q:'RTX 3060' },
-  { cat:'GPU',  name:'AMD RX 6600 XT (usado)',            price:'R$ 980,00', source:'Facebook Marketplace', q:'RX 6600 XT' },
-  { cat:'GPU',  name:'NVIDIA GTX 1080 Ti (usado)',        price:'R$ 870,00', source:'Mercado Livre', q:'GTX 1080 Ti' },
-  { cat:'GPU',  name:'NVIDIA RTX 2070 Super (usado)',     price:'R$ 1.050,00', source:'Shopee',      q:'RTX 2070 Super' },
-  { cat:'RAM',  name:'16GB DDR4 3200MHz (usado)',         price:'R$ 140,00', source:'Mercado Livre', q:'16GB DDR4 3200' },
-  { cat:'RAM',  name:'32GB DDR4 3600MHz Kit (usado)',     price:'R$ 260,00', source:'Mercado Livre', q:'32GB DDR4 3600' },
-  { cat:'SSD',  name:'Samsung 970 Evo 1TB NVMe (usado)', price:'R$ 260,00', source:'Mercado Livre', q:'Samsung 970 Evo 1TB' },
-  { cat:'SSD',  name:'WD Blue SN570 500GB (usado)',       price:'R$ 130,00', source:'Shopee',        q:'WD SN570 500GB' },
-  { cat:'MBO',  name:'ASUS B550M-K (usado)',              price:'R$ 390,00', source:'Mercado Livre', q:'ASUS B550M-K' },
-  { cat:'MBO',  name:'Gigabyte B660M DS3H (usado)',       price:'R$ 360,00', source:'Facebook Marketplace', q:'Gigabyte B660M DS3H' },
-  { cat:'PSU',  name:'Corsair CV550 550W (usado)',        price:'R$ 220,00', source:'Mercado Livre', q:'Corsair CV550' },
-  { cat:'CLR',  name:'Cooler Master Hyper 212 (usado)',   price:'R$ 95,00',  source:'Mercado Livre', q:'Hyper 212' },
-  { cat:'CASE', name:'NZXT H510 (usado)',                 price:'R$ 280,00', source:'Mercado Livre', q:'NZXT H510' },
-];
-
-const USED_STORE_URLS = {
-  'Mercado Livre':        q => `https://lista.mercadolivre.com.br/${encodeURIComponent(q)}`,
-  'Shopee':               q => `https://shopee.com.br/search?keyword=${encodeURIComponent(q)}`,
-  'Facebook Marketplace': q => `https://www.facebook.com/marketplace/search/?query=${encodeURIComponent(q)}`,
-};
-
-function renderUsedParts() {
-  const el = document.getElementById('used-rows');
-  el.innerHTML = USED_PARTS.map(p => `
-    <div class="used-part-row">
-      <div class="used-cat-badge">${p.cat}</div>
-      <div>
-        <div class="used-part-name">${p.name}</div>
-        <div class="used-part-source">${p.source}</div>
-      </div>
-      <div class="used-part-price">${p.price}</div>
-      <div class="used-part-btn">
-        <a href="${USED_STORE_URLS[p.source](p.q)}" target="_blank" rel="noopener">Ver anúncio →</a>
-      </div>
-    </div>
-  `).join('');
-}
-
+// ══════════════════════════════════════════════════
 // INIT
+// ══════════════════════════════════════════════════
 function initPage() {
-  // populate home card counts from live DB
-  const allCats = [...CATS, ...PERIPH_CATS];
-  allCats.forEach(c => {
-    const el = document.getElementById('cnt-'+c.id);
-    if(el) el.textContent = (DB[c.id]||[]).length + ' produtos';
+  // Populate category counts
+  ALL_CATS.forEach(c => {
+    const el = document.getElementById('cnt-' + c.id);
+    if (el) el.textContent = (DB[c.id] || []).length + ' produtos';
   });
-  // total parts count
-  let total = 0;
-  allCats.forEach(c => { total += (DB[c.id]||[]).length; });
+  // Total parts count
+  const total = ALL_CATS.reduce((sum, c) => sum + (DB[c.id] || []).length, 0);
   const sp = document.getElementById('stat-parts');
-  if(sp) sp.textContent = total+'+';
+  if (sp) sp.textContent = total + '+';
   const sb = document.getElementById('stat-builds');
-  if(sb) sb.textContent = BUILDS_DATA.length;
+  if (sb) sb.textContent = BUILDS_DATA.length;
 
+  renderBuilder();
   renderBuilds();
   filterParts();
   updateAuthUI();
 }
+
 initPage();
 </script>
 </body>
