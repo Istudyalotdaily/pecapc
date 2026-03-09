@@ -167,6 +167,17 @@ header{background:rgba(8,8,10,.96);backdrop-filter:blur(16px);border-bottom:1px 
 .compat-item.na .compat-icon{background:var(--bg3)}
 .compat-msg{line-height:1.45}
 
+/* ── STORE COMPARE MODAL ── */
+.sc-listing{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--r);background:var(--bg3);border:1px solid var(--border);transition:border-color .15s}
+.sc-listing:hover{border-color:var(--border2)}
+.sc-listing.best{border-color:rgba(249,115,22,.35);background:rgba(249,115,22,.04)}
+.sc-store-name{font-size:12px;font-family:var(--font-mono);font-weight:600;color:var(--tx2);width:80px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em}
+.sc-price{font-size:15px;font-family:var(--font-mono);font-weight:700;color:var(--tx);flex:1}
+.sc-listing.best .sc-price{color:var(--or)}
+.sc-badge-best{font-size:9px;font-family:var(--font-mono);font-weight:700;background:var(--org);color:var(--or);border:1px solid rgba(249,115,22,.2);border-radius:2px;padding:1px 5px;text-transform:uppercase;letter-spacing:.04em}
+.sc-installment{font-size:10px;color:var(--tx3);font-family:var(--font-mono)}
+.sc-no-stock{font-size:11px;color:var(--tx3);font-style:italic}
+
 /* ── BOTTLENECK CALCULATOR ── */
 .bn-section{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
 .bn-title{font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);margin-bottom:10px}
@@ -677,6 +688,27 @@ footer{background:var(--bg2);border-top:1px solid var(--border);margin-top:64px}
   </div>
 </div>
 
+<!-- STORE COMPARE MODAL -->
+<div class="overlay" id="sc-overlay" onclick="if(event.target===this)closeStoreCompare()">
+  <div class="history-box" style="max-width:520px">
+    <div class="history-hdr">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700" id="sc-title">Comparar Preços</div>
+        <div style="font-size:12px;color:var(--tx3);margin-top:2px" id="sc-specs"></div>
+      </div>
+      <button class="picker-close" onclick="closeStoreCompare()">Fechar</button>
+    </div>
+    <div class="history-body">
+      <div id="sc-listings" style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px"></div>
+      <div style="font-size:11px;color:var(--tx3);margin-bottom:10px;line-height:1.5">Preços à vista / PIX consultados diretamente nas lojas. Clique para comprar — preços podem variar. Atualizado março 2026.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+        <button class="btn btn-or btn-sm" id="sc-add-btn" onclick="scAddToBuild()">+ Adicionar à Build</button>
+        <button class="btn btn-ghost btn-sm" id="sc-hist-btn" onclick="scOpenHistory()">Ver Histórico</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toasts" id="toasts"></div>
 
 <!-- FOOTER -->
@@ -754,65 +786,116 @@ function storeURL(storeKey, productName, entry) {
 // 
 const DB = {
 cpu:[
-  // AM5 — Zen 4 / Zen 5
-  {id:'cpu01',name:'AMD Ryzen 5 7600X',specs:'6C/12T · AM5 · 5.3GHz · 105W',price:1390,badge:'dest',socket:'AM5',tdp:105,stores:{
-    kabum:'https://www.kabum.com.br/produto/426261/processador-amd-ryzen-5-7600x-4-7ghz-5-3ghz-max-turbo-cache-38mb-am5-6-nucleos-12-threads-100-100000593wof',
-    pichau:'https://www.pichau.com.br/processador-amd-ryzen-5-7600x-4-7ghz-5-3ghz-turbo-cache-38mb-am5-6-core-12-threads-100-100000593wof',
-    terabyte:1419}},
-  {id:'cpu02',name:'AMD Ryzen 5 7600',specs:'6C/12T · AM5 · 5.1GHz · 65W',price:1199,socket:'AM5',tdp:65,stores:{
-    kabum:'https://www.kabum.com.br/produto/426260/processador-amd-ryzen-5-7600-3-8ghz-5-1ghz-max-turbo-cache-38mb-am5-6-nucleos-100-100001015box',
-    pichau:1219}},
-  {id:'cpu03',name:'AMD Ryzen 7 7700X',specs:'8C/16T · AM5 · 5.4GHz · 105W',price:1799,socket:'AM5',tdp:105,stores:{
-    pichau:'https://www.pichau.com.br/processador-amd-ryzen-7-7700x-4-5ghz-5-4ghz-turbo-cache-40mb-am5-8-core-16-threads-100-100000591wof',
-    terabyte:1829}},
-  {id:'cpu04',name:'AMD Ryzen 7 7800X3D',specs:'8C/16T · AM5 · 5.0GHz · 3D V-Cache · 120W',price:2099,badge:'dest',socket:'AM5',tdp:120,stores:{
-    kabum:'https://www.kabum.com.br/produto/426262/processador-amd-ryzen-7-7800x3d-5-0ghz-max-turbo-cache-104mb-am5-8-nucleos-video-integrado-100-100000910wof',
-    pichau:'https://www.pichau.com.br/processador-amd-ryzen-7-7800x3d-4-2ghz-5-0ghz-turbo-cache-104mb-am5-8-core-16-threads-sem-cooler-100-100000910wof',
-    terabyte:2149}},
-  {id:'cpu05',name:'AMD Ryzen 9 7900X',specs:'12C/24T · AM5 · 5.6GHz · 170W',price:2399,socket:'AM5',tdp:170,stores:{
-    kabum:2399,
-    pichau:'https://www.pichau.com.br/processador-amd-ryzen-9-7900x-4-7ghz-5-6ghz-turbo-cache-76mb-am5-12-core-24-threads-100-100000589wof',
-    terabyte:2449}},
-  {id:'cpu06',name:'AMD Ryzen 7 9800X3D',specs:'8C/16T · AM5 · 5.2GHz · 3D V-Cache · 120W · Zen 5',price:2899,badge:'novo',socket:'AM5',tdp:120,stores:{
-    kabum:'https://www.kabum.com.br/produto/677529/processador-amd-ryzen-7-9800x3d-4-7ghz-5-2ghz-turbo-8-cores-16-threads-am5-sem-cooler-100-1000001084wof',
-    pichau:2949,terabyte:2979}},
-  {id:'cpu07',name:'AMD Ryzen 5 9600X',specs:'6C/12T · AM5 · 5.4GHz · 65W · Zen 5',price:1599,badge:'novo',socket:'AM5',tdp:65,stores:{
-    kabum:1599,pichau:1629,terabyte:1649}},
-  {id:'cpu08',name:'AMD Ryzen 7 9700X',specs:'8C/16T · AM5 · 5.5GHz · 65W · Zen 5',price:2099,badge:'novo',socket:'AM5',tdp:65,stores:{
-    kabum:2099,pichau:2129,terabyte:2149}},
-  {id:'cpu09',name:'AMD Ryzen 9 9950X',specs:'16C/32T · AM5 · 5.7GHz · 170W · Zen 5',price:4499,badge:'novo',socket:'AM5',tdp:170,stores:{
-    pichau:4499,terabyte:4549}},
-  // AM4 — Zen 3
-  {id:'cpu10',name:'AMD Ryzen 5 5600X',specs:'6C/12T · AM4 · 4.6GHz · 65W',price:1137,socket:'AM4',tdp:65,stores:{
-    kabum:'https://www.kabum.com.br/produto/129451/processador-amd-ryzen-5-5600x-3-7ghz-4-6ghz-max-turbo-cache-35mb-6-nucleos-12-threads-am4-100-100000065box',
-    pichau:'https://www.pichau.com.br/processador-amd-ryzen-5-5600x-6-core-12-threads-3-7ghz-4-6ghz-turbo-cache-35mb-am4-100-100000065box',
-    ml:1159}},
-  {id:'cpu11',name:'AMD Ryzen 5 5600',specs:'6C/12T · AM4 · 4.4GHz · 65W',price:999,socket:'AM4',tdp:65,stores:{
-    kabum:'https://www.kabum.com.br/produto/320798/processador-amd-ryzen-5-5600-3-5ghz-4-4ghz-max-turbo-cache-35mb-am4-sem-video-100-100000927box',
-    pichau:'https://www.pichau.com.br/processador-amd-ryzen-5-5600-6-core-12-threads-3-5ghz-4-4ghz-turbo-cache-35mb-am4-100-100000927box',
-    amazon:1019}},
-  {id:'cpu12',name:'AMD Ryzen 7 5700X',specs:'8C/16T · AM4 · 4.6GHz · 65W',price:1199,socket:'AM4',tdp:65,stores:{
-    kabum:1199,pichau:1219,ml:1189}},
-  {id:'cpu13',name:'AMD Ryzen 7 5800X3D',specs:'8C/16T · AM4 · 4.5GHz · 3D V-Cache · 105W',price:1599,badge:'dest',socket:'AM4',tdp:105,stores:{
-    kabum:1599,pichau:1629,terabyte:1649}},
-  {id:'cpu14',name:'AMD Ryzen 9 5900X',specs:'12C/24T · AM4 · 4.8GHz · 105W',price:1799,socket:'AM4',tdp:105,stores:{
-    kabum:1799,pichau:1829}},
-  // Intel LGA1700
-  {id:'cpu15',name:'Intel Core i3-14100F',specs:'4C/8T · LGA1700 · 4.7GHz · 58W',price:699,socket:'LGA1700',tdp:58,stores:{
-    kabum:699,amazon:719}},
-  {id:'cpu16',name:'Intel Core i5-13400F',specs:'10C/16T · LGA1700 · 4.6GHz · 65W',price:1099,badge:'pop',socket:'LGA1700',tdp:65,stores:{
-    kabum:1099,pichau:1119,amazon:1129}},
-  {id:'cpu17',name:'Intel Core i5-14600K',specs:'14C/20T · LGA1700 · 5.3GHz · 125W',price:1799,socket:'LGA1700',tdp:125,stores:{
-    kabum:1799,pichau:1829,terabyte:1849}},
-  {id:'cpu18',name:'Intel Core i7-14700K',specs:'20C/28T · LGA1700 · 5.6GHz · 253W',price:2699,socket:'LGA1700',tdp:253,stores:{
-    kabum:2699,pichau:2749}},
-  {id:'cpu19',name:'Intel Core i9-14900K',specs:'24C/32T · LGA1700 · 6.0GHz · 253W',price:3599,socket:'LGA1700',tdp:253,stores:{
-    pichau:3599,terabyte:3649}},
-  // Intel LGA1851 Arrow Lake
-  {id:'cpu20',name:'Intel Core Ultra 5 245K',specs:'14C/14T · LGA1851 · 5.2GHz · 125W · Arrow Lake',price:2199,badge:'novo',socket:'LGA1851',tdp:125,stores:{
-    kabum:2199,terabyte:2249}},
-  {id:'cpu21',name:'Intel Core Ultra 7 265K',specs:'20C/20T · LGA1851 · 5.5GHz · 125W · Arrow Lake',price:2899,badge:'novo',socket:'LGA1851',tdp:125,stores:{
-    kabum:2899,pichau:2949}},
+  // ── AM4 ──────────────────────────────────────────────
+  {id:'cpu_5500',name:'AMD Ryzen 5 5500',specs:'6C/12T · AM4 · 4.2GHz · 65W · Zen 3',price:552,socket:'AM4',tdp:65,
+    listings:[
+      {store:'Pichau',price:570,url:'https://www.pichau.com.br/processador-amd-ryzen-5-5500-3-6ghz-4-2ghz-turbo-cache-19mb-am4-6-core-12-threads-100-100000457box'},
+      {store:'Amazon',price:712,url:'https://www.amazon.com.br/dp/B09HJR1Q1C'},
+    ]},
+  {id:'cpu_5600gt',name:'AMD Ryzen 5 5600GT',specs:'6C/12T · AM4 · 4.6GHz · 65W · iGPU Radeon',price:850,socket:'AM4',tdp:65,
+    listings:[
+      {store:'KaBuM',price:800,url:'https://www.kabum.com.br/produto/520368/processador-amd-ryzen-5-5600gt-3-6-ghz-4-6ghz-max-turbo-cache-4mb-6-nucleos-12-threads-am4-100-100001488box'},
+      {store:'Pichau',price:849,url:'https://www.pichau.com.br/processador-amd-ryzen-5-5600gt-3-6ghz-4-6ghz-turbo-cache-4mb-am4-100-100001488box'},
+    ]},
+  {id:'cpu02',name:'AMD Ryzen 5 5600',specs:'6C/12T · AM4 · 4.4GHz · 65W · Zen 3',price:1075,badge:'pop',socket:'AM4',tdp:65,
+    listings:[
+      {store:'Pichau',price:879,url:'https://www.pichau.com.br/processador-amd-ryzen-5-5600-3-5ghz-4-4ghz-turbo-cache-35mb-am4-6-core-12-threads-100-100000927box'},
+      {store:'Microgem',price:999,url:'https://www.microgem.com.br/produto/processador-amd-ryzen-5-5600-am4-3-5-ghz-base-4-4-ghz-max-35-mb-cache-6-core-12-threads-100-100000927box-75238'},
+      {store:'Amazon',price:1075,url:'https://www.amazon.com.br/dp/B09VCHR1VH'},
+    ]},
+  {id:'cpu01',name:'AMD Ryzen 5 5600X',specs:'6C/12T · AM4 · 4.6GHz · 65W · Zen 3',price:1259,badge:'dest',socket:'AM4',tdp:65,
+    listings:[
+      {store:'KaBuM',price:1259,url:'https://www.kabum.com.br/produto/129451/processador-amd-ryzen-5-5600x-3-7ghz-4-6ghz-max-turbo-cache-35mb-am4-sem-video-100-100000065box'},
+      {store:'Amazon',price:1329,url:'https://www.amazon.com.br/dp/B08166SLDF'},
+    ]},
+  {id:'cpu_5700x',name:'AMD Ryzen 7 5700X',specs:'8C/16T · AM4 · 4.6GHz · 65W · Zen 3',price:1099,socket:'AM4',tdp:65,
+    listings:[
+      {store:'Amazon',price:1099,url:'https://www.amazon.com.br/dp/B09VCCZ2PK'},
+      {store:'Pichau',price:1149,url:'https://www.pichau.com.br/processador-amd-ryzen-7-5700x-3-4ghz-4-6ghz-turbo-cache-36mb-am4-8-core-16-threads-100-100000926wof'},
+    ]},
+  {id:'cpu_5800x3d',name:'AMD Ryzen 7 5800X3D',specs:'8C/16T · AM4 · 4.5GHz · 3D V-Cache · 105W',price:1899,badge:'pop',socket:'AM4',tdp:105,
+    listings:[
+      {store:'KaBuM',price:1899,url:'https://www.kabum.com.br/produto/233739/processador-amd-ryzen-7-5800x3d-3-4ghz-4-5ghz-max-turbo-cache-100mb-am4-sem-video-100-100000651wof'},
+      {store:'Amazon',price:1999,url:'https://www.amazon.com.br/dp/B09VCJ2SHR'},
+    ]},
+  // ── AM5 Ryzen 7000 ────────────────────────────────────
+  {id:'cpu_7600',name:'AMD Ryzen 5 7600',specs:'6C/12T · AM5 · 5.1GHz · 65W · Zen 4',price:899,socket:'AM5',tdp:65,
+    listings:[
+      {store:'Amazon',price:849,url:'https://www.amazon.com.br/dp/B0BBJDS62N'},
+      {store:'KaBuM',price:899,url:'https://www.kabum.com.br/produto/426260/processador-amd-ryzen-5-7600-3-8ghz-5-1ghz-max-turbo-cache-38mb-am5-sem-video-100-100001015box'},
+      {store:'Pichau',price:879,url:'https://www.pichau.com.br/processador-amd-ryzen-5-7600-3-8ghz-5-1ghz-turbo-cache-38mb-am5-6-core-12-threads-100-100001015box'},
+    ]},
+  {id:'cpu_7600x',name:'AMD Ryzen 5 7600X',specs:'6C/12T · AM5 · 5.3GHz · 105W · Zen 4',price:1270,badge:'dest',socket:'AM5',tdp:105,
+    listings:[
+      {store:'Amazon',price:1059,url:'https://www.amazon.com.br/dp/B0BBJDS98N'},
+      {store:'KaBuM',price:1099,url:'https://www.kabum.com.br/produto/426261/processador-amd-ryzen-5-7600x-4-7ghz-5-3ghz-max-turbo-cache-38mb-am5-sem-video-100-100000593box'},
+    ]},
+  {id:'cpu03',name:'AMD Ryzen 7 7700X',specs:'8C/16T · AM5 · 5.4GHz · 105W · Zen 4',price:1499,socket:'AM5',tdp:105,
+    listings:[
+      {store:'Amazon',price:1499,url:'https://www.amazon.com.br/dp/B0BBJHDS4M'},
+      {store:'Pichau',price:1549,url:'https://www.pichau.com.br/processador-amd-ryzen-7-7700x-4-5ghz-5-4ghz-turbo-cache-40mb-am5-8-core-16-threads-100-100000591box'},
+    ]},
+  {id:'cpu_7800x3d',name:'AMD Ryzen 7 7800X3D',specs:'8C/16T · AM5 · 5.0GHz · 3D V-Cache · 120W',price:2099,badge:'dest',socket:'AM5',tdp:120,
+    listings:[
+      {store:'Pichau',price:2099,url:'https://www.pichau.com.br/processador-amd-ryzen-7-7800x3d-8-core-16-threads-4-2ghz-5-0ghzturbo-cache-104mb-am5-100-100000910wof'},
+      {store:'Amazon',price:2599,url:'https://www.amazon.com.br/dp/B0BTZB7F88'},
+      {store:'KaBuM',price:2149,url:'https://www.kabum.com.br/produto/426262/processador-amd-ryzen-7-7800x3d-5-0ghz-max-turbo-cache-104mb-am5-8-nucleos-video-integrado-100-100000910wof'},
+    ]},
+  // ── AM5 Ryzen 9000 ────────────────────────────────────
+  {id:'cpu_9600x',name:'AMD Ryzen 5 9600X',specs:'6C/12T · AM5 · 5.4GHz · 65W · Zen 5',price:1239,socket:'AM5',tdp:65,
+    listings:[
+      {store:'Pichau',price:1239,url:'https://www.pichau.com.br/processador-amd-ryzen-5-9600x-3-9ghz-5-4ghz-turbo-cache-38mb-am5-6-core-12-threads-100-100001051box'},
+      {store:'Amazon',price:1299,url:'https://www.amazon.com.br/dp/B0CQ2S9HXS'},
+    ]},
+  {id:'cpu_9700x',name:'AMD Ryzen 7 9700X',specs:'8C/16T · AM5 · 5.5GHz · 65W · Zen 5',price:1899,socket:'AM5',tdp:65,
+    listings:[
+      {store:'Amazon',price:1899,url:'https://www.amazon.com.br/dp/B0CQ2T2XMX'},
+      {store:'Pichau',price:1949,url:'https://www.pichau.com.br/processador-amd-ryzen-7-9700x-3-8ghz-5-5ghz-turbo-cache-40mb-am5-8-core-16-threads-100-100001404box'},
+    ]},
+  {id:'cpu_9800x3d',name:'AMD Ryzen 7 9800X3D',specs:'8C/16T · AM5 · 5.2GHz · 3D V-Cache · 120W',price:2600,badge:'novo',socket:'AM5',tdp:120,
+    listings:[
+      {store:'Pichau',price:2599,url:'https://www.pichau.com.br/processador-amd-ryzen-7-9800x3d-8-core-16-threads-4-7ghz-5-2ghz-turbo-cache-104mb-am5-100-100001084wof'},
+      {store:'Amazon',price:2600,url:'https://www.amazon.com.br/dp/B0DKFMSMYK'},
+      {store:'KaBuM',price:3699,url:'https://www.kabum.com.br/produto/662405/processador-amd-ryzen-7-9800x3d-cache-8mb-8-nucleos-16-threads-am5-100-100001084wof'},
+    ]},
+  {id:'cpu_9900x',name:'AMD Ryzen 9 9900X',specs:'12C/24T · AM5 · 5.6GHz · 120W · Zen 5',price:2599,socket:'AM5',tdp:120,
+    listings:[
+      {store:'KaBuM',price:2599,url:'https://www.kabum.com.br/busca/ryzen-9-9900x'},
+      {store:'Amazon',price:2699,url:'https://www.amazon.com.br/dp/B0CQ2TSMXB'},
+    ]},
+  // ── LGA1700 Intel ─────────────────────────────────────
+  {id:'cpu_i5_12400f',name:'Intel Core i5-12400F',specs:'6C/12T · LGA1700 · 4.4GHz · 65W · Alder Lake',price:600,badge:'pop',socket:'LGA1700',tdp:65,
+    listings:[
+      {store:'Amazon',price:600,url:'https://www.amazon.com.br/dp/B09NMPD8V2'},
+      {store:'Pichau',price:619,url:'https://www.pichau.com.br/processador-intel-core-i5-12400f-2-5ghz-4-4ghz-turbo-lga1700-12-geracao-6-cores-12-threads-cache-18mb-bx8071512400f'},
+      {store:'KaBuM',price:649,url:'https://www.kabum.com.br/produto/246017/processador-intel-core-i5-12400f-2-5ghz-4-4ghz-max-turbo-cache-18mb-lga-1700-bx8071512400f'},
+    ]},
+  {id:'cpu_i5_14400f',name:'Intel Core i5-14400F',specs:'10C/16T · LGA1700 · 4.7GHz · 65W · Raptor Lake',price:1099,badge:'dest',socket:'LGA1700',tdp:65,
+    listings:[
+      {store:'Amazon',price:1099,url:'https://www.amazon.com.br/dp/B0CPXQWCKN'},
+      {store:'Pichau',price:1149,url:'https://www.pichau.com.br/processador-intel-core-i5-14400f-2-5ghz-4-7ghz-turbo-lga1700-14-geracao-10-cores-16-threads-cache-20mb-bx8071514400f'},
+    ]},
+  {id:'cpu_i5_14600k',name:'Intel Core i5-14600K',specs:'14C/20T · LGA1700 · 5.3GHz · 181W · Raptor Lake',price:1454,badge:'pop',socket:'LGA1700',tdp:181,
+    listings:[
+      {store:'Amazon',price:1454,url:'https://www.amazon.com.br/dp/B0CHF2WQ6D'},
+      {store:'Pichau',price:1499,url:'https://www.pichau.com.br/processador-intel-core-i5-14600k-3-5ghz-5-3ghz-turbo-lga1700-14-geracao-14-cores-20-threads-cache-24mb-bx8071514600k'},
+    ]},
+  {id:'cpu_i7_14700f',name:'Intel Core i7-14700F',specs:'20C/28T · LGA1700 · 5.4GHz · 65W · Raptor Lake',price:1898,socket:'LGA1700',tdp:65,
+    listings:[
+      {store:'Amazon',price:1898,url:'https://www.amazon.com.br/dp/B0CPXRCC4J'},
+      {store:'Pichau',price:1949,url:'https://www.pichau.com.br/processador-intel-core-i7-14700f-2-1ghz-5-4ghz-turbo-lga1700-14-geracao-20-cores-28-threads-cache-33mb-bx8071514700f'},
+    ]},
+  // ── LGA1851 Intel ─────────────────────────────────────
+  {id:'cpu_u5_245k',name:'Intel Core Ultra 5 245K',specs:'14C/14T · LGA1851 · 5.2GHz · 125W · Arrow Lake',price:1454,badge:'novo',socket:'LGA1851',tdp:125,
+    listings:[
+      {store:'Amazon',price:1454,url:'https://www.amazon.com.br/dp/B0CQKXNPQY'},
+      {store:'Pichau',price:1499,url:'https://www.pichau.com.br/processador-intel-core-ultra-5-245k-3-6ghz-5-2ghz-turbo-lga1851-14-geracao-14-cores-14-threads-cache-24mb-bx80768245k'},
+    ]},
+  {id:'cpu_u7_265k',name:'Intel Core Ultra 7 265K',specs:'20C/20T · LGA1851 · 5.5GHz · 125W · Arrow Lake',price:1798,socket:'LGA1851',tdp:125,
+    listings:[
+      {store:'Amazon',price:1798,url:'https://www.amazon.com.br/dp/B0CQKXRR1Y'},
+      {store:'Pichau',price:1849,url:'https://www.pichau.com.br/processador-intel-core-ultra-7-265k-3-9ghz-5-5ghz-turbo-lga1851-14-geracao-20-cores-20-threads-cache-36mb-bx80768265k'},
+    ]},
 ],
 cooler:[
   // Budget air (<R$150)
@@ -886,90 +969,273 @@ mobo:[
   {id:'mb12',name:'MSI MEG Z890 ACE',specs:'ATX · LGA1851 · DDR5 · PCIe 5.0 · WiFi 7',price:3299,badge:'novo',socket:'LGA1851',ramType:'DDR5',formFactor:'ATX',stores:{terabyte:3299,kabum:3399}},
 ],
 ram:[
-  {id:'ram_8gb_ddr4',name:'Corsair Vengeance LPX 8GB DDR4 3200MHz',specs:'DDR4 · 3200MHz · CL16 · 8GB',price:129,ramType:'DDR4',tdp:4,stores:{kabum:129,pichau:139,amazon:135}},
-  {id:'ram01',name:'Kingston Fury Beast DDR4 16GB (2×8GB) 3200MHz',specs:'DDR4 · 3200MHz · CL16 · 16GB kit',price:249,ramType:'DDR4',tdp:5,stores:{
-    kabum:'https://www.kabum.com.br/produto/113713/memoria-ram-kingston-fury-beast-16gb-2x8gb-3200mhz-ddr4-cl16-kf432c16bbk2-16',
-    amazon:259,ml:239,pichau:255}},
-  {id:'ram_pichau16',name:'Pichau Helix RGB 16GB DDR4 3200MHz',specs:'DDR4 · 3200MHz · CL19 · RGB · 16GB',price:239,badge:'pop',ramType:'DDR4',tdp:5,stores:{pichau:239,terabyte:249}},
-  {id:'ram02',name:'Kingston Fury Beast DDR4 32GB (2×16GB) 3200MHz',specs:'DDR4 · 3200MHz · CL16 · 32GB kit',price:399,ramType:'DDR4',tdp:6,stores:{kabum:399,pichau:419,amazon:409}},
-  {id:'ram03',name:'G.Skill Trident Z RGB DDR4 32GB 3600MHz',specs:'DDR4 · 3600MHz · CL18 · 32GB kit',price:549,badge:'dest',ramType:'DDR4',tdp:6,stores:{amazon:549,ml:529,terabyte:569}},
-  {id:'ram04',name:'Kingston Fury Beast DDR5 16GB (2×8GB) 5200MHz',specs:'DDR5 · 5200MHz · CL40 · 16GB kit',price:319,ramType:'DDR5',tdp:7,stores:{kabum:319,pichau:339,terabyte:349}},
-  {id:'ram05',name:'Kingston Fury Beast DDR5 32GB (2×16GB) 5200MHz',specs:'DDR5 · 5200MHz · CL40 · 32GB kit',price:549,badge:'dest',ramType:'DDR5',tdp:7,stores:{
-    kabum:'https://www.kabum.com.br/produto/186817/memoria-ram-kingston-fury-beast-32gb-2x16gb-5200mhz-ddr5-cl40-kf552c40bbk2-32',
-    pichau:569,terabyte:579}},
-  {id:'ram06',name:'G.Skill Trident Z5 RGB DDR5 32GB 6000MHz',specs:'DDR5 · 6000MHz · CL36 · 32GB kit',price:749,badge:'dest',ramType:'DDR5',tdp:8,stores:{amazon:749,terabyte:779,pichau:759}},
-  {id:'ram07',name:'G.Skill Trident Z5 RGB DDR5 64GB 6000MHz',specs:'DDR5 · 6000MHz · CL30 · 64GB kit',price:1399,ramType:'DDR5',tdp:10,stores:{amazon:1399,terabyte:1449}},
-  {id:'ram08',name:'Corsair Vengeance DDR5 32GB 5600MHz',specs:'DDR5 · 5600MHz · CL36 · 32GB kit',price:599,ramType:'DDR5',tdp:7,stores:{kabum:599,pichau:619,terabyte:629}},
-  {id:'ram09',name:'Crucial Pro DDR5 32GB 4800MHz',specs:'DDR5 · 4800MHz · CL40 · 32GB kit',price:499,ramType:'DDR5',tdp:7,stores:{amazon:499,ml:479,kabum:509}},
+  {id:'ram_8gb_ddr4',name:'Corsair Vengeance LPX 8GB DDR4 3200MHz',specs:'DDR4 · 3200MHz · CL16 · 8GB',price:149,ramType:'DDR4',tdp:4,
+    listings:[
+      {store:'kabum',price:149,url:'https://www.kabum.com.br/busca/memoria+ddr4+8gb'},
+      {store:'pichau',price:159,url:'https://www.pichau.com.br/busca?q=memoria+ddr4+8gb'},
+      {store:'amazon',price:169,url:'https://www.amazon.com.br/s?k=ddr4+8gb+3200'},
+    ],stores:{kabum:149,pichau:159,amazon:169}},
+  {id:'ram01',name:'Kingston Fury Beast DDR4 16GB (2×8GB) 3200MHz',specs:'DDR4 · 3200MHz · CL16 · 16GB kit',price:279,ramType:'DDR4',tdp:5,
+    listings:[
+      {store:'kabum',price:279,url:'https://www.kabum.com.br/produto/113713/memoria-ram-kingston-fury-beast-16gb-2x8gb-3200mhz-ddr4'},
+      {store:'pichau',price:289,url:'https://www.pichau.com.br/busca?q=kingston+fury+beast+ddr4+16gb'},
+      {store:'amazon',price:299,url:'https://www.amazon.com.br/s?k=kingston+fury+beast+ddr4+16gb'},
+      {store:'terabyte',price:295,url:'https://www.terabyteshop.com.br/busca/?q=fury+beast+ddr4+16gb'},
+    ],stores:{kabum:279,pichau:289,terabyte:295,amazon:299}},
+  {id:'ram02',name:'Kingston Fury Beast DDR4 32GB (2×16GB) 3200MHz',specs:'DDR4 · 3200MHz · CL16 · 32GB kit',price:469,ramType:'DDR4',tdp:6,
+    listings:[
+      {store:'kabum',price:469,url:'https://www.kabum.com.br/busca/memoria+ddr4+32gb+fury'},
+      {store:'pichau',price:489,url:'https://www.pichau.com.br/busca?q=fury+beast+ddr4+32gb'},
+      {store:'amazon',price:499,url:'https://www.amazon.com.br/s?k=kingston+fury+beast+ddr4+32gb'},
+    ],stores:{kabum:469,pichau:489,amazon:499}},
+  {id:'ram03',name:'G.Skill Trident Z RGB DDR4 32GB 3600MHz',specs:'DDR4 · 3600MHz · CL18 · 32GB kit',price:599,badge:'dest',ramType:'DDR4',tdp:6,
+    listings:[
+      {store:'amazon',price:599,url:'https://www.amazon.com.br/s?k=gskill+trident+ddr4+32gb+3600'},
+      {store:'terabyte',price:619,url:'https://www.terabyteshop.com.br/busca/?q=trident+z+rgb+ddr4+32gb'},
+      {store:'ml',price:579,url:'https://lista.mercadolivre.com.br/gskill-trident-ddr4-32gb'},
+    ],stores:{ml:579,amazon:599,terabyte:619}},
+  {id:'ram04',name:'Kingston Fury Beast DDR5 16GB (2×8GB) 5200MHz',specs:'DDR5 · 5200MHz · CL40 · 16GB kit',price:349,ramType:'DDR5',tdp:7,
+    listings:[
+      {store:'kabum',price:349,url:'https://www.kabum.com.br/busca/memoria+ddr5+16gb+fury'},
+      {store:'pichau',price:369,url:'https://www.pichau.com.br/busca?q=fury+beast+ddr5+16gb'},
+      {store:'terabyte',price:379,url:'https://www.terabyteshop.com.br/busca/?q=fury+beast+ddr5+16gb'},
+    ],stores:{kabum:349,pichau:369,terabyte:379}},
+  {id:'ram05',name:'Kingston Fury Beast DDR5 32GB (2×16GB) 5200MHz',specs:'DDR5 · 5200MHz · CL40 · 32GB kit',price:599,badge:'dest',ramType:'DDR5',tdp:7,
+    listings:[
+      {store:'kabum',price:599,url:'https://www.kabum.com.br/produto/186817/memoria-ram-kingston-fury-beast-32gb-2x16gb-5200mhz-ddr5'},
+      {store:'pichau',price:629,url:'https://www.pichau.com.br/busca?q=fury+beast+ddr5+32gb+5200'},
+      {store:'terabyte',price:649,url:'https://www.terabyteshop.com.br/busca/?q=fury+beast+ddr5+32gb'},
+    ],stores:{kabum:599,pichau:629,terabyte:649}},
+  {id:'ram06',name:'G.Skill Trident Z5 RGB DDR5 32GB 6000MHz',specs:'DDR5 · 6000MHz · CL36 · 32GB kit',price:799,badge:'dest',ramType:'DDR5',tdp:8,
+    listings:[
+      {store:'amazon',price:799,url:'https://www.amazon.com.br/s?k=gskill+trident+z5+ddr5+32gb+6000'},
+      {store:'terabyte',price:829,url:'https://www.terabyteshop.com.br/busca/?q=trident+z5+ddr5+32gb+6000'},
+      {store:'pichau',price:849,url:'https://www.pichau.com.br/busca?q=trident+z5+ddr5+32gb'},
+    ],stores:{amazon:799,terabyte:829,pichau:849}},
+  {id:'ram08',name:'Corsair Vengeance DDR5 32GB 5600MHz',specs:'DDR5 · 5600MHz · CL36 · 32GB kit',price:649,ramType:'DDR5',tdp:7,
+    listings:[
+      {store:'kabum',price:649,url:'https://www.kabum.com.br/busca/corsair+vengeance+ddr5+32gb'},
+      {store:'pichau',price:679,url:'https://www.pichau.com.br/busca?q=corsair+vengeance+ddr5+32gb'},
+      {store:'amazon',price:699,url:'https://www.amazon.com.br/s?k=corsair+vengeance+ddr5+32gb'},
+    ],stores:{kabum:649,pichau:679,amazon:699}},
+  {id:'ram07',name:'G.Skill Trident Z5 RGB DDR5 64GB 6000MHz',specs:'DDR5 · 6000MHz · CL30 · 64GB kit',price:1599,ramType:'DDR5',tdp:10,
+    listings:[
+      {store:'amazon',price:1599,url:'https://www.amazon.com.br/s?k=gskill+trident+z5+ddr5+64gb'},
+      {store:'terabyte',price:1649,url:'https://www.terabyteshop.com.br/busca/?q=trident+z5+ddr5+64gb'},
+    ],stores:{amazon:1599,terabyte:1649}},
 ],
 gpu:[
-  // RTX 30 series
-  {id:'gpu_3050',name:'NVIDIA GeForce RTX 3050 8GB',specs:'8GB GDDR6 · 8nm · 130W · Ampere',price:1499,badge:'pop',tdp:130,vram:8,stores:{kabum:1499,pichau:1549,terabyte:1579}},
-  {id:'gpu_3060',name:'NVIDIA GeForce RTX 3060 12GB',specs:'12GB GDDR6 · 8nm · 170W · Ampere',price:1649,tdp:170,vram:12,stores:{kabum:1649,pichau:1699,terabyte:1729}},
-  {id:'gpu_3060ti',name:'NVIDIA GeForce RTX 3060 Ti 8GB',specs:'8GB GDDR6X · 8nm · 200W · Ampere',price:2199,tdp:200,vram:8,stores:{kabum:2199,pichau:2249,terabyte:2279}},
-  {id:'gpu_3070',name:'NVIDIA GeForce RTX 3070 8GB',specs:'8GB GDDR6 · 8nm · 220W · Ampere',price:2599,tdp:220,vram:8,stores:{kabum:2599,pichau:2649,terabyte:2699}},
-  {id:'gpu_3070ti',name:'NVIDIA GeForce RTX 3070 Ti 8GB',specs:'8GB GDDR6X · 8nm · 290W · Ampere',price:2999,tdp:290,vram:8,stores:{kabum:2999,pichau:3049}},
-  {id:'gpu_3080',name:'NVIDIA GeForce RTX 3080 10GB',specs:'10GB GDDR6X · 8nm · 320W · Ampere',price:3499,tdp:320,vram:10,stores:{kabum:3499,pichau:3549,terabyte:3599}},
-  {id:'gpu_3080ti',name:'NVIDIA GeForce RTX 3080 Ti 12GB',specs:'12GB GDDR6X · 8nm · 350W · Ampere',price:4199,tdp:350,vram:12,stores:{kabum:4199,pichau:4299}},
-  {id:'gpu_3090',name:'NVIDIA GeForce RTX 3090 24GB',specs:'24GB GDDR6X · 8nm · 350W · Ampere',price:4999,tdp:350,vram:24,stores:{pichau:4999,terabyte:5199}},
-  // RTX 40 series
-  {id:'gpu01',name:'NVIDIA GeForce RTX 4060 8GB',specs:'8GB GDDR6 · 4nm · 115W · Ada Lovelace',price:2199,badge:'dest',tdp:115,vram:8,stores:{
-    kabum:'https://www.kabum.com.br/produto/484213/placa-de-video-msi-geforce-rtx-4060-gaming-x-8gb-gddr6-128-bits-912-v516-079',
-    pichau:2249,terabyte:2279}},
-  {id:'gpu02',name:'NVIDIA GeForce RTX 4060 Ti 8GB',specs:'8GB GDDR6 · 4nm · 165W · Ada Lovelace',price:2799,badge:'pop',tdp:165,vram:8,stores:{kabum:2799,pichau:2849,terabyte:2899}},
-  {id:'gpu03',name:'NVIDIA GeForce RTX 4060 Ti 16GB',specs:'16GB GDDR6 · 4nm · 165W',price:3399,tdp:165,vram:16,stores:{kabum:3399,terabyte:3449}},
-  {id:'gpu04',name:'NVIDIA GeForce RTX 4070 12GB',specs:'12GB GDDR6X · 4nm · 200W',price:4299,badge:'dest',tdp:200,vram:12,stores:{kabum:4299,pichau:4349,terabyte:4399}},
-  {id:'gpu05',name:'NVIDIA GeForce RTX 4070 Super 12GB',specs:'12GB GDDR6X · 4nm · 220W',price:5499,badge:'dest',tdp:220,vram:12,stores:{kabum:5499,pichau:5599,terabyte:5649}},
-  {id:'gpu06',name:'NVIDIA GeForce RTX 4070 Ti Super 16GB',specs:'16GB GDDR6X · 4nm · 285W',price:6299,tdp:285,vram:16,stores:{pichau:6299,terabyte:6399}},
-  {id:'gpu07',name:'NVIDIA GeForce RTX 4080 Super 16GB',specs:'16GB GDDR6X · 4nm · 320W',price:7999,tdp:320,vram:16,stores:{pichau:7999,terabyte:8199,kabum:8099}},
-  {id:'gpu08',name:'NVIDIA GeForce RTX 4090 24GB',specs:'24GB GDDR6X · 4nm · 450W',price:11999,tdp:450,vram:24,stores:{pichau:11999,terabyte:12499,kabum:12199}},
-  // RTX 50 series
-  {id:'gpu_5060',name:'NVIDIA GeForce RTX 5060 8GB',specs:'8GB GDDR7 · 4nm · 150W · Blackwell',price:2299,badge:'novo',tdp:150,vram:8,stores:{pichau:2299,terabyte:2399,kabum:2349}},
-  {id:'gpu_5060ti8',name:'NVIDIA GeForce RTX 5060 Ti 8GB',specs:'8GB GDDR7 · 4nm · 180W · Blackwell',price:2999,badge:'novo',tdp:180,vram:8,stores:{pichau:2999,terabyte:3099}},
-  {id:'gpu_5060ti16',name:'NVIDIA GeForce RTX 5060 Ti 16GB',specs:'16GB GDDR7 · 4nm · 180W · Blackwell',price:3499,badge:'novo',tdp:180,vram:16,stores:{pichau:3499,terabyte:3599}},
-  {id:'gpu_5070',name:'NVIDIA GeForce RTX 5070 12GB',specs:'12GB GDDR7 · 4nm · 250W · Blackwell',price:5499,badge:'novo',tdp:250,vram:12,stores:{pichau:5499,terabyte:5699}},
-  {id:'gpu_5070ti',name:'NVIDIA GeForce RTX 5070 Ti 16GB',specs:'16GB GDDR7 · 4nm · 300W · Blackwell',price:7499,badge:'novo',tdp:300,vram:16,stores:{pichau:7499,terabyte:7799}},
-  {id:'gpu_5080',name:'NVIDIA GeForce RTX 5080 16GB',specs:'16GB GDDR7 · 4nm · 360W · Blackwell',price:11499,badge:'novo',tdp:360,vram:16,stores:{pichau:11499,terabyte:11999}},
-  {id:'gpu_5090',name:'NVIDIA GeForce RTX 5090 32GB',specs:'32GB GDDR7 · 4nm · 575W · Blackwell',price:22999,badge:'novo',tdp:575,vram:32,stores:{pichau:22999,terabyte:23999}},
-  // AMD RX 6000
-  {id:'gpu_6600',name:'AMD Radeon RX 6600 8GB',specs:'8GB GDDR6 · 7nm · 132W · RDNA 2',price:1199,tdp:132,vram:8,stores:{kabum:1199,pichau:1249,terabyte:1279}},
-  {id:'gpu_6650xt',name:'AMD Radeon RX 6650 XT 8GB',specs:'8GB GDDR6 · 6nm · 180W · RDNA 2',price:1599,tdp:180,vram:8,stores:{kabum:1599,pichau:1649}},
-  {id:'gpu_6700xt',name:'AMD Radeon RX 6700 XT 12GB',specs:'12GB GDDR6 · 7nm · 230W · RDNA 2',price:1999,tdp:230,vram:12,stores:{kabum:1999,pichau:2049,terabyte:2099}},
-  {id:'gpu_6750xt',name:'AMD Radeon RX 6750 XT 12GB',specs:'12GB GDDR6 · 6nm · 250W · RDNA 2',price:2299,tdp:250,vram:12,stores:{kabum:2299,pichau:2349}},
-  {id:'gpu_6800xt',name:'AMD Radeon RX 6800 XT 16GB',specs:'16GB GDDR6 · 7nm · 300W · RDNA 2',price:2999,tdp:300,vram:16,stores:{pichau:2999,terabyte:3099}},
-  // AMD RX 7000
-  {id:'gpu09',name:'AMD Radeon RX 7600 8GB',specs:'8GB GDDR6 · 6nm · 165W · RDNA 3',price:1549,badge:'pop',tdp:165,vram:8,stores:{kabum:1549,pichau:1599,terabyte:1629}},
-  {id:'gpu_7600xt',name:'AMD Radeon RX 7600 XT 16GB',specs:'16GB GDDR6 · 6nm · 190W · RDNA 3',price:2099,tdp:190,vram:16,stores:{kabum:2099,pichau:2149}},
-  {id:'gpu10',name:'AMD Radeon RX 7700 XT 12GB',specs:'12GB GDDR6 · 6nm · 245W · RDNA 3',price:2799,tdp:245,vram:12,stores:{kabum:2799,pichau:2849,terabyte:2899}},
-  {id:'gpu11',name:'AMD Radeon RX 7800 XT 16GB',specs:'16GB GDDR6 · 6nm · 263W · RDNA 3',price:3699,badge:'pop',tdp:263,vram:16,stores:{kabum:3699,pichau:3749,terabyte:3799}},
-  {id:'gpu12',name:'AMD Radeon RX 7900 GRE 16GB',specs:'16GB GDDR6 · 5nm · 260W · RDNA 3',price:4199,badge:'dest',tdp:260,vram:16,stores:{kabum:4199,pichau:4249,terabyte:4299}},
-  {id:'gpu13',name:'AMD Radeon RX 7900 XTX 24GB',specs:'24GB GDDR6 · 5nm · 355W · RDNA 3',price:6499,tdp:355,vram:24,stores:{pichau:6499,terabyte:6699}},
-  // AMD RX 9000
-  {id:'gpu_9060xt',name:'AMD Radeon RX 9060 XT 16GB',specs:'16GB GDDR6 · 4nm · 150W · RDNA 4',price:2999,badge:'novo',tdp:150,vram:16,stores:{pichau:2999,terabyte:3099,kabum:3049}},
-  {id:'gpu_9070',name:'AMD Radeon RX 9070 12GB',specs:'12GB GDDR6 · 4nm · 220W · RDNA 4',price:4499,badge:'novo',tdp:220,vram:12,stores:{pichau:4499,terabyte:4699}},
-  {id:'gpu_9070xt',name:'AMD Radeon RX 9070 XT 16GB',specs:'16GB GDDR6 · 4nm · 220W · RDNA 4',price:5299,badge:'novo',tdp:220,vram:16,stores:{pichau:5299,terabyte:5499}},
-  // Intel Arc
-  {id:'gpu_b580',name:'Intel Arc B580 12GB',specs:'12GB GDDR6 · 5nm · 190W · Battlemage',price:1999,badge:'pop',tdp:190,vram:12,stores:{kabum:1999,pichau:2049,terabyte:2079}},
+  // ── RTX 30 series ────────────────────────────────────
+  {id:'gpu_3050_8gb',name:'NVIDIA GeForce RTX 3050 8GB',specs:'8GB GDDR6 · 8nm · 130W · Ampere',price:1499,tdp:130,vram:8,
+    listings:[
+      {store:'KaBuM',price:1499,url:'https://www.kabum.com.br/busca/rtx+3050+8gb'},
+      {store:'Pichau',price:1549,url:'https://www.pichau.com.br/busca?q=rtx+3050+8gb'},
+    ]},
+  {id:'gpu_3060',name:'NVIDIA GeForce RTX 3060 12GB',specs:'12GB GDDR6 · 8nm · 170W · Ampere',price:2099,tdp:170,vram:12,
+    listings:[
+      {store:'KaBuM',price:2099,url:'https://www.kabum.com.br/busca/rtx+3060+12gb'},
+      {store:'Pichau',price:2149,url:'https://www.pichau.com.br/busca?q=rtx+3060+12gb'},
+    ]},
+  {id:'gpu_3070',name:'NVIDIA GeForce RTX 3070 8GB',specs:'8GB GDDR6 · 8nm · 220W · Ampere',price:2399,tdp:220,vram:8,
+    listings:[
+      {store:'KaBuM',price:2399,url:'https://www.kabum.com.br/busca/rtx+3070'},
+      {store:'Pichau',price:2449,url:'https://www.pichau.com.br/busca?q=rtx+3070+8gb'},
+    ]},
+  // ── RTX 50 series (new) ────────────────────────────────────
+  {id:'gpu_rtx5050',name:'NVIDIA GeForce RTX 5050 8GB',specs:'8GB GDDR7 · 4nm · 130W · Blackwell',price:1699,badge:'novo',tdp:130,vram:8,
+    listings:[
+      {store:'KaBuM',price:1699,url:'https://www.kabum.com.br/busca/rtx+5050'},
+      {store:'Pichau',price:1749,url:'https://www.pichau.com.br/busca?q=rtx+5050'},
+    ]},
+  {id:'gpu_rtx5060',name:'NVIDIA GeForce RTX 5060 8GB',specs:'8GB GDDR7 · 4nm · 145W · Blackwell',price:2340,badge:'novo',tdp:145,vram:8,
+    listings:[
+      {store:'Pichau',price:2260,url:'https://www.pichau.com.br/busca?q=rtx+5060+8gb'},
+      {store:'KaBuM',price:2299,url:'https://www.kabum.com.br/busca/rtx+5060'},
+    ]},
+  {id:'gpu_5060ti8',name:'NVIDIA GeForce RTX 5060 Ti 8GB',specs:'8GB GDDR7 · 4nm · 180W · Blackwell',price:2777,badge:'novo',tdp:180,vram:8,
+    listings:[
+      {store:'Pichau',price:2759,url:'https://www.pichau.com.br/busca?q=rtx+5060+ti+8gb'},
+      {store:'KaBuM',price:2849,url:'https://www.kabum.com.br/busca/rtx+5060+ti+8gb'},
+    ]},
+  {id:'gpu_5060ti16',name:'NVIDIA GeForce RTX 5060 Ti 16GB',specs:'16GB GDDR7 · 4nm · 180W · Blackwell',price:3699,badge:'novo',tdp:180,vram:16,
+    listings:[
+      {store:'Pichau',price:3699,url:'https://www.pichau.com.br/busca?q=rtx+5060+ti+16gb'},
+      {store:'KaBuM',price:3799,url:'https://www.kabum.com.br/busca/rtx+5060+ti+16gb'},
+    ]},
+  // ── RTX 40 series ────────────────────────────────────
+  {id:'gpu01',name:'NVIDIA GeForce RTX 4060 8GB',specs:'8GB GDDR6 · 4nm · 115W · Ada Lovelace',price:2400,tdp:115,vram:8,
+    listings:[
+      {store:'Pichau',price:2400,url:'https://www.pichau.com.br/placa-de-video-msi-geforce-rtx-4060-ventus-2x-black-oc-8gb-gddr6-128-bit-912-v516-209'},
+      {store:'KaBuM',price:2499,url:'https://www.kabum.com.br/produto/484213/placa-de-video-msi-geforce-rtx-4060-gaming-x-8gb-gddr6-128-bits-912-v516-079'},
+      {store:'Amazon',price:2799,url:'https://www.amazon.com.br/dp/B0C3PWKFZ9'},
+    ]},
+  {id:'gpu02',name:'NVIDIA GeForce RTX 4060 Ti 8GB',specs:'8GB GDDR6 · 4nm · 165W · Ada Lovelace',price:2479,badge:'dest',tdp:165,vram:8,
+    listings:[
+      {store:'Pichau',price:2479,url:'https://www.pichau.com.br/placa-de-video-gigabyte-geforce-rtx-4060-ti-eagle-8gb-gddr6-128-bit-gv-n406teagle-8gd'},
+      {store:'KaBuM',price:2599,url:'https://www.kabum.com.br/busca/rtx+4060+ti+8gb'},
+    ]},
+  {id:'gpu04',name:'NVIDIA GeForce RTX 4070 12GB',specs:'12GB GDDR6X · 4nm · 200W · Ada Lovelace',price:4277,tdp:200,vram:12,
+    listings:[
+      {store:'Pichau',price:4277,url:'https://www.pichau.com.br/busca?q=rtx+4070+12gb'},
+      {store:'KaBuM',price:4399,url:'https://www.kabum.com.br/busca/rtx+4070+12gb'},
+    ]},
+  {id:'gpu05',name:'NVIDIA GeForce RTX 4070 Super 12GB',specs:'12GB GDDR6X · 4nm · 220W · Ada Lovelace',price:4599,badge:'dest',tdp:220,vram:12,
+    listings:[
+      {store:'Pichau',price:5299,url:'https://www.pichau.com.br/busca?q=rtx+4070+super'},
+      {store:'KaBuM',price:5499,url:'https://www.kabum.com.br/busca/rtx+4070+super'},
+    ]},
+  {id:'gpu06',name:'NVIDIA GeForce RTX 4080 Super 16GB',specs:'16GB GDDR6X · 4nm · 320W · Ada Lovelace',price:7999,tdp:320,vram:16,
+    listings:[
+      {store:'Pichau',price:7999,url:'https://www.pichau.com.br/busca?q=rtx+4080+super'},
+      {store:'KaBuM',price:8199,url:'https://www.kabum.com.br/busca/rtx+4080+super'},
+    ]},
+  {id:'gpu08',name:'NVIDIA GeForce RTX 4090 24GB',specs:'24GB GDDR6X · 4nm · 450W · Ada Lovelace',price:11999,tdp:450,vram:24,
+    listings:[
+      {store:'Pichau',price:11999,url:'https://www.pichau.com.br/busca?q=rtx+4090'},
+      {store:'KaBuM',price:12499,url:'https://www.kabum.com.br/busca/rtx+4090'},
+    ]},
+  {id:'gpu_5070',name:'NVIDIA GeForce RTX 5070 12GB',specs:'12GB GDDR7 · 4nm · 250W · Blackwell',price:3955,badge:'novo',tdp:250,vram:12,
+    listings:[
+      {store:'Pichau',price:3955,url:'https://www.pichau.com.br/busca?q=rtx+5070+12gb'},
+      {store:'KaBuM',price:4199,url:'https://www.kabum.com.br/busca/rtx+5070'},
+    ]},
+  {id:'gpu_5070ti',name:'NVIDIA GeForce RTX 5070 Ti 16GB',specs:'16GB GDDR7 · 4nm · 300W · Blackwell',price:6499,badge:'novo',tdp:300,vram:16,
+    listings:[
+      {store:'Pichau',price:6499,url:'https://www.pichau.com.br/busca?q=rtx+5070+ti'},
+      {store:'KaBuM',price:6799,url:'https://www.kabum.com.br/busca/rtx+5070+ti'},
+    ]},
+  {id:'gpu_5080',name:'NVIDIA GeForce RTX 5080 16GB',specs:'16GB GDDR7 · 4nm · 360W · Blackwell',price:9999,badge:'novo',tdp:360,vram:16,
+    listings:[
+      {store:'Pichau',price:9998,url:'https://www.pichau.com.br/busca?q=rtx+5080'},
+      {store:'KaBuM',price:10499,url:'https://www.kabum.com.br/busca/rtx+5080'},
+    ]},
+  // ── AMD RX 7000 ───────────────────────────────────────
+  {id:'gpu_b570',name:'Intel Arc B570 12GB',specs:'12GB GDDR6 · 5nm · 150W · Battlemage',price:1499,badge:'pop',tdp:150,vram:12,
+    listings:[
+      {store:'KaBuM',price:1499,url:'https://www.kabum.com.br/busca/arc+b570'},
+      {store:'Pichau',price:1549,url:'https://www.pichau.com.br/busca?q=arc+b570'},
+    ]},
+  {id:'gpu_b580',name:'Intel Arc B580 12GB',specs:'12GB GDDR6 · 5nm · 190W · Battlemage',price:1999,tdp:190,vram:12,
+    listings:[
+      {store:'KaBuM',price:1999,url:'https://www.kabum.com.br/busca/arc+b580'},
+      {store:'Pichau',price:2049,url:'https://www.pichau.com.br/busca?q=arc+b580'},
+    ]},
+  {id:'gpu09',name:'AMD Radeon RX 7600 8GB',specs:'8GB GDDR6 · 6nm · 165W · RDNA 3',price:1500,badge:'pop',tdp:165,vram:8,
+    listings:[
+      {store:'Pichau',price:1539,url:'https://www.pichau.com.br/busca?q=rx+7600+8gb'},
+      {store:'KaBuM',price:1599,url:'https://www.kabum.com.br/busca/rx+7600+8gb'},
+      {store:'Terabyte',price:1549,url:'https://www.terabyteshop.com.br/busca/?q=rx+7600'},
+    ]},
+  {id:'gpu_7700xt',name:'AMD Radeon RX 7700 XT 12GB',specs:'12GB GDDR6 · 6nm · 245W · RDNA 3',price:2959,tdp:245,vram:12,
+    listings:[
+      {store:'Pichau',price:2959,url:'https://www.pichau.com.br/busca?q=rx+7700+xt'},
+      {store:'KaBuM',price:3099,url:'https://www.kabum.com.br/busca/rx+7700+xt'},
+    ]},
+  {id:'gpu11',name:'AMD Radeon RX 7800 XT 16GB',specs:'16GB GDDR6 · 6nm · 263W · RDNA 3',price:3699,badge:'pop',tdp:263,vram:16,
+    listings:[
+      {store:'Pichau',price:3699,url:'https://www.pichau.com.br/busca?q=rx+7800+xt'},
+      {store:'KaBuM',price:3849,url:'https://www.kabum.com.br/busca/rx+7800+xt'},
+    ]},
+  {id:'gpu12',name:'AMD Radeon RX 7900 GRE 16GB',specs:'16GB GDDR6 · 5nm · 260W · RDNA 3',price:4199,badge:'dest',tdp:260,vram:16,
+    listings:[
+      {store:'Pichau',price:4199,url:'https://www.pichau.com.br/busca?q=rx+7900+gre'},
+      {store:'KaBuM',price:4399,url:'https://www.kabum.com.br/busca/rx+7900+gre'},
+    ]},
+  {id:'gpu13',name:'AMD Radeon RX 7900 XTX 24GB',specs:'24GB GDDR6 · 5nm · 355W · RDNA 3',price:5999,tdp:355,vram:24,
+    listings:[
+      {store:'Pichau',price:5999,url:'https://www.pichau.com.br/busca?q=rx+7900+xtx'},
+      {store:'KaBuM',price:6299,url:'https://www.kabum.com.br/busca/rx+7900+xtx'},
+    ]},
+  // ── AMD RX 9000 (RDNA 4) ─────────────────────────────
+  {id:'gpu_9060xt8',name:'AMD Radeon RX 9060 XT 8GB',specs:'8GB GDDR6 · 4nm · 150W · RDNA 4',price:2159,badge:'novo',tdp:150,vram:8,
+    listings:[
+      {store:'Pichau',price:2159,url:'https://www.pichau.com.br/busca?q=rx+9060+xt+8gb'},
+      {store:'KaBuM',price:2299,url:'https://www.kabum.com.br/busca/rx+9060+xt+8gb'},
+    ]},
+  {id:'gpu_9060xt16',name:'AMD Radeon RX 9060 XT 16GB',specs:'16GB GDDR6 · 4nm · 150W · RDNA 4',price:2699,badge:'novo',tdp:150,vram:16,
+    listings:[
+      {store:'Pichau',price:2699,url:'https://www.pichau.com.br/busca?q=rx+9060+xt+16gb'},
+      {store:'KaBuM',price:2849,url:'https://www.kabum.com.br/busca/rx+9060+xt+16gb'},
+    ]},
+  {id:'gpu_9070',name:'AMD Radeon RX 9070 12GB',specs:'12GB GDDR6 · 4nm · 220W · RDNA 4',price:4199,badge:'novo',tdp:220,vram:12,
+    listings:[
+      {store:'Pichau',price:4199,url:'https://www.pichau.com.br/busca?q=rx+9070+12gb'},
+      {store:'KaBuM',price:4399,url:'https://www.kabum.com.br/busca/rx+9070'},
+    ]},
+  {id:'gpu_9070xt',name:'AMD Radeon RX 9070 XT 16GB',specs:'16GB GDDR6 · 4nm · 220W · RDNA 4',price:4599,badge:'novo',tdp:220,vram:16,
+    listings:[
+      {store:'Pichau',price:4599,url:'https://www.pichau.com.br/busca?q=rx+9070+xt'},
+      {store:'KaBuM',price:4799,url:'https://www.kabum.com.br/busca/rx+9070+xt'},
+    ]},
 ],
 storage:[
-  {id:'ssd_240',name:'Kingston A400 240GB SATA',specs:'240GB · SATA · 500MB/s read',price:109,tdp:2,stores:{kabum:109,amazon:119,pichau:115}},
-  {id:'ssd_480',name:'Kingston A400 480GB SATA',specs:'480GB · SATA · 500MB/s read',price:159,tdp:2,stores:{kabum:159,amazon:169,pichau:165}},
-  {id:'ssd_nv2_500',name:'Kingston NV2 500GB NVMe',specs:'500GB · PCIe 4.0 · 3500MB/s read',price:189,tdp:4,stores:{kabum:189,amazon:199,pichau:195}},
-  {id:'ssd05',name:'Kingston NV2 1TB NVMe',specs:'1TB · PCIe 4.0 · 3500MB/s read',price:289,badge:'pop',tdp:5,stores:{
-    kabum:'https://www.kabum.com.br/produto/364497/ssd-kingston-nv2-1tb-m-2-nvme-snv2s-1000g',
-    amazon:299,ml:279,pichau:295}},
-  {id:'ssd06',name:'Kingston NV2 2TB NVMe',specs:'2TB · PCIe 4.0 · 3500MB/s read',price:499,tdp:5,stores:{kabum:499,amazon:519,pichau:509}},
-  {id:'ssd_p3_1tb',name:'Crucial P3 Plus 1TB NVMe',specs:'1TB · PCIe 4.0 · 5000MB/s read',price:299,tdp:5,stores:{kabum:299,amazon:319,terabyte:309}},
-  {id:'ssd_p3_2tb',name:'Crucial P3 Plus 2TB NVMe',specs:'2TB · PCIe 4.0 · 4800MB/s read',price:549,tdp:5,stores:{amazon:549,terabyte:569}},
-  {id:'ssd01',name:'WD Black SN850X 1TB NVMe',specs:'1TB · PCIe 4.0 · 7300MB/s read',price:469,badge:'dest',tdp:8,stores:{
-    kabum:'https://www.kabum.com.br/produto/226067/ssd-wd-black-sn850x-nvme-m-2-1tb-pcie-gen4-x4-7300mb-s-leitura-6300mb-s-gravacao-wds100t2x0e',
-    amazon:489,terabyte:479}},
-  {id:'ssd02',name:'WD Black SN850X 2TB NVMe',specs:'2TB · PCIe 4.0 · 7300MB/s read',price:849,badge:'dest',tdp:8,stores:{kabum:849,amazon:879,terabyte:869}},
-  {id:'ssd03',name:'Samsung 990 Pro 1TB NVMe',specs:'1TB · PCIe 4.0 · 7450MB/s read',price:499,badge:'dest',tdp:8,stores:{kabum:499,terabyte:519,amazon:509}},
-  {id:'ssd04',name:'Samsung 990 Pro 2TB NVMe',specs:'2TB · PCIe 4.0 · 7450MB/s read',price:949,tdp:8,stores:{kabum:949,terabyte:979,amazon:959}},
-  {id:'ssd08',name:'Seagate Barracuda 2TB HDD',specs:'2TB · SATA · 7200RPM · 256MB cache',price:299,tdp:10,stores:{kabum:299,amazon:319,ml:289}},
-  {id:'ssd09',name:'Seagate Barracuda 4TB HDD',specs:'4TB · SATA · 5400RPM · 256MB cache',price:449,tdp:12,stores:{amazon:449,ml:429,terabyte:459}},
-  {id:'ssd10',name:'Samsung 870 EVO 1TB SATA',specs:'1TB · SATA · 560MB/s read',price:399,tdp:4,stores:{kabum:399,amazon:419,terabyte:409}},
+  {id:'ssd_240',name:'Kingston A400 240GB SATA',specs:'240GB · SATA · 500MB/s read',price:109,tdp:2,
+    listings:[
+      {store:'kabum',price:109,url:'https://www.kabum.com.br/busca/kingston+a400+240gb'},
+      {store:'amazon',price:119,url:'https://www.amazon.com.br/s?k=kingston+a400+240gb'},
+      {store:'pichau',price:115,url:'https://www.pichau.com.br/busca?q=kingston+a400+240gb'},
+    ],stores:{kabum:109,pichau:115,amazon:119}},
+  {id:'ssd_nv2_500',name:'Kingston NV2 500GB NVMe',specs:'500GB · PCIe 4.0 · 3500MB/s read',price:199,tdp:4,
+    listings:[
+      {store:'kabum',price:199,url:'https://www.kabum.com.br/busca/kingston+nv2+500gb'},
+      {store:'pichau',price:209,url:'https://www.pichau.com.br/busca?q=kingston+nv2+500gb'},
+      {store:'amazon',price:219,url:'https://www.amazon.com.br/s?k=kingston+nv2+500gb'},
+    ],stores:{kabum:199,pichau:209,amazon:219}},
+  {id:'ssd05',name:'Kingston NV2 1TB NVMe',specs:'1TB · PCIe 4.0 · 3500MB/s read',price:299,badge:'pop',tdp:5,
+    listings:[
+      {store:'kabum',price:299,url:'https://www.kabum.com.br/produto/364497/ssd-kingston-nv2-1tb-m-2-nvme-snv2s-1000g'},
+      {store:'pichau',price:319,url:'https://www.pichau.com.br/busca?q=kingston+nv2+1tb'},
+      {store:'amazon',price:329,url:'https://www.amazon.com.br/s?k=kingston+nv2+1tb'},
+      {store:'terabyte',price:309,url:'https://www.terabyteshop.com.br/busca/?q=kingston+nv2+1tb'},
+    ],stores:{kabum:299,terabyte:309,pichau:319,amazon:329}},
+  {id:'ssd06',name:'Kingston NV2 2TB NVMe',specs:'2TB · PCIe 4.0 · 3500MB/s read',price:519,tdp:5,
+    listings:[
+      {store:'kabum',price:519,url:'https://www.kabum.com.br/busca/kingston+nv2+2tb'},
+      {store:'pichau',price:539,url:'https://www.pichau.com.br/busca?q=kingston+nv2+2tb'},
+      {store:'amazon',price:559,url:'https://www.amazon.com.br/s?k=kingston+nv2+2tb'},
+    ],stores:{kabum:519,pichau:539,amazon:559}},
+  {id:'ssd_p3_1tb',name:'Crucial P3 Plus 1TB NVMe',specs:'1TB · PCIe 4.0 · 5000MB/s read',price:309,tdp:5,
+    listings:[
+      {store:'kabum',price:309,url:'https://www.kabum.com.br/busca/crucial+p3+1tb'},
+      {store:'amazon',price:329,url:'https://www.amazon.com.br/s?k=crucial+p3+plus+1tb'},
+      {store:'terabyte',price:319,url:'https://www.terabyteshop.com.br/busca/?q=crucial+p3+1tb'},
+    ],stores:{kabum:309,terabyte:319,amazon:329}},
+  {id:'ssd01',name:'WD Black SN850X 1TB NVMe',specs:'1TB · PCIe 4.0 · 7300MB/s read',price:499,badge:'dest',tdp:8,
+    listings:[
+      {store:'kabum',price:499,url:'https://www.kabum.com.br/produto/226067/ssd-wd-black-sn850x-nvme-m-2-1tb-pcie-gen4-x4-7300mb-s'},
+      {store:'amazon',price:519,url:'https://www.amazon.com.br/s?k=wd+black+sn850x+1tb'},
+      {store:'terabyte',price:509,url:'https://www.terabyteshop.com.br/busca/?q=wd+black+sn850x+1tb'},
+    ],stores:{kabum:499,terabyte:509,amazon:519}},
+  {id:'ssd02',name:'WD Black SN850X 2TB NVMe',specs:'2TB · PCIe 4.0 · 7300MB/s read',price:949,badge:'dest',tdp:8,
+    listings:[
+      {store:'kabum',price:949,url:'https://www.kabum.com.br/busca/wd+black+sn850x+2tb'},
+      {store:'amazon',price:979,url:'https://www.amazon.com.br/s?k=wd+black+sn850x+2tb'},
+      {store:'terabyte',price:959,url:'https://www.terabyteshop.com.br/busca/?q=wd+black+sn850x+2tb'},
+    ],stores:{kabum:949,terabyte:959,amazon:979}},
+  {id:'ssd03',name:'Samsung 990 Pro 1TB NVMe',specs:'1TB · PCIe 4.0 · 7450MB/s read',price:549,badge:'dest',tdp:8,
+    listings:[
+      {store:'kabum',price:549,url:'https://www.kabum.com.br/busca/samsung+990+pro+1tb'},
+      {store:'terabyte',price:569,url:'https://www.terabyteshop.com.br/busca/?q=samsung+990+pro+1tb'},
+      {store:'amazon',price:559,url:'https://www.amazon.com.br/s?k=samsung+990+pro+1tb'},
+    ],stores:{kabum:549,amazon:559,terabyte:569}},
+  {id:'ssd04',name:'Samsung 990 Pro 2TB NVMe',specs:'2TB · PCIe 4.0 · 7450MB/s read',price:999,tdp:8,
+    listings:[
+      {store:'kabum',price:999,url:'https://www.kabum.com.br/busca/samsung+990+pro+2tb'},
+      {store:'amazon',price:1029,url:'https://www.amazon.com.br/s?k=samsung+990+pro+2tb'},
+      {store:'terabyte',price:1049,url:'https://www.terabyteshop.com.br/busca/?q=samsung+990+pro+2tb'},
+    ],stores:{kabum:999,amazon:1029,terabyte:1049}},
+  {id:'ssd08',name:'Seagate Barracuda 2TB HDD',specs:'2TB · SATA · 7200RPM · 256MB cache',price:329,tdp:10,
+    listings:[
+      {store:'kabum',price:329,url:'https://www.kabum.com.br/busca/seagate+barracuda+2tb'},
+      {store:'amazon',price:349,url:'https://www.amazon.com.br/s?k=seagate+barracuda+2tb'},
+      {store:'ml',price:309,url:'https://lista.mercadolivre.com.br/seagate-barracuda-2tb'},
+    ],stores:{ml:309,kabum:329,amazon:349}},
+  {id:'ssd09',name:'Seagate Barracuda 4TB HDD',specs:'4TB · SATA · 5400RPM · 256MB cache',price:479,tdp:12,
+    listings:[
+      {store:'amazon',price:479,url:'https://www.amazon.com.br/s?k=seagate+barracuda+4tb'},
+      {store:'ml',price:449,url:'https://lista.mercadolivre.com.br/seagate-barracuda-4tb'},
+      {store:'terabyte',price:499,url:'https://www.terabyteshop.com.br/busca/?q=seagate+barracuda+4tb'},
+    ],stores:{ml:449,amazon:479,terabyte:499}},
 ],
 psu:[
   {id:'psu_400w',name:'Rise Mode Z 400W 80+ Bronze',specs:'400W · 80+ Bronze · Semi Modular',price:199,badge:'pop',wattage:400,tdp:0,stores:{kabum:199,pichau:209,terabyte:215}},
@@ -1165,8 +1431,9 @@ function storeChips(part, maxCount) {
 }
 
 function minPrice(part) {
-  const vals = Object.values(part.stores || {}).map(v => typeof v === 'number' ? v : part.price);
-  return Math.min(...vals);
+  if (part.listings && part.listings.length) return Math.min(...part.listings.map(l=>l.price));
+  const vals = Object.values(part.stores || {}).filter(v => typeof v === 'number');
+  return vals.length ? Math.min(...vals) : (part.price || 0);
 }
 
 function removePart(id) { delete build[id]; renderBuilder(); document.getElementById('suggest-area').innerHTML = '<button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="runSuggestions()">Analisar build e sugerir</button>'; }
@@ -1755,20 +2022,66 @@ function filterCatalog() {
     : all.map(p => {
         const mp = minPrice(p);
         const badge = p.badge ? `<span class="badge ${p.badge==='dest'?'badge-or':p.badge==='pop'?'badge-green':'badge-blue'}">${p.badge==='dest'?'Destaque':p.badge==='pop'?'Popular':'Novo'}</span>` : '';
-        return `<div class="plist-row" onclick="openHistory('${p._cat.id}','${p.id}')" style="cursor:pointer" title="Ver histórico de preços">
+        return `<div class="plist-row" onclick="openStoreCompare('${p._cat.id}','${p.id}')" style="cursor:pointer" title="Ver comparação de lojas">
           <div><span class="pt-tag">${p._cat.icon}</span></div>
           <div>
             <div style="font-size:13.5px;font-weight:700;margin-bottom:2px">${p.name}${badge}</div>
             <div style="font-size:11px;color:var(--tx3)">${p.specs||''}</div>
           </div>
           <div class="store-chips" onclick="event.stopPropagation()">${storeChips(p, 3)}</div>
-          <div><div class="pt-price">~${fmt(mp)}</div><div style="font-size:10px;color:var(--tx3)">ref. est.</div></div>
+          <div><div class="pt-price">${fmt(mp)}</div><div style="font-size:10px;color:var(--tx3)">menor preço</div></div>
           <div onclick="event.stopPropagation()">
             ${isBuilderCat(p._cat.id) ? `<button class="btn btn-or btn-sm" onclick="quickAdd('${p._cat.id}','${p.id}')">+ Build</button>` : ''}
-            <button class="btn btn-ghost btn-xs" onclick="openHistory('${p._cat.id}','${p.id}')" style="margin-left:4px"></button>
+            <button class="btn btn-ghost btn-xs" onclick="event.stopPropagation();openHistory('${p._cat.id}','${p.id}')" style="margin-left:4px" title="Histórico"></button>
           </div>
         </div>`;
       }).join('');
+}
+
+// ── STORE COMPARE MODAL ──
+let _scCat = null, _scPart = null;
+function openStoreCompare(catId, partId) {
+  _scCat = catId; _scPart = partId;
+  const part = (DB[catId]||[]).find(p=>p.id===partId);
+  if (!part) return;
+  document.getElementById('sc-title').textContent = part.name;
+  document.getElementById('sc-specs').textContent = part.specs || '';
+  document.getElementById('sc-add-btn').style.display = isBuilderCat(catId) ? '' : 'none';
+
+  // Build listings from stores object
+  // store names now embedded in listings as .store string
+  // Use listings array directly (each has .store name string, .price, .url)
+  const entries = (part.listings || []).slice().sort((a,b)=>a.price-b.price);
+  const minP = entries[0]?.price || 0;
+
+  document.getElementById('sc-listings').innerHTML = entries.map((e,i) => {
+    const isBest = e.price === minP;
+    return `<a class="sc-listing${isBest?' best':''}" href="${e.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+      <span class="sc-store-name">${e.store}</span>
+      <span class="sc-price">${fmt(e.price)}</span>
+      ${isBest?'<span class="sc-badge-best">melhor</span>':''}
+      <span class="sc-installment">12x R$${Math.ceil(e.price/12).toLocaleString('pt-BR')}</span>
+    </a>`;
+  }).join('') || '<div style="color:var(--tx3);font-size:13px;padding:8px">Nenhum preço disponível.</div>';
+
+  document.getElementById('sc-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeStoreCompare() {
+  document.getElementById('sc-overlay').style.display='none';
+  document.body.style.overflow='';
+}
+function scAddToBuild() {
+  if (_scCat && _scPart) {
+    quickAdd(_scCat, _scPart);
+    closeStoreCompare();
+  }
+}
+function scOpenHistory() {
+  if (_scCat && _scPart) {
+    closeStoreCompare();
+    openHistory(_scCat, _scPart);
+  }
 }
 
 function quickAdd(catId, partId) {
@@ -1920,6 +2233,51 @@ function init() {
 }
 
 init();
+</script>
+
+<!-- ── Live Price API Integration ─────────────────────────────────────── -->
+<script>
+(async function loadLivePrices() {
+  const API_BASE = 'https://pecapc-api.onrender.com'; // ← your Render URL
+
+  try {
+    const res = await fetch(`${API_BASE}/api/products`, {
+      cache: 'no-store',
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error(`API ${res.status}`);
+    const { data } = await res.json();
+
+    let updated = 0;
+    for (const live of data) {
+      const catArr = DB[live.category];
+      if (!catArr) continue;
+      const local = catArr.find(p => p.id === live.id);
+      if (!local || !live.listings?.length) continue;
+      // Update listings with fresh scraped prices
+      local.listings = live.listings.map(l => ({
+        store: l.store,
+        price: l.price,
+        url:   l.url,
+        inStock: l.inStock,
+      }));
+      // Update top-level price to current lowest in-stock
+      const prices = live.listings.filter(l => l.inStock && l.price).map(l => l.price);
+      if (prices.length) local.price = Math.min(...prices);
+      updated++;
+    }
+
+    // Re-render visible UI
+    if (typeof filterCatalog === 'function') filterCatalog();
+    if (typeof renderBuild   === 'function') renderBuild();
+
+    if (updated) toast(`Preços atualizados ao vivo (${updated} produtos)`, 'ok');
+    console.log(`[PeçaPC] Live prices loaded: ${updated} products`);
+  } catch (err) {
+    // Silent — built-in prices still work fine
+    console.warn('[PeçaPC] Live prices unavailable, using built-in data.', err.message);
+  }
+})();
 </script>
 </body>
 </html>
