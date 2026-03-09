@@ -1,0 +1,22 @@
+{
+  "name": "pecapc-api",
+  "version": "1.0.0",
+  "description": "PeçaPC price scraper API — daily scrapes BR stores, updates SQLite DB, serves JSON",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "scrape": "node src/scraper.js",
+    "seed": "node src/seed.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "better-sqlite3": "^9.4.3",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5"
+  }
+}
